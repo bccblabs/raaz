@@ -8,7 +8,7 @@ import ProfileContainer from './ProfileContainer'
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 import {PostList} from '../post'
-
+import {General} from '../styles'
 import {
 	homePostSelector,
 	homePostPaginationSelector,
@@ -39,12 +39,16 @@ class Home extends Component {
 	render () {
 	  	let {data, pagination, profileData, fetchTags, fetchData, tags, userId} = this.props
 
-			, leftItem = userId?{title:'My Builds', onPress: Actions.MyBuilds}:null
+			, leftItem = userId?{title:'My Builds', onPress: ()=>{Actions.BuildsByUserId({userId})}}:null
 			, rightItem = userId?{title: 'Settings', onPress: Actions.Settings}:null
 
 			, header = (<F8Header foreground="dark" leftItem={leftItem} rightItem={rightItem}/>)
-			,	list = (<PostList key="home-posts" data={data} pagination={pagination} userId={userId} tags={tags} fetchTags={fetchTags} fetchData={fetchData} />)
-		  , btn = (<F8Button type="tertiary" caption="Add New Build" icon={require ('../common/img/tuning.png')}/>)
+			, list = (<PostList key="home-posts" data={data} pagination={pagination} userId={userId} tags={tags} fetchTags={fetchTags} fetchData={fetchData} />)
+		    , btn =  (<F8Button
+			          style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}
+			          type="saved" caption="New Post"
+			          onPress={Actions.NewPost}
+			        />)
 
 		return (
 			<ProfileContainer

@@ -10,7 +10,7 @@ exports.AUTH0_CLIENT_SECRET = module.exports.AUTH0_CLIENT_SECRET ='RyE7bMsLckFWN
 exports.AUTH0_DOMAIN = module.exports.AUTH0_DOMAIN ='https://raaz.auth0.com'
 
 exports.AUTH0_CALLBACK_URL = '//raaz://callback'
-exports.API_ENDPOINT = module.exports.API_ENDPOINT = "http://localhost:3001"
+exports.API_ENDPOINT = module.exports.API_ENDPOINT = "http://localhost:8080"
 
 exports.GET_OPTS = module.exports.GET_OPTS = { method: 'GET', headers: {'Accept': 'application/json','Content-Type':'application/json'}}
 

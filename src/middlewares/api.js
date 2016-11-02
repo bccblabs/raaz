@@ -1,6 +1,6 @@
 import { Schema, arrayOf, normalize } from 'normalizr'
 import { camelizeKeys } from 'humps'
-const API_ROOT = 'http://localhost:3001'
+import { API_ENDPOINT } from '../constants'
 
 // * ponyfilling....
 require('es6-symbol/implement')
@@ -99,7 +99,7 @@ function getNextPageUrl (response) {
 }
 
 function callApi (endpoint, schema, data,) {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint,
+  const fullUrl = (endpoint.indexOf(API_ENDPOINT) === -1) ? API_ENDPOINT + endpoint : endpoint,
         body = JSON.stringify ({data: data}),
         postOpts = {
                   method: 'POST',

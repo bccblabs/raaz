@@ -198,8 +198,7 @@ export const Styles = StyleSheet.create ({
     borderTopColor: 'rgba(0,0,0,0.5)',
     backgroundColor: 'rgba(0,0,0,0.5)',
     alignSelf: 'center',
-    height: 40,
-    width: window.width/2.5,
+    width: window.width/2,
     margin: 12,
   },
   mapStyle: {
@@ -416,7 +415,7 @@ export const PostStyles = StyleSheet.create({
     height: 40,
     width: 40,
     marginHorizontal: 8,
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
 
   largeUserPhoto: {

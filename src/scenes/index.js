@@ -6,7 +6,7 @@ import { BuildDetails, BuildsByPartId, BuildsBySpecId, BuildsByTag, BuildsByUser
 import { Parts, PartDetails, PartFilter, PartsByManufacturer } from '../part'
 import { Makes, Models, Submodels, Specs } from '../picker'
 import { Tuning, TuningBySpec, QRScreen } from '../tuning'
-import { Comments, Login, Home, MyBuilds, MyPosts, NewPost, Notifications, Posts, Saved, Settings } from '../user'
+import { Comments, Login, Home, MyBuilds, MyPosts, NewPost, Notifications, Posts, PreviewBuild, PreviewPost, Saved, Settings } from '../user'
 
 import { TabIcon } from '../components'
 export default scenes = Actions.create (
@@ -29,6 +29,11 @@ export default scenes = Actions.create (
     <Scene key="Submodels" component={Submodels} title="Trims" hideNavBar/>
     <Scene key="Specs" component={Specs} title="Specs" hideNavBar/>
 
+    <Scene key="NewPost" component={NewPost} hideNavBar/>
+    <Scene key="PreviewBuild" component={PreviewBuild} hideNavBar/>
+    <Scene key="PreviewPost" component={PreviewPost} hideNavBar/>
+    
+    <Scene key="BuildsByUserId" component={BuildsByUserId} hideNavBar/>
+    <Scene key="BuildsByPartId" component={BuildsByPartId} hideNavBar/>
   </Scene>
-
 )

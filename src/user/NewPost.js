@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   View,
   Platform,
+  Text,
   Image,
   TouchableWithoutFeedback
 } from 'react-native'
@@ -15,103 +16,77 @@ import {connect} from 'react-redux'
 import {createSelector} from 'reselect'
 import { Actions } from 'react-native-router-flux'
 
-// import FloatLabelTextInput from 'react-native-floating-label-text-input'
+
+import ImagePicker from 'react-native-image-crop-picker'
+
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
-import { Text, Paragraph } from '../common/F8Text'
+import { Heading3 } from '../common/F8Text'
 
 import {FilterCard} from '../components'
 
-import { NewPostStyles, General, ListingStyles, PostStyles } from '../styles'
+import { NewPostStyles, General, PostStyles, Titles } from '../styles'
 import {ImageOptions, VideoOptions} from '../constants'
 
 import {newpostTaggedCars} from '../selectors'
-import {removeFromTaggedCars} from '../reducers/newpost/newpostActions'
+import {removeFromTaggedCars, setSelectedMedia} from '../reducers/newpost/newpostActions'
 
 const dismissKeyboard = require('dismissKeyboard')
 
 const mapStateToProps = (state) => {
   return {
     profileData: state.user.profileData,
-    taggedCars: newpostTaggedCars (state)
+    taggedCars: newpostTaggedCars (state),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeFromTaggedCars: (specId) => {dispatch (removeFromTaggedCars (specId))}
+    removeFromTaggedCars: (specId) => {dispatch (removeFromTaggedCars (specId))},
+    setSelectedMedia: (paths) => {dispatch (setSelectedMedia (paths))}
   }
 }
 
 class NewPost extends Component {
   constructor (props) {
     super (props)
-    this.pickImage = this.pickImage.bind (this)
+    this.pickMedia = this.pickMedia.bind (this)
+    this.takePhoto = this.takePhoto.bind (this)
     this.renderEditLog = this.renderEditLog.bind (this)
-    this.renderImagesContainer = this.renderImagesContainer.bind (this)
-    this.renderVideosContainer = this.renderVideosContainer.bind (this)
+    this.renderImages = this.renderImages.bind (this)
     this.state = {
-      images: [],
-      videos: [],
-
       taggedCars: props.taggedCars,
-
-      parts: [],
-      taggedUsers: [],
-
-      title: null,
-      desription: null,
-
-      listedPrice: null,
-      listedMileage: null,
-      vin: null,
-
-      listing: false,
-
-      profileData: props.profileData
+      profileData: props.profileData,
+      images: [],
+      video: '',
     }
   }
 
   componentWillReceiveProps (nextProps) {
     let {taggedCars} = nextProps
     this.setState ({taggedCars})
-    console.log (this.props, 'componentWillUpdate')
   }
 
-  pickImage (type) {
-    ImagePickerManager.launchImageLibrary(ImageOptions, (response) => {
-      if (response.didCancel) {
-        return
-      }
-        let images = this.state.images
-        const source = Platform.OS === 'ios'
-                      ? {type: type, uri: response.uri.replace('file://', ''), isStatic: true, width: response.width, height: response.height}
-                      : {type: type, uri: response.uri, isStatic: true, width: response.width, height: response.height}
-        images.push (source)
-        this.setState({images})
+  pickMedia () {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      multiple: true
+    }).then(images => {
+      let photos = images.map ((image)=>image['path'])
+      this.setState ({images: photos})
     });
   }
 
-  pickVideo (type) {
-    ImagePickerManager.launchImageLibrary(VideoOptions, (response) => {
-      if (response.didCancel) {
-        return
-      }
-        const source = Platform.OS === 'ios'
-                      ? {type: type, uri: response.uri.replace('file://', ''), isStatic: true, width: response.width, height: response.height}
-                      : {type: type, uri: response.uri, isStatic: true, width: response.width, height: response.height}
-        let videos = this.state.videos
-        videos.push (source)
-        this.setState ({videos})
-    });
-  }
-
-
-  renderGenericInput() {
-    return (
-      <View>
-      </View>
-    )
+  takePhoto () {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      console.log(image);
+    });    
   }
 
   renderEditLog() {
@@ -136,14 +111,7 @@ class NewPost extends Component {
         })
         }
       </ScrollView>
-      <View style={PostStyles.header}>
-        <Image source={{uri: picture}} style={PostStyles.userPhotoStyle}/>
-          <TextInput
-            placeholder="Tag Line"
-            multiline={true}
-            maxLength={20}
-            style={NewPostStyles.singleLineBlockInput}/>
-      </View>
+      <Image source={{uri: picture}} style={PostStyles.userPhotoStyle}/>
       <TextInput
         placeholder="OMG IT'S FAST"
         multiline={true}
@@ -153,80 +121,33 @@ class NewPost extends Component {
     )
   }
 
-  // renderEditListing() {
-  //   return (
-  //     <View style={{paddingTop: 20, paddingBottom: 20}}>
-  //     <FloatLabelTextInput
-  //       placeHolder={"Asking Price ($)"}
-  //       value={"0"}
-  //       />
-  //     <FloatLabelTextInput
-  //       placeHolder={"Mileage"}
-  //       value={"0"}
-  //       />
-  //     <FloatLabelTextInput
-  //       placeHolder={"VIN"}
-  //       value={"Your VIN here..."}
-  //     />
-  //    </View>
-  //   )
-  // }
-
-  renderVideosContainer () {
-    return this.state.videos.length>0?
-    ( <View>
-      <Text style={NewPostStyles.divTitleStyle}>Videos</Text>
-      <ScrollView
-        horizontal={true}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}>
-        {
-          this.state.videos.map ((img, idx)=>{
-            return (
-              <View key={idx} style={{alignItems: 'center', height: 300, width: 300}}>
-                <Video
-                   source={{uri: img.uri}}/>
-                <MainButton
+  renderImages () {
+  return this.state.images.length>0?
+    ( 
+      <View>
+            <Heading3 style={Titles.buildSectionTitle}>{"Photos"}</Heading3>
+        <ScrollView
+          horizontal={true}
+          showsVerticalScrollIndicator={false}
+          style={{margin: 8}}
+          showsHorizontalScrollIndicator={false}>
+          {
+            this.state.images.map ((img, idx)=>{
+              return (
+              <View key={idx} style={{marginLeft: 4}}>
+              <TouchableWithoutFeedback
                   onPress={()=>{
-                    let images = this.state.videos.splice (idx, 1)
-                    this.setState ({videos: this.state.videos})
-                    }}
-                  type='secondary'
-                  caption="Remove"/>
-                </View>
-            )
-          })
-        }
-      </ScrollView>
-      </View>
-    )
-    :(<View/>)
-  }
-  renderImagesContainer () {
-    return this.state.images.length>0?
-    ( <View>
-      <Text style={NewPostStyles.divTitleStyle}>Photos</Text>
-      <ScrollView
-      horizontal={true}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}>
-        {
-          this.state.images.map ((img, idx)=>{
-            return (
-              <View key={idx} style={{alignItems: 'center'}}>
-              <Image style={{width: 100, height: 100}} source={{uri: img.uri}}/>
-              <MainButton
-                onPress={()=>{
-                  let images = this.state.images.splice (idx, 1)
-                  this.setState ({images: this.state.images})
-                  }}
-                type='secondary'
-                caption="Remove"/>
+                    let images = this.state.images.splice (idx, 1)
+                    this.setState ({images: this.state.images})
+                    }}>
+                  <Image source={require ('../common/img/x.png')} style={{height:16, width: 16,alignSelf: 'flex-end'}}/>
+              </TouchableWithoutFeedback>
+              <Image style={{width: 100, height: 100, marginHorizontal: 8}} source={{uri: img}}/>
               </View>
-            )
+              )
           })
         }
-      </ScrollView>
+        </ScrollView>
       </View>
     )
     :(<View/>)
@@ -234,7 +155,7 @@ class NewPost extends Component {
 
   render () {
     const leftItem = {title: 'cancel', onPress: Actions.pop}
-        , rightItem = {title: 'preview', onPress: Actions.previewDraft}
+        , rightItem = {title: 'preview', onPress: Actions.PreviewPost}
 
     let {profileData} = this.props
 
@@ -248,20 +169,31 @@ class NewPost extends Component {
           title="New Post"
           style={General.headerStyle}/>
         {this.renderEditLog()}
-        {this.renderImagesContainer()}
-        {this.renderVideosContainer()}
+        {this.renderImages()}
         <View style={{position: 'absolute', bottom: 0}}>
-        <F8Button icon={require ('../common/img/car.png')} onPress={Actions.PickMakes} type="tertiary" caption="Tag Car" style={NewPostStyles.bottomButtonStyle}/>
-        <F8Button icon={require ('../common/img/photo.png')} onPress={()=>this.pickImage('normal')} type="tertiary" caption="Photo" style={NewPostStyles.bottomButtonStyle}/>
-        <F8Button icon={require ('../common/img/panovideo.png')} onPress={()=>this.pickVideo('panorama')} type="tertiary" caption="Video" style={NewPostStyles.bottomButtonStyle}/>
+        <F8Button 
+          icon={require ('../common/img/car.png')} 
+          onPress={Actions.PickBuild} 
+          type="tertiary" 
+          caption="Tag My Build" 
+          style={NewPostStyles.bottomButtonStyle}/>
+        <F8Button 
+          icon={require ('../common/img/photo.png')} 
+          onPress={this.pickMedia} 
+          type="tertiary" 
+          caption="Choose From Library" 
+          style={NewPostStyles.bottomButtonStyle}/>
+        <F8Button 
+          icon={require ('../common/img/panovideo.png')} 
+          onPress={this.takePhoto} 
+          type="tertiary" 
+          caption="Take Photo Using Camera" 
+          style={NewPostStyles.bottomButtonStyle}/>
         </View>
       </View>
       </TouchableWithoutFeedback>
     )
   }
 }
-
-// <View style={{width: 1, backgroundColor: 'lightgray', marginVertical: 12}}/>
-// <F8Button icon={require ('../common/img/listing.png')} onPress={Actions.TagListing} type="tertiary" caption="Post As Listing" style={NewPostStyles.topButtonStyle}/>
 
 export default connect (mapStateToProps, mapDispatchToProps) (NewPost)
