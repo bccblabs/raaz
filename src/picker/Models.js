@@ -66,7 +66,7 @@ class Models extends Component {
     let {models, selectedMake, isFetching} = this.state,
         {fetchSubmodels, setModel} = this.props
     const leftItem = {
-            title: 'Makes',
+            icon: require ('../common/img/back.ios.png'),
             onPress: ()=>Actions.pop()
           },
           content = isFetching?(<LoadingView/>):(

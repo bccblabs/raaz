@@ -56,12 +56,12 @@ export default class PartDetails extends Component {
   render() {
     let {partId} = this.props.data, content
     const leftItem = {
-            title: 'Back',
+            icon: require ('../common/img/back.ios.png'),
             onPress: ()=> {Actions.pop()}
           }
         , rightItem = {
-          title: 'Listings',
-          onPress: ()=> {Actions.Listings({partId})}
+            icon: require ('../common/img/cart.png'),
+            onPress: ()=> {Actions.Listings({partId})}
         }
         , {data, hasError, isLoading} = this.state
         , header = (

@@ -15,7 +15,7 @@ import {togglePartTag} from '../reducers/tuning/filterActions'
 
 export default class BuildFilter extends Component {
   render () {
-    const leftItem = {title: 'Back', onPress: ()=>{Actions.pop()}}
+    const leftItem = {icon: require ('../common/img/back.ios.png'), onPress: ()=>{Actions.pop()}}
         , {filterId, title} = this.props
     return (
       <View style={{flex: 1}}>

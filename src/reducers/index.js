@@ -7,7 +7,7 @@ import history from './history/historyReducer'
 import post from './post/postReducer'
 import user from './user/userReducer'
 import newpost from './newpost/newpostReducer'
-
+import newbuild from './newbuild/newbuildReducer'
 import assign from 'lodash/assign'
 
 import {combineReducers} from 'redux'
@@ -95,6 +95,7 @@ let initState = {
   posts: {},
   specsDetails: {},
   newpost: {},
+  newbuild: {}
 }
 
 function entities(state=initState, action) {
@@ -215,6 +216,7 @@ const rootReducer = combineReducers ({
   tuning,
   post,
   newpost,
+  newbuild,
 })
 
 

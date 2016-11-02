@@ -21,11 +21,7 @@ export default class LoadingView extends Component {
           justifyContent: 'center',
           backgroundColor: 'transparent'
         }}>
-        <Spinner style={{}} isVisible={true} size={50} type={'Wave'} color={'#CC0000'}/>
-        <Text style={{marginTop: 16}}>{"Loading Cars..."}</Text>
-        <TouchableOpacity onPress={()=>Actions.pop()}>
-          <Text style={{marginTop: 16}}>{"Back to Last Page"}</Text>
-        </TouchableOpacity>
+        <Spinner style={{}} isVisible={true} size={100} type={'Wave'} color={'#CC0000'}/>
       </View>
     )
   }

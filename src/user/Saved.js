@@ -43,7 +43,7 @@ class SavedPartsList extends Component {
   render () {
     let {dataSource} = this.state
       , content
-      , leftItem = {title: 'Back', onPress: Actions.pop}
+      , leftItem = {icon: require ('../common/img/back.ios.png'), onPress: Actions.pop}
     if (!dataSource.getRowCount()) {
       content = (<EmptyView
                 caption={"You haven\'t saved any parts, let\'s start browsing!"}

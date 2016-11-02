@@ -1,11 +1,6 @@
 'use strict'
 
 const {
-  PICK_MAKE,
-  PICK_MODEL,
-  PICK_SUBMODEL,
-  PICK_SPECID,
-
   ADD_TO_TAGGED_CARS,
   REMOVE_FROM_TAGGED_CARS,
 
@@ -24,34 +19,6 @@ export function removeMedia (path) {
   return {
     type: REMOVE_MEDIA,
     payload: path
-  }
-}
-
-export function setMake (value) {
-  return {
-    type: PICK_MAKE,
-    payload: value
-  }
-}
-
-export function setModel (value) {
-  return {
-    type: PICK_MODEL,
-    payload: value
-  }
-}
-
-export function setSubmodel (value) {
-  return {
-    type: PICK_SUBMODEL,
-    payload: value
-  }
-}
-
-export function setSpecId (value) {
-  return {
-    type: PICK_SPECID,
-    payload: value
   }
 }
 

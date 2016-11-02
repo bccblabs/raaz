@@ -67,7 +67,7 @@ class SubmodelsList extends Component {
         {fetchSpecs, setSubmodel} = this.props
 
     const leftItem = {
-            title: 'Models',
+            icon: require ('../common/img/back.ios.png'),
             onPress: ()=>Actions.pop()
           },
           content = isFetching?(<LoadingView/>):(

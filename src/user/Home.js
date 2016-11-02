@@ -39,8 +39,8 @@ class Home extends Component {
 	render () {
 	  	let {data, pagination, profileData, fetchTags, fetchData, tags, userId} = this.props
 
-			, leftItem = userId?{title:'My Builds', onPress: ()=>{Actions.BuildsByUserId({userId})}}:null
-			, rightItem = userId?{title: 'Settings', onPress: Actions.Settings}:null
+			, leftItem = userId?{ icon: require ('../common/img/car.png'), onPress: ()=>{Actions.BuildsByUserId({userId})}}:null
+			, rightItem = userId?{ icon: require ('../common/img/helmet.png'), onPress: Actions.Settings}:null
 
 			, header = (<F8Header foreground="dark" leftItem={leftItem} rightItem={rightItem}/>)
 			, list = (<PostList key="home-posts" data={data} pagination={pagination} userId={userId} tags={tags} fetchTags={fetchTags} fetchData={fetchData} />)

@@ -31,7 +31,7 @@ export default class ProfileContainer extends Component {
         backgroundColor="transparent"
         contentBackgroundColor="white"
         backgroundSpeed={1}
-        parallaxHeaderHeight={300+64}
+        parallaxHeaderHeight={200+64}
         renderFixedHeader={() => headerContent}
         fixedHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}

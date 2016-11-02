@@ -35,7 +35,6 @@ export default class List extends Component {
 
   componentWillReceiveProps (nextProps) {
     let {data, tags, pagination} = nextProps
-    console.log (nextProps, this.props)
     if (!isEqual(data, this.props.data)) {
       let newBlob = union (this.state.data, data)
       this.setState ({
@@ -47,7 +46,6 @@ export default class List extends Component {
   }
 
   render () {
-    console.log (this.state)
     let {dataSource, pagination} = this.state
       , {title, fetchData, fetchTags, tags, renderRow} = this.props
       , {nextPageUrl, isFetching, hasError} = pagination

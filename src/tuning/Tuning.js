@@ -63,15 +63,18 @@ class Tuning extends Component {
 
   componentWillReceiveProps(nextProps) {
     let {myBuilds, onStart} = nextProps
-      , noBuilds = myBuilds && myBuilds.ids && myBuilds.ids.length == 0
+      , noBuilds = (myBuilds && myBuilds.ids && myBuilds.ids.length == 0)?true:false
       , showModal = noBuilds && onStart
-
+    console.log ('receiveprops, ', {noBuilds}, {showModal}, {onStart})
     this.setState ({showModal})
   }
 
   render () {
-    const rightItem = {title: 'Saved', onPress:Actions.Saved}
-    let {
+    let rightItem = {
+        icon: require ('../common/img/cart.png'), 
+        onPress:Actions.Saved
+      }
+    , {
       data, 
       pagination, 
       tags, 

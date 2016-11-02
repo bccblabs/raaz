@@ -73,7 +73,7 @@ class SpecsList extends Component {
         {addSpecToHistory, userId, setSelectedSpecId,
         selectedMake, selectedModel, selectedSubmodel} = this.props
     const leftItem = {
-            title: 'Back',
+            icon: require ('../common/img/back.ios.png'),
             onPress: ()=>Actions.pop(),
           },
     content = isFetching?(<LoadingView/>):(

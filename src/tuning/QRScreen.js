@@ -20,7 +20,7 @@ export default class QRScreen extends Component {
   render () {
     return (
       <View style={{backgroundColor: 'black', flex: 1}}>
-      <F8Header title="QR Scan" foreground="light" leftItem={{title: 'Back', onPress: Actions.pop}}/>
+      <F8Header title="QR Scan" foreground="light" style={{backgroundColor: 'transparent'}} leftItem={{icon: require ('../common/img/back_white.ios.png'), onPress: Actions.pop}}/>
       </View>
     )
   }

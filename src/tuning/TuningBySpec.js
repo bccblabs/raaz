@@ -94,7 +94,7 @@ class TuningBySpec extends Component {
   render () {
     let {specsDetails, specsPagination} = this.state
       , specsInfo = this.state.specsDetails[0]
-      , leftItem = {title: 'Back', onPress: ()=> {Actions.pop ()}}
+      , leftItem = {icon: require ('../common/img/back.ios.png'), onPress: ()=> {Actions.pop ()}}
       , headerContent = (<F8Header foreground="dark" style={General.headerStyle} leftItem={leftItem}/>)
     if (specsPagination.isFetching) {
       return (

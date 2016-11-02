@@ -69,7 +69,7 @@ class Makes extends Component {
       , {setMake} = this.props
 
     const leftItem = {
-            title: 'Cancel',
+            icon: require ('../common/img/back.ios.png'),
             onPress: ()=>Actions.pop()
           },
           content = isFetching?(<LoadingView/>):(

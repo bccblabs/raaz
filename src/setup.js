@@ -2,12 +2,14 @@
 
 import React, { Component } from 'react'
 import { View } from 'react-native'
+import codePush from 'react-native-code-push'
 import { Provider, connect } from 'react-redux'
+import { Router } from 'react-native-router-flux'
+import * as storage from 'redux-storage'
 
 import { loadHisory } from './reducers/history/historyActions'
 import { asyncStorageEngine, configureStore } from './store/configureStore'
-import * as storage from 'redux-storage'
-import {LoadingView} from './components'
+import { LoadingView } from './components'
 import scenes from './scenes'
 
 import historyInitialState from './reducers/history/historyInitialState'
@@ -16,11 +18,9 @@ import tuningFilterInitialState from './reducers/tuning/filterInitialState'
 import userInitialState from './reducers/user/userInitialState'
 import postInitialState from './reducers/post/postInitialState'
 import newpostInitialState from './reducers/newpost/newpostInitialState'
+import newbuildInitialState from './reducers/newbuild/newbuildInitialState'
 
-import { Router, Scene } from 'react-native-router-flux'
 
-
-import codePush from 'react-native-code-push'
 
 const RouterWithRedux = connect () (Router)
 
@@ -32,6 +32,7 @@ function getInitialState () {
     user: new userInitialState,
     post: new postInitialState,
     newpost: new newpostInitialState,
+    newbuild: new newbuildInitialState,
   }
   return _initState
 }
