@@ -28,22 +28,24 @@ import {FilterCard} from '../components'
 import { NewPostStyles, General, PostStyles, Titles } from '../styles'
 import {ImageOptions, VideoOptions} from '../constants'
 
-import {newpostTaggedCars} from '../selectors'
-import {removeFromTaggedCars, setSelectedMedia} from '../reducers/newpost/newpostActions'
+import {taggedCars, profileSelector, selectedMediaSelector} from '../selectors'
+import {removeFromTaggedCars, addMedia, removeMedia} from '../reducers/newpost/newpostActions'
 
 const dismissKeyboard = require('dismissKeyboard')
 
 const mapStateToProps = (state) => {
   return {
-    profileData: state.user.profileData,
-    taggedCars: newpostTaggedCars (state),
+    profileData: profileSelector (state),
+    selectedMedia: selectedMediaSelector (state)
+    // taggedCars: taggedCars (state),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     removeFromTaggedCars: (specId) => {dispatch (removeFromTaggedCars (specId))},
-    setSelectedMedia: (paths) => {dispatch (setSelectedMedia (paths))}
+    addMedia: (paths) => {dispatch (addMedia (paths))},
+    removeMedia: (path) => {dispatch (removeMedia (path))}
   }
 }
 
@@ -55,16 +57,15 @@ class NewPost extends Component {
     this.renderEditLog = this.renderEditLog.bind (this)
     this.renderImages = this.renderImages.bind (this)
     this.state = {
-      taggedCars: props.taggedCars,
       profileData: props.profileData,
-      images: [],
-      video: '',
+      images: props.selectedMedia,
+      taggedCars: props.taggedCars,
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    let {taggedCars} = nextProps
-    this.setState ({taggedCars})
+    let {taggedCars, selectedMedia} = nextProps
+    this.setState ({taggedCars, images: selectedMedia})
   }
 
   pickMedia () {
@@ -75,7 +76,7 @@ class NewPost extends Component {
       multiple: true
     }).then(images => {
       let photos = images.map ((image)=>image['path'])
-      this.setState ({images: photos})
+      this.props.addMedia (photos)
     });
   }
 
@@ -85,7 +86,8 @@ class NewPost extends Component {
       height: 400,
       cropping: true
     }).then(image => {
-      console.log(image);
+      let path = image['path'];
+      this.props.addMedia ([path])
     });    
   }
 
@@ -122,35 +124,33 @@ class NewPost extends Component {
   }
 
   renderImages () {
-  return this.state.images.length>0?
-    ( 
-      <View>
-            <Heading3 style={Titles.buildSectionTitle}>{"Photos"}</Heading3>
-        <ScrollView
-          horizontal={true}
-          showsVerticalScrollIndicator={false}
-          style={{margin: 8}}
-          showsHorizontalScrollIndicator={false}>
-          {
-            this.state.images.map ((img, idx)=>{
-              return (
-              <View key={idx} style={{marginLeft: 4}}>
-              <TouchableWithoutFeedback
-                  onPress={()=>{
-                    let images = this.state.images.splice (idx, 1)
-                    this.setState ({images: this.state.images})
-                    }}>
+    let {images} = this.state
+    return images.length>0?
+      ( 
+        <View>
+              <Heading3 style={Titles.buildSectionTitle}>{"Photos"}</Heading3>
+          <ScrollView
+            horizontal={true}
+            showsVerticalScrollIndicator={false}
+            style={{margin: 8}}
+            showsHorizontalScrollIndicator={false}>
+            {
+              images.map ((img, idx)=>{
+                return (
+                <View key={idx} style={{marginLeft: 4}}>
+                <TouchableWithoutFeedback
+                  onPress={()=>{this.props.removeMedia (img)}}>
                   <Image source={require ('../common/img/x.png')} style={{height:16, width: 16,alignSelf: 'flex-end'}}/>
-              </TouchableWithoutFeedback>
-              <Image style={{width: 100, height: 100, marginHorizontal: 8}} source={{uri: img}}/>
-              </View>
-              )
-          })
-        }
-        </ScrollView>
-      </View>
-    )
-    :(<View/>)
+                </TouchableWithoutFeedback>
+                <Image style={{width: 100, height: 100, marginHorizontal: 8}} source={{uri: img}}/>
+                </View>
+                )
+            })
+          }
+          </ScrollView>
+        </View>
+      )
+      :(<View/>)
   }
 
   render () {

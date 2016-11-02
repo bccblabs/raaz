@@ -1,12 +1,16 @@
 'use strict'
 import React, {Component} from 'react'
 import {
+  Image,
+  Modal, 
+  Text,
+  TouchableWithoutFeedback,
   View
 } from 'react-native'
 
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
-import {DetailStyles} from '../styles'
+import {DetailStyles, General} from '../styles'
 
 
 import F8Header from '../common/F8Header'
@@ -17,9 +21,9 @@ import {BuildList} from '../build'
 import {buildsSelector, buildsPaginationSelector, buildCategoriesSelector} from '../selectors'
 import {fetchCategoriesFromApi, fetchBuilds} from '../reducers/tuning/filterActions'
 
-import {userIdSelector, profileSelector} from '../selectors'
+import {userIdSelector, profileSelector, myBuildsSelector, onStartSelector} from '../selectors'
 
-import {setUserData} from '../reducers/user/userActions'
+import {setUserData, fetchUserBuilds, toggleOnStart} from '../reducers/user/userActions'
 import {setAccessToken} from '../reducers/history/historyActions'
 
 const mapStateToProps = (state, props) => {
@@ -28,7 +32,9 @@ const mapStateToProps = (state, props) => {
     pagination: buildsPaginationSelector(state),
     tags: buildCategoriesSelector (state),
     user: props.user,
-    access_token: props.access_token
+    access_token: props.access_token,
+    myBuilds: myBuildsSelector (state),
+    onStart: onStartSelector (state),
   }
 }
 
@@ -37,39 +43,74 @@ const mapDispatchToProps = (dispatch, props) => {
     fetchTags: () => { dispatch (fetchCategoriesFromApi ('car'))},
     fetchData: (pageUrl) => {dispatch (fetchBuilds (pageUrl))},
     setUserData: () => { dispatch (setUserData (props.user))},
-    setAccessToken: () => {dispatch (setAccessToken (props.access_token))}
+    setAccessToken: () => {dispatch (setAccessToken (props.access_token))},
+    fetchUserBuilds: () => {dispatch (fetchUserBuilds ())},
+    toggleOnStart: () => {dispatch (toggleOnStart())}
   }
 }
 
 class Tuning extends Component {
   constructor (props) {
     super (props)
+    this.state = {showModal: false}
   }
 
   componentWillMount() {
     this.props.setUserData()
     this.props.setAccessToken()
+    this.props.fetchUserBuilds()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let {myBuilds, onStart} = nextProps
+      , noBuilds = myBuilds && myBuilds.ids && myBuilds.ids.length == 0
+      , showModal = noBuilds && onStart
+
+    this.setState ({showModal})
   }
 
   render () {
     const rightItem = {title: 'Saved', onPress:Actions.Saved}
-    let {data, pagination, tags, userId, fetchTags, fetchData} = this.props
+    let {
+      data, 
+      pagination, 
+      tags, 
+      userId, 
+      fetchTags, 
+      fetchData,
+      toggleOnStart
+    } = this.props
 
-    console.log (this.props)
+    , {showModal} = this.state
+
+    console.log ('showModal=', showModal)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
-      <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
-      <F8Button style={{flex: 1}}
-                onPress={Actions.QRScan}
-                type="search"
-                icon={require ('../common/img/qr.png')}
-                caption={"By QR Code"}/>
-      <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                caption="search by car" type="search"
-                icon={require ('../common/img/search.png')}/>
-      </View>
-      <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>
+        <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
+        <F8Button style={{flex: 1}}
+                  onPress={Actions.QRScan}
+                  type="search"
+                  icon={require ('../common/img/qr.png')}
+                  caption={"By QR Code"}/>
+        <F8Button style={{flex: 1}}  onPress={Actions.Makes}
+                  caption="search by car" type="search"
+                  icon={require ('../common/img/search.png')}/>
+        </View>
+        <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>
+        <Modal 
+          animationType={"slide"}
+          transparent={true}
+          visible={showModal} 
+          onRequestClose={toggleOnStart}>
+          <View style={General.modalStyle}>
+          <Text style={{fontFamily: 'Futura-CondensedExtraBold', color: 'black'}}>You haven't added ur ride, bruh</Text>
+          <View style={{flexDirection: 'row', marginTop: 40}}>
+          <F8Button type="saved" style={{flex: 0, margin: 4}} caption="Add My Car"/>          
+          <F8Button type="unsaved" style={{flex: 0, margin: 4}} onPress={()=>{toggleOnStart() && this.setState ({showModal: false})}} caption="Got it, Later!"/>          
+          </View>
+          </View>
+        </Modal>
       </View>
     )
   }

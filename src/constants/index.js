@@ -24,6 +24,11 @@ export default keyMirror ({
   SET_STORE: null,
 
 
+
+
+
+
+
   /* Posts */
   POSTS_REQUEST: null,
   POSTS_SUCCESS: null,
@@ -36,6 +41,13 @@ export default keyMirror ({
   POSTS_REQUEST_BUILD: null,
   POSTS_SUCCESS_BUILD: null,
   POSTS_ERROR_BUILD: null,
+
+
+
+
+
+
+
 
   /* User create post */
   RESET_POSTS_FILTER_STATE: null,
@@ -53,8 +65,21 @@ export default keyMirror ({
 
   ADD_TO_TAGGED_CARS: null,
   REMOVE_FROM_TAGGED_CARS: null,
-
   TOGGLE_POST_LIKE: null,
+
+  ADD_MEDIA: null,
+  REMOVE_MEDIA: null,
+
+  TOGGLE_ON_START: null,
+
+
+
+
+
+
+
+
+
 
   /* Events */
   EVENTS_REQUEST: null,
@@ -65,6 +90,13 @@ export default keyMirror ({
   SET_EVENTS_FILTER_HASH: null,
   SET_EVENTS_FILTER_STATE: null,
   TOGGLE_EVENTS_FILTER_LIST_VALUE: null,
+
+
+
+
+
+
+
 
 
   /* Builds, Cars, Listings, Tuning, etc. */
@@ -96,8 +128,6 @@ export default keyMirror ({
   BUILDS_REQUEST_SPECID: null,
   BUILDS_SUCCESS_SPECID: null,
   BUILDS_ERROR_SPECID: null,
-
-
 
   PARTS_REQUEST: null,
   PARTS_SUCCESS: null,
@@ -148,6 +178,15 @@ export default keyMirror ({
   SET_SELECTED_SUBMODEL: null,
   SET_SELECTED_SPECID: null,
 
+
+
+
+
+
+
+
+
+
   /* History */
 
   ADD_TO_SAVED_SPECS: null,
@@ -155,6 +194,18 @@ export default keyMirror ({
 
   SET_ACCESS_TOKEN: null,
   LOAD_HISTORY: null,
+
+
+
+
+
+
+
+
+
+
+
+
 
   /* Social Login and Profile */
   LOGIN: null,

@@ -1,6 +1,6 @@
 'use strict'
 
-const {Map, Record} = require ('immutable')
+const {Map, Record, List} = require ('immutable')
 
 const newpostInitialState = Record ({
 
@@ -9,7 +9,8 @@ const newpostInitialState = Record ({
   pickedSubmodel: '',
   pickedSpecId: '',
 
-  taggedCars: new (Map)
+  taggedCars: new (Map),
+  selectedMedia: new (List),
 })
 
 export default newpostInitialState

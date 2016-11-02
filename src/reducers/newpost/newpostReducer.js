@@ -8,7 +8,8 @@ const {
 
   ADD_TO_TAGGED_CARS,
   REMOVE_FROM_TAGGED_CARS,
-
+  ADD_MEDIA,
+  REMOVE_MEDIA,
 } = require ('../../constants').default
 
 const InitialState = require ('./newpostInitialState').default
@@ -47,6 +48,27 @@ export default function NewPostReducer (state=initialState, action) {
         , taggedCars = state.get ('taggedCars').delete (payload)
       return state.setIn (['taggedCars'], taggedCars, val=> taggedCars)
     }
+
+    case REMOVE_MEDIA: {
+      let {payload} = action
+        , selectedMedia = state.getIn (['selectedMedia'])
+        , newList
+      if (selectedMedia.indexOf (payload) > -1)
+        newList = selectedMedia.delete (selectedMedia.indexOf (payload))
+
+      nextState = state.setIn (['selectedMedia'], newList, val=>newList)
+      return nextState
+    }
+
+    case ADD_MEDIA: {
+      let {payload} = action
+        , selectedMedia = state.getIn (['selectedMedia'])
+        , newList = selectedMedia.push (...payload)
+
+      nextState = state.setIn (['selectedMedia'], newList, val=>newList)
+      return nextState
+    }
+
     default: {
       return state
     }

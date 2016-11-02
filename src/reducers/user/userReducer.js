@@ -28,6 +28,8 @@ const {
   LOGIN,
   LOGGED_IN,
   LOGGED_OUT,
+
+  TOGGLE_ON_START,
 } = require ('../../constants').default
 
 const InitialState = require ('./userInitialState').default
@@ -73,6 +75,12 @@ export default function userReducer (state=initialState, action) {
     case LOGGED_OUT: {
       return initialState
     }
+
+    case TOGGLE_ON_START: {
+      return state.setIn (['onStart'], false, val=>false)
+    }
+
+
     default: {
       return state;
     }

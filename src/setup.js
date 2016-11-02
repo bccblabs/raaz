@@ -17,7 +17,8 @@ import userInitialState from './reducers/user/userInitialState'
 import postInitialState from './reducers/post/postInitialState'
 import newpostInitialState from './reducers/newpost/newpostInitialState'
 
-import { Router, Scene} from 'react-native-router-flux'
+import { Router, Scene } from 'react-native-router-flux'
+
 
 import codePush from 'react-native-code-push'
 

@@ -1,7 +1,7 @@
 'use strict'
 import {Linking} from 'react-native'
 import qs from 'qs'
-
+import {fetchBuildsByUserId} from '../tuning/filterActions'
 import {Actions} from 'react-native-router-flux'
 import {
   AUTH0_FB_SIGNIN,
@@ -11,6 +11,7 @@ import {
   AUTH0_DOMAIN,
   AUTH0_CALLBACK_URL,
   API_ENDPOINT,
+
 } from '../../constants'
 
 import {
@@ -39,6 +40,7 @@ const {
   REPLY_COMMENT_ERR,
 
   TOGGLE_POST_LIKE,
+  TOGGLE_ON_START,
 
 } = require ('../../constants').default
 
@@ -58,6 +60,15 @@ export function setUserData (profileData) {
   }
 }
 
+
+function fetchUserBuilds () {
+  return (dispatch, getState) => {
+    let userId = getState().user.profileData.user_id
+    if (userId) {
+      dispatch (fetchBuildsByUserId(null, userId))
+    }
+  }
+}
 function fetchUserProfileApi (access_token) {
     let url = API_ENDPOINT + '/socialSignIn?access_token=' + access_token
 
@@ -135,4 +146,8 @@ function togglePostLike (postId) {
   }
 }
 
-module.exports = {loginWithFacebook, loginWithInstagram, logOut, setUserData};
+function toggleOnStart () {
+  return { type: TOGGLE_ON_START}
+}
+
+module.exports = {toggleOnStart, fetchUserBuilds , loginWithFacebook, loginWithInstagram, logOut, setUserData};

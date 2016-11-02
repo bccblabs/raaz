@@ -37,13 +37,23 @@ import keys from 'lodash/keys'
 export const makesSelector = (state) => (keys (state.entities.makes).sort())
 
 /* cars by specs selector */
-export const newpostTaggedCars = (state) => (state.newpost.taggedCars.toIndexedSeq().toArray())
+
+export const taggedCars = (state) => (state.newpost.taggedCars.toIndexedSeq().toArray())
+export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toArray())
 
 /* user selectors */
   export const isLikedByUser = (state) => {return true}
   export const profileSelector = (state) => (state.user.profileData)
   export const userIdSelector = (state) => (state.user.profileData.user_id)
   export const accessTokenSelector = (state) => (state.history.access_token)
+  export const myBuildsSelector = (state) => {
+    let userId = state.user.profileData.user_id
+    if (userId) return state.pagination.buildPaginationByUserId && state.pagination.buildPaginationByUserId[userId] || {}
+    return {}
+  }
+  export const onStartSelector = (state) => {
+    return state.user.onStart
+  }
 
 /* tags selectors */
   export const selectedTagsSelector = (state, props) => {

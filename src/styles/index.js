@@ -32,8 +32,14 @@ export const General = StyleSheet.create ({
   tabBarStyle: {
       backgroundColor: 'white',
       opacity        : 1
+  },
+  modalStyle: {
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: 'white', 
+    opacity: 0.9,
+    flex: 1
   }
-
 })
 
 export const Header = StyleSheet.create ({
