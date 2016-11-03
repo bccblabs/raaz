@@ -82,13 +82,21 @@ export default keyMirror ({
 
   ADD_BUILD_MEDIA: null,
   REMOVE_BUILD_MEDIA: null,
-
   SET_PRIMARY_IMAGE: null,
+  
+  SET_NAME: null,
+
+  ADD_SPEC_ENTRY: null,
+  EDIT_SPEC_ENTRY: null,
+  REMOVE_SPEC_ENTRY: null,
+
+  ADD_BY_PART_ID: null,
+  ADD_PART: null, 
+  EDIT_PART: null,
+  REMOVE_PART_BY_ID: null
 
 
-
-
-
+  
   /* Events */
   EVENTS_REQUEST: null,
   EVENTS_SUCCESS: null,

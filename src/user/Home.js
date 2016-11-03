@@ -52,6 +52,7 @@ class Home extends Component {
 
 		return (
 			<ProfileContainer
+				currentUser={true}
 				profileData={profileData}
 				listContent={list}
 				btnContent={btn}

@@ -9,6 +9,18 @@ const {
   ADD_BUILD_MEDIA,
   REMOVE_BUILD_MEDIA,
   SET_PRIMARY_IMAGE,
+
+  SET_NAME,
+
+  ADD_SPEC_ENTRY,
+  EDIT_SPEC_ENTRY,
+  REMOVE_SPEC_ENTRY,
+
+  ADD_BY_PART_ID: null,
+  ADD_PART: null, 
+  EDIT_PART: null,
+  REMOVE_PART: null
+
 } = require ('../../constants').default
 
 export function setMake (value) {
@@ -39,14 +51,13 @@ export function setSpecId (value) {
   }
 }
 
-
 export function addMedia (medialist) {
   return {
     type: ADD_BUILD_MEDIA,
     payload: medialist
   }
 }
-  
+
 export function removeMedia (path) {
   return {
     type: REMOVE_BUILD_MEDIA,
@@ -60,3 +71,61 @@ export function setPrimaryImage (path) {
 		payload: path
 	}
 }
+
+
+export function setName (value) {
+  return {
+    type: SET_NAME,
+    payload: value
+  }
+}
+  
+export function addSpecEntry (name, value) {
+  return {
+    type: ADD_SPEC_ENTRY,
+    payload: {name, value}
+  }
+}
+
+export function editSpecEntry (name, value) {
+  return {
+    type: EDIT_SPEC_ENTRY,
+    payload: {name, value}
+  }
+}
+
+export function removeSpecEntry (name) {
+  return {
+    type: REMOVE_SPEC_ENTRY,
+    payload: name
+  }
+}
+
+export function addPartByPartId (partId) {
+  return {
+    type: ADD_BY_PART_ID,
+    payload: partId
+  }
+}
+
+export function addPart (part) {
+  return {
+    type: ADD_PART,
+    payload: part
+  }
+}
+
+export function removePart (partId) {
+  return {
+    type: REMOVE_PART,
+    payload: partId
+  }
+}
+
+export function editPart (partId, partInfo) {
+  return {
+    type: EDIT_PART,
+    payload {partId, partInfo}
+  }
+}
+

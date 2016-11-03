@@ -53,10 +53,10 @@ class CategoryFilter extends Component {
 
     let buttonContent = selectedTags.size ? (
       <F8Button
-        type="secondary"
+        type="saved"
         caption="Get Sum"
         icon={require ('../common/img/tuning.png')}
-        onPress={()=>{Actions.PartsList({selectedTags, specId: filterId, title})}}
+        onPress={()=>{Actions.Parts({selectedTags, specId: filterId, title})}}
         style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}/>
       ):(
       <F8Button
@@ -67,7 +67,7 @@ class CategoryFilter extends Component {
       return (
         <View style={{flex: 1}}>
         <ScrollView>
-          <TagFilters data={this.state.categories} onPress={toggleAction} selectedTags={selectedTags}/>
+          <TagFilter data={this.state.categories} onPress={toggleAction} selectedTags={selectedTags}/>
           </ScrollView>
           {buttonContent}
         </View>

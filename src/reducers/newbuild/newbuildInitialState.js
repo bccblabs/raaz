@@ -3,12 +3,17 @@
 const {List, Map, Record} = require ('immutable')
 
 const newbuildInitiaState = Record ({
-  pickedMake: '',
-  pickedModel: '',
-  pickedSubmodel: '',
-  pickedSpecId: '',
-  selectedMedia: new (List),
-  installedParts: new (Map),
+  buildMake: '',
+  buildModel: '',
+  buildSubmodel: '',
+  buildSpecId: '',
+
+  buildYear: '',
+  buildName: '',
+  buildId: '',
+
+  buildMedia: new (List),
+  buildParts: new (Map),
 })
 
 export default newbuildInitiaState

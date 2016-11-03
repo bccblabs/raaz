@@ -549,6 +549,17 @@ bottomButton: {
       left: 8,
       width: window.width/3,
     },
+    userActionButton: {
+      margin: 4, 
+      borderRadius: 10, 
+      height: 30
+    },
+    userButtonContainer: {
+      position: 'absolute',
+      right: 8,
+      bottom: 8,
+      width: window.width/3
+    },
     partTitle: {
       fontSize: 16,
       fontWeight: '700',

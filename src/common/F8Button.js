@@ -248,7 +248,6 @@ var styles = StyleSheet.create({
   tuningCaption: {
     color: 'white',
     fontSize: 10,
-    fontWeight: 'bold',
   },
   errorCaption: {
     color: 'black',

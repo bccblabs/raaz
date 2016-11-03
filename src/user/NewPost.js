@@ -154,8 +154,8 @@ class NewPost extends Component {
   }
 
   render () {
-    const leftItem = {title: 'cancel', onPress: Actions.pop}
-        , rightItem = {title: 'preview', onPress: Actions.PreviewPost}
+    const leftItem = {icon: require ('../common/img/back.ios.png'), onPress: Actions.pop}
+        , rightItem = {icon: require ('../common/img/publish.png'), onPress: Actions.PreviewPost}
 
     let {profileData} = this.props
 

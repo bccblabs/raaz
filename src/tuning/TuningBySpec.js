@@ -175,9 +175,9 @@ class TuningBySpec extends Component {
             {tuningcomponent}
           </ParallaxScrollView>
           <F8Button
-            style={{alignSelf: 'center', marginTop: 16}}
+            style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}
             onPress={()=>{Actions.PartFilter({filterId: specId, title: model + ' ' + submodel})} }
-            type="tertiary" caption={`Search and Compare`}
+            type="saved" caption={`Search and Compare`}
             icon={require ('../common/img/tuning.png')}
           />
           </View>

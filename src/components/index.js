@@ -2,36 +2,38 @@ import CategoryFilter from './CategoryFilter'
 import CommentBtn from './CommentBtn'
 import EmptyView from './EmptyView'
 import ErrorView from './ErrorView'
+import FBLoginButton from './FBLoginButton'
 import FollowButton from './FollowButton'
+import INSLoginButton from './INSLoginButton'
 import LikeBtn from './LikeBtn'
-import TagsHeader from './TagsHeader'
-import Tag from './Tag'
-import TabIcon from './TabIcon'
-import SaveProductButton from './SaveProductButton'
+import List from './List'
+import LoadingView from './LoadingView'
 import Manufacturers from './Manufacturers'
 import MetricsGraph from './MetricsGraph'
 import PostCard from './Manufacturers'
-import FBLoginButton from './FBLoginButton'
-import INSLoginButton from './INSLoginButton'
-import LoadingView from './LoadingView'
-import List from './List'
+import SaveProductButton from './SaveProductButton'
 import SpecsHistoryHeader from './SpecsHistoryHeader'
+import Tag from './Tag'
+import TabIcon from './TabIcon'
+import TagFilter from './TagFilter'
+import TagsHeader from './TagsHeader'
 
 module.exports.CategoryFilter = CategoryFilter
 module.exports.CommentBtn = CommentBtn
 module.exports.EmptyView = EmptyView
 module.exports.ErrorView = ErrorView
+module.exports.FBLoginButton = FBLoginButton
 module.exports.FollowButton = FollowButton
+module.exports.INSLoginButton = INSLoginButton
 module.exports.LikeBtn = LikeBtn
 module.exports.List = List
-module.exports.MetricsGraph = MetricsGraph
-module.exports.Tag = Tag
-module.exports.TagsHeader = TagsHeader
-module.exports.SaveProductButton = SaveProductButton
-module.exports.Manufacturers = Manufacturers
-module.exports.PostCard = PostCard
-module.exports.FBLoginButton = FBLoginButton
-module.exports.INSLoginButton = INSLoginButton
 module.exports.LoadingView = LoadingView
-module.exports.TabIcon = TabIcon
+module.exports.Manufacturers = Manufacturers
+module.exports.MetricsGraph = MetricsGraph
+module.exports.PostCard = PostCard
+module.exports.SaveProductButton = SaveProductButton
 module.exports.SpecsHistoryHeader = SpecsHistoryHeader
+module.exports.Tag = Tag
+module.exports.TagFilter = TagFilter
+module.exports.TagsHeader = TagsHeader
+module.exports.TabIcon = TabIcon

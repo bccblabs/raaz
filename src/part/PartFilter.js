@@ -13,7 +13,7 @@ import {CategoryFilter} from '../components'
 
 import {togglePartTag} from '../reducers/tuning/filterActions'
 
-export default class BuildFilter extends Component {
+export default class PartFilter extends Component {
   render () {
     const leftItem = {icon: require ('../common/img/back.ios.png'), onPress: ()=>{Actions.pop()}}
         , {filterId, title} = this.props
@@ -23,7 +23,7 @@ export default class BuildFilter extends Component {
       <F8Button onPress={Actions.SearchTuning}
                 caption="search" type="search"
                 icon={require ('../common/img/search.png')}/>
-      <CategoryFilters filterId={filterId} title={title} toggleAction={togglePartTag}/>
+      <CategoryFilter filterId={filterId} title={title} toggleAction={togglePartTag}/>
       </View>
     )
   }
