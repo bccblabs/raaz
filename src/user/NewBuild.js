@@ -16,7 +16,12 @@ const mapStateToProps = (state) => {
 		buildId: buildId (state),
 
 		buildMedia: buildMedia (state),
-		buildParts: buildParts (state)
+		buildParts: buildParts (state),
+
+		specEntries: specEntries (state),
+
+		parts: partEntries (state),
+		removePart: removePart ()
 	}
 }
 
@@ -25,11 +30,18 @@ const mapDispatchToProps = (dispatch) => {
 		addMedia: (mediaList) => dispatch (addMedia (mediaList)),
 		removeMedia: (path) => dispatch (removeMedia (path)),
 		setPrimaryImage: (path) => dispatch (setPrimaryImage (path)),
+
+		addSpecEntry: (name, value) => dispatch (addSpecEntry (name, value)),
+		removeSpecEntry: (name, value) => dispatch (removeSpecEntry (name, value)),
+
+		addPartByPartId: (partId) => dispatch (addPartByPartId (partId)),
+		addPart (part) => ()
 	}
 }
 
 class NewBuild extends Component {
 	render() {
+		
 		return (<View/>)
 	}
 }

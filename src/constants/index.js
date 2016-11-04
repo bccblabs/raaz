@@ -89,8 +89,8 @@ export default keyMirror ({
   ADD_SPEC_ENTRY: null,
   EDIT_SPEC_ENTRY: null,
   REMOVE_SPEC_ENTRY: null,
+  SET_SPEC: null,
 
-  ADD_BY_PART_ID: null,
   ADD_PART: null, 
   EDIT_PART: null,
   REMOVE_PART_BY_ID: null

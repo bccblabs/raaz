@@ -15,11 +15,11 @@ const {
   ADD_SPEC_ENTRY,
   EDIT_SPEC_ENTRY,
   REMOVE_SPEC_ENTRY,
+  SET_SPEC,
 
-  ADD_BY_PART_ID: null,
-  ADD_PART: null, 
-  EDIT_PART: null,
-  REMOVE_PART: null
+  ADD_PART, 
+  EDIT_PART,
+  REMOVE_PART
 
 } = require ('../../constants').default
 
@@ -122,10 +122,24 @@ export function removePart (partId) {
   }
 }
 
-export function editPart (partId, partInfo) {
+export function setSpecs (specInfo) {
+  return {
+    type: SET_SPEC,
+    payload: specInfo,
+  }
+}
+
+export function editPart (part) {
   return {
     type: EDIT_PART,
-    payload {partId, partInfo}
+    payload {part}
+  }
+}
+
+export function removePart (partId) {
+  return {
+    type: REMOVE_PART,
+    payload: partId
   }
 }
 
