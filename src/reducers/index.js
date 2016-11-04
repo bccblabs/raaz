@@ -1,4 +1,6 @@
 'use strict'
+import {combineReducers} from 'redux'
+import assign from 'lodash/assign'
 
 import car from './car/filterReducer'
 import tuning from './tuning/filterReducer'
@@ -7,10 +9,9 @@ import history from './history/historyReducer'
 import post from './post/postReducer'
 import user from './user/userReducer'
 import newpost from './newpost/newpostReducer'
-import newbuild from './newbuild/newbuildReducer'
-import assign from 'lodash/assign'
+import newbuild from './build/buildReducer'
+import newpart from './part/partReducer'
 
-import {combineReducers} from 'redux'
 const {
   BUILDS_REQUEST,
   BUILDS_SUCCESS,
@@ -95,7 +96,8 @@ let initState = {
   posts: {},
   specsDetails: {},
   newpost: {},
-  newbuild: {}
+  newbuild: {},
+  newpart: {},
 }
 
 function entities(state=initState, action) {
@@ -217,6 +219,7 @@ const rootReducer = combineReducers ({
   post,
   newpost,
   newbuild,
+  newpart,
 })
 
 

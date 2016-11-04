@@ -25,10 +25,6 @@ export default keyMirror ({
 
 
 
-
-
-
-
   /* Posts */
   POSTS_REQUEST: null,
   POSTS_SUCCESS: null,
@@ -41,10 +37,6 @@ export default keyMirror ({
   POSTS_REQUEST_BUILD: null,
   POSTS_SUCCESS_BUILD: null,
   POSTS_ERROR_BUILD: null,
-
-
-
-
 
 
 
@@ -67,9 +59,9 @@ export default keyMirror ({
 
   TOGGLE_ON_START: null,
 
-
-
-
+  CREATE_POST_REQUEST: null,
+  CREATE_POST_SUCCESS: null,
+  CREATE_POST_ERROR: null,
 
 
 
@@ -82,21 +74,45 @@ export default keyMirror ({
 
   ADD_BUILD_MEDIA: null,
   REMOVE_BUILD_MEDIA: null,
-  SET_PRIMARY_IMAGE: null,
-  
-  SET_NAME: null,
+  SET_BUILD_IMAGE: null,
+  SET_BUILD_NAME: null,
 
-  ADD_SPEC_ENTRY: null,
-  EDIT_SPEC_ENTRY: null,
-  REMOVE_SPEC_ENTRY: null,
-  SET_SPEC: null,
+  ADD_BUILD_SPEC: null,
+  EDIT_BUILD_SPEC: null,
+  REMOVE_BUILD_SPEC: null,
+  SET_BUILD_SPEC: null,
 
   ADD_PART: null, 
   EDIT_PART: null,
-  REMOVE_PART_BY_ID: null
+  REMOVE_PART: null,
+
+  CREATE_BUILD_REQUEST: null,
+  CREATE_BUILD_SUCCESS: null,
+  CREATE_BUILD_ERROR: null,
 
 
-  
+
+
+  /* user custom part */
+  ADD_PART_MEDIA: null,
+  REMOVE_PART_MEDIA: null,
+  SET_PART_IMAGE: null,
+  SET_PART_NAME: null,
+
+  ADD_PART_SPEC: null,
+  EDIT_PART_SPEC: null,
+  REMOVE_PART_SPEC: null,
+  SET_PART_SPEC: null, 
+
+  PART_TAG_SPECID: null,
+  PART_REMOVE_SPECID: null,
+
+  CREATE_PART_REQUEST: null,
+  CREATE_PART_SUCCESS: null,
+  CREATE_PART_ERROR: null,
+
+
+
   /* Events */
   EVENTS_REQUEST: null,
   EVENTS_SUCCESS: null,
@@ -106,11 +122,6 @@ export default keyMirror ({
   SET_EVENTS_FILTER_HASH: null,
   SET_EVENTS_FILTER_STATE: null,
   TOGGLE_EVENTS_FILTER_LIST_VALUE: null,
-
-
-
-
-
 
 
 
@@ -197,12 +208,6 @@ export default keyMirror ({
 
 
 
-
-
-
-
-
-
   /* History */
 
   ADD_TO_SAVED_SPECS: null,
@@ -210,15 +215,6 @@ export default keyMirror ({
 
   SET_ACCESS_TOKEN: null,
   LOAD_HISTORY: null,
-
-
-
-
-
-
-
-
-
 
 
 

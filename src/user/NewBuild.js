@@ -15,12 +15,15 @@ import {
 } from '../selectors'
 
 import {
-	addMedia, 
-	removeMedia, 
-	setPrimaryImage,
-
+	addBuildMedia, 
+	removeBuildMedia, 
+	setBuildImage,
+	setBuildName,
+	addBuildSpecEntry,
+	editBuildSpecEntry,
+	removeBuildSpecEntry,
 	createBuild, 
-} from '../reducers/newbuild/newbuildActions'
+} from '../reducers/build/buildActions'
 
 const mapStateToProps = (state) => {
 	return {

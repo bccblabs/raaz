@@ -18,8 +18,8 @@ import tuningFilterInitialState from './reducers/tuning/filterInitialState'
 import userInitialState from './reducers/user/userInitialState'
 import postInitialState from './reducers/post/postInitialState'
 import newpostInitialState from './reducers/newpost/newpostInitialState'
-import newbuildInitialState from './reducers/newbuild/newbuildInitialState'
-
+import newbuildInitialState from './reducers/build/buildInitialState'
+import newpartInitialState from './reducers/part/partInitialState'
 
 
 const RouterWithRedux = connect () (Router)
@@ -33,6 +33,7 @@ function getInitialState () {
     post: new postInitialState,
     newpost: new newpostInitialState,
     newbuild: new newbuildInitialState,
+    newpart: new newpartInitialState,
   }
   return _initState
 }
