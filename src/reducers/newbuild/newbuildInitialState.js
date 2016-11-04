@@ -6,18 +6,14 @@ const newbuildInitiaState = Record ({
   buildMake: '',
   buildModel: '',
   buildSubmodel: '',
-  buildSpecId: '',
 
-  buildYear: '',
+  buildSpecId: '',
   buildName: '',
   buildId: '',
 
   buildMedia: new (List),
-  primaryImage: '',
-
-  parts: new (Map),
-
-  specEntries: new (Map),
+  buildParts: new (Map),
+  buildSpecs: new (Map),
 })
 
 export default newbuildInitiaState
