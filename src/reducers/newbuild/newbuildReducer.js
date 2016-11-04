@@ -59,7 +59,6 @@ export default function NewBuildReducer (state=initialState, action) {
 	        , newList = buildMedia.push (...payload)
 
 	      nextState = state.setIn (['buildMedia'], newList, val=>newList)
-	      					.setIn (['primaryImage'], newList.first(), val=>newList.first())
 	      return nextState
 	    }
 
@@ -75,7 +74,10 @@ export default function NewBuildReducer (state=initialState, action) {
 	    }
 
 	    case SET_PRIMARY_IMAGE: {
-	    	return state.setIn (['primaryImage'], action.payload, val=>action.payload)
+	    	let {path, idx} = action.payload
+	    		, media = state.getIn (['buildMedia'])
+	    		, newList = media.slice (0, idx).concat (media.slice(idx+1)).insert (0, path)
+	    	return state.setIn (['buildMedia'], newList, val=>newList)
 	    }
 	
 		case SET_NAME: {
@@ -84,37 +86,37 @@ export default function NewBuildReducer (state=initialState, action) {
 
 		case ADD_SPEC_ENTRY: {
 			let {name, value} = action.payload
-			return state.setIn (['specEntries', name], value, val=>value)
+			return state.setIn (['buildSpecs', name], value, val=>value)
 		}		
 
 		case EDIT_SPEC_ENTRY:  {
 			let {name, value} = action.payload
-			return state.setIn (['specEntries', name], value, val=>value)
+			return state.setIn (['buildSpecs', name], value, val=>value)
 		}
 
 		case REMOVE_SPEC_ENTRY: {
-			return state.deleteIn (['specEntries', action.payload])
+			return state.deleteIn (['buildSpecs', action.payload])
 		}
 
 		case SET_SPEC: {
 			let {specInfo} = action.payload
 				, specMap = Map (specInfo).deleteIn (['specId'])
-				, specs = state.getIn (['specEntries']).merge (specMap)
-			return state.setIn (['specEntries'], specs, val=>specs)
+				, specs = state.getIn (['buildSpecs']).merge (specMap)
+			return state.setIn (['buildSpecs'], specs, val=>specs)
 		}
 
 		case ADD_PART: {
 			let {part} = action.payload
-			return state.setIn (['parts', part.partId], part, val=>part)
+			return state.setIn (['buildParts', part.partId], part, val=>part)
 		}
 
 		case EDIT_PART: {
 			let {part} = action.payload
-			return state.setIn (['parts', part.partId], part, val=>part)
+			return state.setIn (['buildParts', part.partId], part, val=>part)
 		}
 
 		case REMOVE_PART: {
-			return state.deleteIn (['parts', action.payload])
+			return state.deleteIn (['buildParts', action.payload])
 		}
 
 	    default: {

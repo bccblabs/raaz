@@ -1,5 +1,5 @@
 'use strict'
-
+import {CALL_API, Schemas} from '../../middlewares/api'
 const {
   PICK_MAKE,
   PICK_MODEL,
@@ -20,6 +20,10 @@ const {
   ADD_PART, 
   EDIT_PART,
   REMOVE_PART
+
+  CREATE_BUILD_REQUEST,
+  CREATE_BUILD_SUCCESS,
+  CREATE_BUILD_ERROR,
 
 } = require ('../../constants').default
 
@@ -65,10 +69,10 @@ export function removeMedia (path) {
   }
 }
 
-export function setPrimaryImage (path) {
+export function setPrimaryImage (path, idx) {
 	return {
 		type: SET_PRIMARY_IMAGE,
-		payload: path
+		payload: {path, idx}
 	}
 }
 
@@ -143,3 +147,14 @@ export function removePart (partId) {
   }
 }
 
+export function createBuild (buildData, userId) {
+  let endpoint = '/build/create',
+  return {
+    userId,
+    [CALL_API]: {
+      types: [CREATE_BUILD_REQUEST, CREATE_BUILD_SUCCESS, CREATE_BUILD_ERROR],
+      endpoint,
+      schema: Schemas.BUILD_ARRAY,
+    }
+  }
+}

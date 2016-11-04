@@ -4,8 +4,23 @@ import React, {Component} from 'react'
 import {View} from 'react-native'
 import {connect} from 'react-redux'
 
-import {buildSpecId, buildYear, buildName, buildId, buildMedia, buildParts} from '../selectors'
-import {addMedia, removeMedia, setPrimaryImage} from '../reducers/newbuild/newbuildActions'
+import {
+	buildSpecId, 
+	buildName, 
+	buildId, 
+
+	buildMedia, 
+	buildParts,
+	buildSpecs,
+} from '../selectors'
+
+import {
+	addMedia, 
+	removeMedia, 
+	setPrimaryImage,
+
+	createBuild, 
+} from '../reducers/newbuild/newbuildActions'
 
 const mapStateToProps = (state) => {
 	return {
@@ -40,6 +55,15 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class NewBuild extends Component {
+
+	constructor (props) {
+		super (props)
+		this.createBuild = this.createBuild.bind (this)
+	}
+
+	async createBuild () {
+
+	}
 	render() {
 		
 		return (<View/>)
