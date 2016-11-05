@@ -137,6 +137,8 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
     }
   )
 
+  export const newBuildSelector = (state) => (state.newbuild.toJS())
+
 
 /* history selector */
   export const savedSpecsSelector = (state) => (state.history.specs.toIndexedSeq().toArray())

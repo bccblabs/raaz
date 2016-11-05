@@ -45,7 +45,6 @@ const {
 } = require ('../../constants').default
 
 async function handleLinking (event) {
-  console.log ('handleLinking,', event)
   let {url} = event,
       params = url.replace (AUTH0_CALLBACK_URL,'').split ('#')[1],
       {access_token} = qs.parse (params),

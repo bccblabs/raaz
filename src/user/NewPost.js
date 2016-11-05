@@ -14,18 +14,18 @@ import {
 
 import {connect} from 'react-redux'
 import {createSelector} from 'reselect'
-import { Actions } from 'react-native-router-flux'
+import {Actions} from 'react-native-router-flux'
 
 
 import ImagePicker from 'react-native-image-crop-picker'
 
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
-import { Heading3 } from '../common/F8Text'
+import {Heading3} from '../common/F8Text'
 
 import {FilterCard} from '../components'
 
-import { NewPostStyles, General, PostStyles, Titles } from '../styles'
+import {NewPostStyles, General, PostStyles, Titles} from '../styles'
 import {ImageOptions, VideoOptions} from '../constants'
 
 import {taggedCars, profileSelector, selectedMediaSelector} from '../selectors'
@@ -184,10 +184,10 @@ class NewPost extends Component {
           caption="Choose From Library" 
           style={NewPostStyles.bottomButtonStyle}/>
         <F8Button 
-          icon={require ('../common/img/panovideo.png')} 
+          icon={require ('../common/img/camera.png')} 
           onPress={this.takePhoto} 
           type="tertiary" 
-          caption="Take Photo Using Camera" 
+          caption="Camera" 
           style={NewPostStyles.bottomButtonStyle}/>
         </View>
       </View>

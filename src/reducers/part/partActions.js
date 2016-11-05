@@ -22,3 +22,48 @@ const {
 } = require ('../../constants').default
 
 
+
+export function addPartMedia (medialist) {
+  return {
+    type: ADD_PART_MEDIA,
+    payload: medialist
+  }
+}
+export function removePartMedia (path) {
+  return {
+    type: REMOVE_PART_MEDIA,
+    payload: path
+  }
+}
+export function setPartImage (path, idx) {
+	return {
+		type: SET_PART_IMAGE,
+		payload: {path, idx}
+	}
+}
+export function setPartName (value) {
+  return {
+    type: SET_PART_NAME,
+    payload: value
+  }
+}
+
+
+export function addPartSpecEntry (name, value) {
+  return {
+    type: ADD_PART_SPEC,
+    payload: {name, value}
+  }
+}
+export function editPartSpecEntry (name, value) {
+  return {
+    type: EDIT_PART_SPEC,
+    payload: {name, value}
+  }
+}
+export function removePartSpecEntry (name) {
+  return {
+    type: REMOVE_PART_SPEC,
+    payload: name
+  }
+}

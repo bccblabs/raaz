@@ -20,5 +20,5 @@ const initialState = new InitialState
 export default function PartReducer (state=initialState, action) {
 	if (!(state instanceof InitialState)) return state.merge (initialState)
 	let nextState
-
+	return state
 }
