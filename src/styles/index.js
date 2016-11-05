@@ -416,11 +416,9 @@ export const PostStyles = StyleSheet.create({
     color: 'black',
     fontWeight: '500',
   },
-
   userPhotoStyle: {
-    height: 40,
-    width: 40,
-    marginHorizontal: 8,
+    height: 60,
+    width: 60,
     resizeMode: 'cover'
   },
 
@@ -445,15 +443,16 @@ export const PostStyles = StyleSheet.create({
   manufacturerLogo: {
     margin: 4,
     flex: 1,
+    height: 40,
+    width: 80,
     resizeMode: 'contain',
   },
   manufacturerContainer: {
     position: 'absolute',
     backgroundColor: 'black',
-    height: 40,
-    width: 80,
-    bottom: 8,
-    left: 8,
+    flex: 1,
+    top: 8,
+    right: 8,
   },
   postsHorizontal: {
     width: window.width,
@@ -482,15 +481,17 @@ export const PostStyles = StyleSheet.create({
 
   primaryTitle: {
     flex: 1,
-    position: 'absolute',
-    top: 8,
-    width: window.width/2,
-    left: 8,
     fontSize: 20,
     fontWeight: '700',
     backgroundColor: 'white',
     padding: 8,
     paddingHorizontal: 12,
+    marginVertical: 8,
+  },
+  infoContainer: {
+    position: 'absolute',
+    bottom: 8,
+    left: 8,
   },
 
 })
@@ -513,39 +514,37 @@ export const CarmeraStyles = StyleSheet.create ({
 })
 
 export const DetailStyles = StyleSheet.create ({
-  infoContainer: {
-    flex: -1,
-    position: 'absolute',
-    right: 8,
-    top: 88,
-    alignItems: 'center',
-  },
-  userPhotoStyle: {
-    height: 60,
-    width: 60, 
-    resizeMode: 'cover',
-  },
-  bottomButton: {
-    borderWidth: 2,
-    borderColor: 'white',
-  },
-  VRImageHolder : {
-    marginTop: 64,
-    width: window.width,
-    height: 300+64,
-    alignSelf: 'center'
-  },
-    primaryTitle: {
+    infoContainer: {
       flex: 1,
       position: 'absolute',
       bottom: 8,
-      width: window.width/4,
       left: 8,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    userPhotoStyle: {
+      height: 60,
+      width: 60, 
+      resizeMode: 'cover',
+      marginVertical: 8,
+    },
+    primaryTitle: {
+      flex: 1,
       fontSize: 20,
       fontWeight: '700',
       backgroundColor: 'white',
       padding: 8,
       paddingHorizontal: 12,
+    },
+    bottomButton: {
+      borderWidth: 2,
+      borderColor: 'white',
+    },
+    VRImageHolder : {
+      marginTop: 64,
+      width: window.width,
+      height: 300+64,
+      alignSelf: 'center'
     },
     foregroundContainer: {
       marginTop: 68,
