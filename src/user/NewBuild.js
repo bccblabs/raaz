@@ -183,13 +183,11 @@ class NewBuild extends Component {
 				    <F8Button 
 				    	icon={require ('../common/img/photo.png')} 
 		    			type="tertiary" 
-		    			style={{flex: -1}} 
 		    			onPress={this.pickMedia} 
 		    			caption="Library"/>
 				    <F8Button 
 				    	icon={require ('../common/img/camera.png')} 
 		    			type="tertiary" 
-		    			style={{flex: -1}} 
 		    			onPress={this.takePhoto} 
 		    			caption="Camera"/>
 		    		</View>

@@ -513,11 +513,22 @@ export const CarmeraStyles = StyleSheet.create ({
 })
 
 export const DetailStyles = StyleSheet.create ({
-bottomButton: {
-
+  infoContainer: {
+    flex: -1,
+    position: 'absolute',
+    right: 8,
+    top: 88,
+    alignItems: 'center',
+  },
+  userPhotoStyle: {
+    height: 60,
+    width: 60, 
+    resizeMode: 'cover',
+  },
+  bottomButton: {
     borderWidth: 2,
     borderColor: 'white',
-},
+  },
   VRImageHolder : {
     marginTop: 64,
     width: window.width,
@@ -547,12 +558,12 @@ bottomButton: {
       position: 'absolute',
       bottom: 8,
       left: 8,
-      width: window.width/3,
+      width: window.width/4,
     },
     userActionButton: {
       margin: 4, 
       borderRadius: 10, 
-      height: 30
+      height: 30,
     },
     userButtonContainer: {
       position: 'absolute',

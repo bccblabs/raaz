@@ -19,31 +19,20 @@ export default class ProfileContainer extends Component {
   render () {
     let {profileData, listContent, btnContent, headerContent, currentUser} = this.props
       , {picture, name, email, phone, facebook, instagram} = profileData
-      , topbtn = currentUser?(
+      , topbtn = (
           <F8Button 
             icon={require ('../common/img/car.png')} 
             onPress={Actions.NewBuild}
-            style={[DetailStyles.userActionButton, {backgroundColor: 'black'}]} 
-            type="tuning" caption="New Build"/>
-        ):(
-          <F8Button 
-            icon={require ('../common/img/car.png')} 
-            style={[DetailStyles.userActionButton, {backgroundColor: 'black'}]} 
-            type="tuning" caption="Builds"/>
+            style={{flex: 1}}            
+            type="search" caption="New Build"/>
         )
-      , btmbtn = currentUser?(
+      , btmbtn = (
           <F8Button 
             icon={require ('../common/img/comment.png')} 
             onPress={Actions.NewPost}
-            style={[DetailStyles.userActionButton, {backgroundColor: 'black'}]} 
-            type="tuning" 
+            type="search" 
+            style={{flex: 1}}            
             caption="New Post"/>        
-        ):(
-          <F8Button 
-            icon={require ('../common/img/comment.png')} 
-            style={[DetailStyles.userActionButton, {backgroundColor: 'black'}]} 
-            type="tuning" 
-            caption="Message"/>        
         )
       , foregroundContent = (
         <View style={{flex: 1}}>
@@ -52,8 +41,6 @@ export default class ProfileContainer extends Component {
             <Text style={DetailStyles.lightTitle}>{name}</Text>
           </View>
           <View style={DetailStyles.userButtonContainer}>
-          {topbtn}
-          {btmbtn}
           </View>
         </View>
       )
@@ -72,6 +59,13 @@ export default class ProfileContainer extends Component {
         renderBackground={() => <Image source={require ('../common/img/2jz.png')} style={DetailStyles.VRImageHolder}/>}
         >
         <View style={{flex: 1, margin:8, alignItems: 'center'}}>
+        {currentUser?(
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
+          {topbtn}
+          {btmbtn}
+          </View>
+          ):(<View/>)
+        }
         {listContent}
         </View>
       </ParallaxScrollView>

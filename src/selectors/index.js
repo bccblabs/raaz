@@ -172,5 +172,5 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
   )
 
   export const isFollowing = (state, props) => {
-    return true
+    return false
   }
