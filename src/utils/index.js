@@ -154,7 +154,6 @@ export const Requests = {
 
   fetchBuildDetails (buildId) {
     let url = API_ENDPOINT + '/build/details/' + buildId
-    console.log (url)
     return fetchWithTimeout (REQ_TIMEOUT, url, GET_OPTS)
           .then ((resp) => {
             return resp.json()

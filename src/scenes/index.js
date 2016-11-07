@@ -29,8 +29,8 @@ export default scenes = Actions.create (
     <Scene key="PartsByManufacturer" component={PartsByManufacturer} hideNavBar/>
 
     <Scene key="Makes" component={Makes} title="Makes" hideNavBar/>
-    <Scene key="Models" component={Models} title="Models" hideNavBar/>
-    <Scene key="Submodels" component={Submodels} title="Trims" hideNavBar/>
+    <Scene key="Models" type={ActionConst.REPLACE} component={Models} title="Models" hideNavBar/>
+    <Scene key="Submodels" type={ActionConst.REPLACE} component={Submodels} title="Trims" hideNavBar/>
     <Scene key="Specs" type={ActionConst.REPLACE} component={Specs} title="Specs" hideNavBar/>
 
     <Scene key="NewPost" component={NewPost} hideNavBar/>

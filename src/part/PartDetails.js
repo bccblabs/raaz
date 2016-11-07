@@ -37,7 +37,6 @@ export default class PartDetails extends Component {
     try {
       let {partId, specId} = this.props.data
         , data = await Requests.fetchPartDetails (partId, specId)
-      console.log('PartDetails',{data})
       this.setState ({
         hasError: false,
         isLoading: false,

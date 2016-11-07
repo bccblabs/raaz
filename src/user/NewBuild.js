@@ -74,6 +74,10 @@ class NewBuild extends Component {
 		this.renderImages = this.renderImages.bind (this)
 	}
 
+	componentWillReceiveProps(nextProps) {
+		this.setState ({build: nextProps.build})
+	}
+
 	pickMedia () {
 		ImagePicker.openPicker({
 		  width: 300,
@@ -104,7 +108,7 @@ class NewBuild extends Component {
 			<ScrollView
 				horizontal={true}
 				showsVerticalScrollIndicator={false}
-				style={{margin: 8}}
+				style={{margin: 8, flex: 1}}
 				showsHorizontalScrollIndicator={false}>
 				{
 				  buildMedia.map ((img, idx)=>{
@@ -112,9 +116,11 @@ class NewBuild extends Component {
 				    <View key={idx} style={{marginLeft: 4}}>
 				    <TouchableWithoutFeedback
 				      onPress={()=>{this.props.removeBuildMedia (img)}}>
-				      <Image source={require ('../common/img/x.png')} style={{height:16, width: 16,alignSelf: 'flex-end'}}/>
+				      <Image 
+				      	source={require ('../common/img/x.png')} 
+				      	style={{height:16, width: 16,alignSelf: 'flex-end'}}/>
 				    </TouchableWithoutFeedback>
-				    <Image style={{width: 100, height: 100, marginHorizontal: 8}} source={{uri: img}}/>
+				    <Image style={{width: 100, height: 100}} source={{uri: img}}/>
 				    </View>
 				    )
 				})
@@ -125,7 +131,6 @@ class NewBuild extends Component {
 	}
 
 	render() {
-		console.log ('state', this.state, 'props', this.props)
 		let {
 			addBuildMedia,
 			removeBuildMedia,
@@ -147,7 +152,7 @@ class NewBuild extends Component {
 			buildMedia,
 			buildParts,
 			buildSpecs,
-		} = this.state
+		} = this.state.build
 
 		, leftItem = {
 			icon: require ('../common/img/back.ios.png'),
@@ -159,7 +164,7 @@ class NewBuild extends Component {
 		}
 		,	header = (<F8Header foreground="dark" leftItem={leftItem} rightItem={rightItem} title="New Build"/>)
 
-		,	mainImage = (buildMedia && buildMedia[0].length)?{uri: buildMedia[0]}:require ('../common/img/2jz.png')
+		,	mainImage = (buildMedia && buildMedia[0])?{uri: buildMedia[0]}:require ('../common/img/2jz.png')
 		,	foregroundContent
 		,	specsContent
 		,	partsContent
@@ -201,6 +206,7 @@ class NewBuild extends Component {
 			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
 				    <F8Button 
 				    	icon={require ('../common/img/car.png')} 
+				    	onPress={()=>Actions.Makes({build: true})}
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			caption="Pick Car"/>

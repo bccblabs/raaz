@@ -18,6 +18,12 @@ import TabIcon from './TabIcon'
 import TagFilter from './TagFilter'
 import TagsHeader from './TagsHeader'
 
+import MakesList from './Makes'
+import ModelsList from './Models'
+import SubmodelsList from './Submodels'
+import SpecsList from './Specs'
+
+
 module.exports.CategoryFilter = CategoryFilter
 module.exports.CommentBtn = CommentBtn
 module.exports.EmptyView = EmptyView
@@ -37,3 +43,8 @@ module.exports.Tag = Tag
 module.exports.TagFilter = TagFilter
 module.exports.TagsHeader = TagsHeader
 module.exports.TabIcon = TabIcon
+
+module.exports.MakesList = MakesList
+module.exports.ModelsList = ModelsList
+module.exports.SubmodelsList = SubmodelsList
+module.exports.SpecsList = SpecsList

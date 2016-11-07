@@ -21,7 +21,6 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchData: (nextPageUrl) => {
-      console.log('fetch parts', props)
       dispatch (fetchParts (nextPageUrl, props.specId, props.selectedTags))
     },
   }

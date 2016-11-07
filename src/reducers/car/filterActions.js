@@ -81,7 +81,6 @@ export function fetchModels (makeName) {
 
 
 export function fetchSubmodels (makeName, modelName) {
-  console.log (makeName, modelName, 'fetch')
   return {
     [CALL_API]: {
       types: [SUBMODEL_REQUEST, SUBMODEL_SUCCESS, SUBMODEL_ERROR],

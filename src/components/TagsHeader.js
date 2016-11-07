@@ -26,7 +26,6 @@ export default class TagsHeader extends Component {
   }
   render () {
 
-    console.log (this.state)
     let {selectedTags, tagAction, color} = this.props
       , {tags} = this.state
     return (
@@ -40,7 +39,6 @@ export default class TagsHeader extends Component {
           {
             tags && tags.map ((tag, idx)=> {
               if (tag.specId) {
-                console.log ('tag', tag)
                 return (
                   <Tag touchEnabled={true} title={tag.make + ' ' + tag.model + ' ' + tag.submodel}
                        key={idx} selected={true} action={tagAction ({specId: tag.specId})}

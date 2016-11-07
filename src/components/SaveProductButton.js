@@ -22,7 +22,6 @@ const mapDispatchToProps = (dispatch) => {
 class SaveProductButton extends Component {
   render () {
     let {isSaved, part, toggleSaveProduct} = this.props
-    console.log (part)
     if (isSaved) {
       return (
         <F8Button

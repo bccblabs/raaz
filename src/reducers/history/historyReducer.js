@@ -58,7 +58,6 @@ export default function historyReducer (state=initialState, action) {
             let value = history[key]
               , valueMap = new (Map)
             keys (value).forEach ((keyy)=> {valueMap = valueMap.set (keyy, value[keyy])})
-            console.log (valueMap)
             state = state.set (key, valueMap)
           }
         }

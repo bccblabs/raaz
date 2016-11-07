@@ -65,7 +65,6 @@ class Tuning extends Component {
     let {myBuilds, onStart} = nextProps
       , noBuilds = (myBuilds && myBuilds.ids && myBuilds.ids.length == 0)?true:false
       , showModal = noBuilds && onStart
-    console.log ('receiveprops, ', {noBuilds}, {showModal}, {onStart})
     this.setState ({showModal})
   }
 
@@ -86,7 +85,6 @@ class Tuning extends Component {
 
     , {showModal} = this.state
 
-    console.log ('showModal=', showModal)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
         <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
