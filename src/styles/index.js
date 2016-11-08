@@ -80,9 +80,7 @@ export const Specs = StyleSheet.create ({
     flex: -1,
     fontSize: 10,
     color: 'black',
-    padding: 4,
-    paddingTop: 2,
-    paddingBottom: 0,
+    margin: 4
   },
   subtitle1: {
     flex: -1,

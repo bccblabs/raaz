@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { addSpecToHistory } from '../reducers/history/historyActions'
 import { setSpecId } from '../reducers/car/filterActions'
 import { SpecsList } from '../components'
+import { setBuildSpecs } from '../reducers/build/buildActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -36,8 +37,10 @@ class PickSpecs extends Component {
       , onSelectSpec
 
     if (build) {
-      onSelectSpec = (option, buildId) => {
+      onSelectSpec = (option, specId) => {
         Actions.pop ()
+        let car = Object.assign (option, {make: selectedMake, model: selectedModel, submodel: selectedSubmodel, specId: specId})
+        this.props.dispatch (setBuildSpecs (option))
       }
     } else {
       onSelectSpec = (option, specId) => {

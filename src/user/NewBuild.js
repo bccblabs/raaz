@@ -13,7 +13,7 @@ import {Actions} from 'react-native-router-flux'
 
 import ImagePicker from 'react-native-image-crop-picker'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import keys from 'lodash/keys'
+import {keys, isEqual} from 'lodash'
 
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
@@ -21,7 +21,7 @@ import F8Button from '../common/F8Button'
 import Part from '../part/Part'
 import {Heading3, Paragraph} from '../common/F8Text'
 
-import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles} from '../styles'
+import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, Specs} from '../styles'
 import {LoadingView, ErrorView, MetricsGraph} from '../components'
 
 import {
@@ -72,10 +72,12 @@ class NewBuild extends Component {
 		this.pickMedia = this.pickMedia.bind (this)
 		this.takePhoto = this.takePhoto.bind (this)
 		this.renderImages = this.renderImages.bind (this)
+		this.renderSpecs = this.renderSpecs.bind (this)
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState ({build: nextProps.build})
+		if (!isEqual (nextProps.build, this.props.build))
+			this.setState ({build: nextProps.build})
 	}
 
 	pickMedia () {
@@ -130,6 +132,27 @@ class NewBuild extends Component {
 		  :(<View/>)
 	}
 
+	renderSpecs () {
+		let {buildSpecs} = this.state.build
+
+		if (keys(buildSpecs).length) {
+	        let {
+	            cylinders, compressor, configuration,
+	            transmissionSpeed, transmission, drivenWheels, size,
+	          } = buildSpecs
+			, dataArray = keys (buildSpecs).filter((key)=>Number.isInteger (buildSpecs[key]))
+											.map ((key)=>{return {name: key, value: buildSpecs[key]}})
+	        return (
+		          <View style={DetailStyles.descriptionContainer}>
+		        	  {size && cylinders && compressor?(<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>):(<View/>)}
+			          {drivenWheels?(<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>):(<View/>)}
+		        	  <MetricsGraph onDoneEdit={this.props.editBuildSpecEntry} editable={true} data={[{entries:dataArray}]}/>
+		          </View>
+	          )
+		}
+		else return (<View/>)
+	}
+
 	render() {
 		let {
 			addBuildMedia,
@@ -166,9 +189,10 @@ class NewBuild extends Component {
 
 		,	mainImage = (buildMedia && buildMedia[0])?{uri: buildMedia[0]}:require ('../common/img/2jz.png')
 		,	foregroundContent
-		,	specsContent
+		,	specsContent = this.renderSpecs()
 		,	partsContent
 		,	images = this.renderImages ()
+		console.log (buildSpecs)
 
 		return (
 		<View style={{flex: 1}}>
@@ -182,7 +206,7 @@ class NewBuild extends Component {
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={mainImage} style={DetailStyles.VRImageHolder}/>}
           >
-	        <View style={{margin:8, alignItems: 'center'}}>
+	        <View style={{margin:8, alignItems: 'center', flex: 1}}>
 	        	{images}
 			    <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
 				    <F8Button 
@@ -214,7 +238,7 @@ class NewBuild extends Component {
 				    	icon={require ('../common/img/specs.png')} 
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
-		    			onPress={this.takePhoto} 
+		    			onPress={()=>Actions.EditSpecs ({onDoneEdit: this.props.addBuildSpecEntry, newEntry: true})} 
 		    			caption="Add Specs Entry"/>
 	    		</View>
 				<Paragraph style={Titles.filterSectionTitle}>{"PARTS"}</Paragraph>          

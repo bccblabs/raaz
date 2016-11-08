@@ -67,11 +67,6 @@ export default keyMirror ({
 
 
   /* user new build */
-  PICK_MAKE: null,
-  PICK_MODEL: null,
-  PICK_SUBMODEL: null,
-  PICK_SPECID: null,
-
   ADD_BUILD_MEDIA: null,
   REMOVE_BUILD_MEDIA: null,
   SET_BUILD_IMAGE: null,

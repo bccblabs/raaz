@@ -95,8 +95,11 @@ export const Utils = {
         return 'Rear Spring Stiffness Rate (%)'
       case 'frontSpringRateStiffness':
         return 'Front Spring Stiffness Rate (%)'
+      case 'size':
+        return 'Engine Size (Liter)'
+      case 'cylinders': 
+        return 'Engine Cylinders'
       default:
-        console.error ('key not defined', name)
         return name
     }
   },

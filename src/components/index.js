@@ -2,6 +2,7 @@ import CategoryFilter from './CategoryFilter'
 import CommentBtn from './CommentBtn'
 import EmptyView from './EmptyView'
 import ErrorView from './ErrorView'
+import EditSpecs from './EditSpecs'
 import FBLoginButton from './FBLoginButton'
 import FollowButton from './FollowButton'
 import INSLoginButton from './INSLoginButton'
@@ -26,6 +27,8 @@ import SpecsList from './Specs'
 
 module.exports.CategoryFilter = CategoryFilter
 module.exports.CommentBtn = CommentBtn
+module.exports.EditSpecs = EditSpecs
+
 module.exports.EmptyView = EmptyView
 module.exports.ErrorView = ErrorView
 module.exports.FBLoginButton = FBLoginButton

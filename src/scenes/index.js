@@ -8,8 +8,7 @@ import { PostsByBuildId, PostsByUserId } from '../post'
 import { Makes, Models, Submodels, Specs } from '../picker'
 import { Tuning, TuningBySpec, QRScreen } from '../tuning'
 import { Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, Notifications, Posts, PreviewBuild, PreviewPost, Saved, Settings } from '../user'
-
-import { TabIcon } from '../components'
+import { TabIcon, EditSpecs } from '../components'
 export default scenes = Actions.create (
   <Scene key="root">
     <Scene key="login" component={Login} title="Login" hideNavBar={true} />
@@ -37,7 +36,8 @@ export default scenes = Actions.create (
     <Scene key="NewBuild" component={NewBuild} hideNavBar/>
     <Scene key="PreviewBuild" component={PreviewBuild} hideNavBar/>
     <Scene key="PreviewPost" component={PreviewPost} hideNavBar/>
-    
+    <Scene key="EditSpecs" component={EditSpecs} hideNavBar/>
+
     <Scene key="BuildsByUserId" component={BuildsByUserId} hideNavBar/>
     <Scene key="BuildsByPartId" component={BuildsByPartId} hideNavBar/>
 
