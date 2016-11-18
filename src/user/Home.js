@@ -1,27 +1,40 @@
 'use strict'
 
 import React, {Component} from 'react'
+import {View} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 
 import ProfileContainer from './ProfileContainer'
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
-import {PostList} from '../post'
+
+import {BuildsByUserId} from '../build'
+import {PostsByUserId} from '../post'
+
 import {General} from '../styles'
 import {
-	homePostSelector,
-	homePostPaginationSelector,
+	postByUserIdSelector,
+	postPaginationByUserIdSelector,
+
+	buildByUserIdSelector,
+	buildPaginationByUserIdSelector,
+
 	profileSelector,
-	userIdSelector
+	userIdSelector,
 } from '../selectors'
 
-import {fetchPosts} from '../reducers/post/postActions'
+import {fetchPostsByUserId} from '../reducers/post/postActions'
+import {fetchBuildsByUserId} from '../reducers/tuning/filterActions'
 
 const mapStateToProps = (state, props) => {
 	return {
-		data: homePostSelector(state),
-    pagination: homePostPaginationSelector(state),
+		postData: postByUserIdSelector(state, props),
+	    postPagination: postPaginationByUserIdSelector(state, props),
+
+	    buildData: buildByUserIdSelector (state, props),
+	    buildPagination: buildPaginationByUserIdSelector (state, props),
+
 		profileData: profileSelector (state),
 		userId: userIdSelector (state),
 	}
@@ -29,36 +42,51 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchData: (pageUrl) => {
-      dispatch (fetchPosts (pageUrl, props.userId))
+    fetchPosts: (pageUrl) => {
+      dispatch (fetchPostsByUserId (pageUrl, props.userId))
+    },
+
+    fetchBuilds: (pageUrl) => {
+    	dispatch (fetchBuildsByUserId (pageUrl, props.userId))
     }
   }
 }
 
 class Home extends Component {
 	render () {
-	  	let {data, pagination, profileData, fetchTags, fetchData, tags, userId} = this.props
-
-			, leftItem = userId?{ icon: require ('../common/img/car.png'), onPress: ()=>{Actions.BuildsByUserId({userId})}}:null
-			, rightItem = userId?{ icon: require ('../common/img/helmet.png'), onPress: Actions.Settings}:null
-
-			, header = (<F8Header foreground="dark" leftItem={leftItem} rightItem={rightItem}/>)
-			, list = (<PostList key="home-posts" data={data} pagination={pagination} userId={userId} tags={tags} fetchTags={fetchTags} fetchData={fetchData} />)
-		    , btn =  (<F8Button
-			          style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}
-			          type="saved" caption="New Post"
-			          onPress={Actions.NewPost}
-			        />)
+	  	let {	
+	  			postData, postPagination, fetchPosts,
+	  			buildData, buildPagination, fetchBuilds,
+	  			profileData, userId
+	  		} = this.props
+			, buildList = (<BuildsByUserId tabLabel="Builds" key="user-builds" data={buildData} pagination={buildPagination} userId={userId} fetchData={fetchBuilds}/>)
+			, postList = (<PostsByUserId tabLabel="Posts" key="user-posts" data={postData} pagination={postPagination} userId={userId} fetchData={fetchPosts}/>)
+			, btnContent = (
+	          <View style={{
+	          	flexDirection: 'row', justifyContent: 'space-between', flex: -1
+	          }}>
+		          <F8Button 
+		            icon={require ('../common/img/car.png')} 
+		            onPress={Actions.NewBuild}
+		            style={{flex: 1}}            
+		            type="search" caption="New Build"/>
+		          <F8Button 
+		            icon={require ('../common/img/comment.png')} 
+		            onPress={Actions.NewPost}
+		            type="search" 
+		            style={{flex: 1}}            
+		            caption="New Post"/>        
+	          </View>
+			)
 
 		return (
 			<ProfileContainer
-				currentUser={true}
 				profileData={profileData}
-				listContent={list}
-				btnContent={btn}
-				headerContent={header}
-				/>)
-		}
+				btnContent={btnContent}
+				tabs={[buildList,postList]}
+			/>
+		)
+	}
 }
 
 export default connect (mapStateToProps, mapDispatchToProps) (Home)

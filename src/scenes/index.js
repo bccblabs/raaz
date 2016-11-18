@@ -7,15 +7,14 @@ import { Parts, PartDetails, PartFilter, PartsByManufacturer } from '../part'
 import { PostsByBuildId, PostsByUserId } from '../post' 
 import { Makes, Models, Submodels, Specs } from '../picker'
 import { Tuning, TuningBySpec, QRScreen } from '../tuning'
-import { Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, Notifications, Posts, PreviewBuild, PreviewPost, Saved, Settings } from '../user'
+import { ProfileContainer, Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, NewPart, Notifications, Posts, PreviewBuild, PreviewPost, Saved, Settings } from '../user'
 import { TabIcon, EditSpecs } from '../components'
 export default scenes = Actions.create (
   <Scene key="root">
     <Scene key="login" component={Login} title="Login" hideNavBar={true} />
     <Scene key="main" tabs={true} hideNavBar tabBarStyle={General.tabBarStyle}>
         <Scene title="Tuning" icon={TabIcon} key="tuning" component={Tuning} hideNavBar/>
-        <Scene title="Home" icon={TabIcon} key="home" component={Home} hideNavBar/>
-        <Scene title="Messages" icon={TabIcon} key="messages" component={Notifications} hideNavBar/>
+        <Scene title="Profile" icon={TabIcon} key="home" component={Home} hideNavBar/>
     </Scene>
     <Scene key="QRScan" component={QRScreen} hideNavBar/>
     <Scene key="Saved" component={Saved} hideNavBar/>
@@ -34,6 +33,7 @@ export default scenes = Actions.create (
 
     <Scene key="NewPost" component={NewPost} hideNavBar/>
     <Scene key="NewBuild" component={NewBuild} hideNavBar/>
+    <Scene key="NewPart" component={NewPart} hideNavBar/>
     <Scene key="PreviewBuild" component={PreviewBuild} hideNavBar/>
     <Scene key="PreviewPost" component={PreviewPost} hideNavBar/>
     <Scene key="EditSpecs" component={EditSpecs} hideNavBar/>
@@ -43,5 +43,7 @@ export default scenes = Actions.create (
 
     <Scene key="PostsByBuildId" component={PostsByBuildId} hideNavBar/>
     <Scene key="PostsByUserId" component={PostsByUserId} hideNavBar/>
+
+    <Scene key="UserPage" component={ProfileContainer} hideNavBar/>
   </Scene>
 )

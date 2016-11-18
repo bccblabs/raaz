@@ -478,7 +478,7 @@ export const PostStyles = StyleSheet.create({
   },
 
   primaryTitle: {
-    flex: 1,
+    flex: -1,
     fontSize: 20,
     fontWeight: '700',
     backgroundColor: 'white',
@@ -539,7 +539,6 @@ export const DetailStyles = StyleSheet.create ({
       borderColor: 'white',
     },
     VRImageHolder : {
-      marginTop: 64,
       width: window.width,
       height: 300+64,
       alignSelf: 'center'
