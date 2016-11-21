@@ -4,7 +4,7 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
   WebView,
   Text,
@@ -26,31 +26,13 @@ import {LoadingView, ErrorView, Manufacturers, MetricsGraph, PostCard} from '../
 
 import {DetailStyles, General, Specs, Titles, PartStyles, PostStyles} from '../styles'
 
-const specIdSelector = (state) => (state.car.selectedSpecId)
-const specDetailsSelector = (state) => (state.entities.specDetails)
-const specDetailsPagination = (state) => (state.pagination.specDetailsPagination)
+import {specDetailsPaginationSelector, specDetailsSelector} from '../selectors'
 
 
-const getSpecsDetailsEntities = createSelector (
-  [specIdSelector, specDetailsSelector, specDetailsPagination],
-  (specId, specsList, specsPagination) => {
-    let ids = specsPagination[specId]?specsPagination[specId].ids:[]
-    return ids.map (id=>specsList[id])
-  }
-)
-
-const getSpecsDetailsPagination = createSelector (
-  [specIdSelector, specDetailsPagination],
-  (specId, specsPagination) => {
-    return specsPagination[specId] || {}
-  }
-)
-
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   return {
-    specsDetails: getSpecsDetailsEntities(state),
-    specsPagination: getSpecsDetailsPagination(state),
+    specsDetails: specDetailsSelector(state, props),
+    specsPagination: specDetailsPaginationSelector(state, props),
   }
 }
 
@@ -83,7 +65,9 @@ class TuningBySpec extends Component {
 
   componentWillReceiveProps (nextProps) {
     let {specsPagination, specsDetails} = nextProps
-      , specsInfo = this.state.specsDetails[0]
+      , specsInfo = specsDetails[0]
+
+    console.log({nextProps})
     this.setState ({
       specsDetails,
       specsPagination,
@@ -125,14 +109,14 @@ class TuningBySpec extends Component {
       let tuningcomponent = (
         specsInfo.tuning && specsInfo.tuning.length )?(
           <View style={DetailStyles.descriptionContainer}>
-              <Heading3 style={Titles.buildSectionTitle}>{"BRANDS BY CATEGORY"}</Heading3>
+              <Heading3 style={Titles.filterSectionTitle}>{"BRANDS BY CATEGORY"}</Heading3>
               <Manufacturers data={tuning} specId={specId}/>
             </View>
         ): (<View/>)
 
         , postsContent = (posts && posts.length)?(
           <View style={[DetailStyles.descriptionContainer]}>
-          <Heading3 style={Titles.buildSectionTitle}>{"BUILDS"}</Heading3>
+          <Heading3 style={Titles.filterSectionTitle}>{"BUILDS"}</Heading3>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
             {posts.map ((post, idx)=>(<PostCard key={`pc-${idx}`} data={post}/>))}
           </ScrollView>
@@ -148,9 +132,8 @@ class TuningBySpec extends Component {
 
         , descContent = (
           <View style={DetailStyles.descriptionContainer}>
-          <Heading3 style={Titles.buildSectionTitle}>{"SPECS"}</Heading3>
+          <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
           <Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>
-          <Heading3 style={Specs.subtitle}>{`${transmissionSpeed} speed ${transmission}`.toUpperCase()}</Heading3>
           <Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>
           <MetricsGraph data={[{entries:dataArray}]}/>
           </View>
@@ -162,11 +145,28 @@ class TuningBySpec extends Component {
             contentBackgroundColor="white"
             backgroundSpeed={1}
             parallaxHeaderHeight={300+64}
-            renderFixedHeader={() => headerContent}
-            stickyHeaderHeight={64}
+            renderFixedHeader={()=>(
+              <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
+              <TouchableWithoutFeedback onPress={Actions.pop}>
+                <Image source={require ('../common/img/x.png')} style={{flex: -1}}/>
+                </TouchableWithoutFeedback>
+              </View>
+            )}
+            fixedHeaderHeight={64}
             renderForeground={()=>{
               let string = (make + ' ' + model + ' ' + submodel).toUpperCase()
-              return (<Text style={[DetailStyles.primaryTitle, DetailStyles.infoContainer]}>{string}</Text>)
+              return (
+                <View style={DetailStyles.infoContainer}>
+                <TouchableWithoutFeedback onPress={()=>Actions.BuildsBySpecId ({specId: this.props.specId})}>
+                <View style={{flexDirection: 'row', backgroundColor: 'white', justifyContent: 'center'}}>
+                  <Image source={require ('../common/img/tuning.png')}/>
+                  <Text style={DetailStyles.primaryTitle}>
+                    {string}
+                  </Text>
+                </View>
+                </TouchableWithoutFeedback>
+                </View>
+                )
             }}
             renderBackground={() => <WebView source={{uri: "https://storage.googleapis.com/vrview/index.html?image=https://s3.amazonaws.com/vr-web/images/IMG_3656.JPG&is_stereo=false"}} style={DetailStyles.VRImageHolder}/>}
             >

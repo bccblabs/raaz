@@ -94,7 +94,7 @@ let initState = {
   builds: {},
   parts: {},
   posts: {},
-  specsDetails: {},
+  specDetails: {},
   newpost: {},
   newbuild: {},
   newpart: {},

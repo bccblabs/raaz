@@ -14,53 +14,21 @@ import {PostsByUserId} from '../post'
 
 import {General} from '../styles'
 import {
-	postByUserIdSelector,
-	postPaginationByUserIdSelector,
-
-	buildByUserIdSelector,
-	buildPaginationByUserIdSelector,
-
 	profileSelector,
 	userIdSelector,
 } from '../selectors'
 
-import {fetchPostsByUserId} from '../reducers/post/postActions'
-import {fetchBuildsByUserId} from '../reducers/tuning/filterActions'
 
 const mapStateToProps = (state, props) => {
 	return {
-		postData: postByUserIdSelector(state, props),
-	    postPagination: postPaginationByUserIdSelector(state, props),
-
-	    buildData: buildByUserIdSelector (state, props),
-	    buildPagination: buildPaginationByUserIdSelector (state, props),
-
 		profileData: profileSelector (state),
 		userId: userIdSelector (state),
 	}
 }
 
-const mapDispatchToProps = (dispatch, props) => {
-  return {
-    fetchPosts: (pageUrl) => {
-      dispatch (fetchPostsByUserId (pageUrl, props.userId))
-    },
-
-    fetchBuilds: (pageUrl) => {
-    	dispatch (fetchBuildsByUserId (pageUrl, props.userId))
-    }
-  }
-}
-
 class Home extends Component {
 	render () {
-	  	let {	
-	  			postData, postPagination, fetchPosts,
-	  			buildData, buildPagination, fetchBuilds,
-	  			profileData, userId
-	  		} = this.props
-			, buildList = (<BuildsByUserId tabLabel="Builds" key="user-builds" data={buildData} pagination={buildPagination} userId={userId} fetchData={fetchBuilds}/>)
-			, postList = (<PostsByUserId tabLabel="Posts" key="user-posts" data={postData} pagination={postPagination} userId={userId} fetchData={fetchPosts}/>)
+	  	let {profileData, userId} = this.props
 			, btnContent = (
 	          <View style={{
 	          	flexDirection: 'row', justifyContent: 'space-between', flex: -1
@@ -81,12 +49,12 @@ class Home extends Component {
 
 		return (
 			<ProfileContainer
+				userId={userId}
 				profileData={profileData}
 				btnContent={btnContent}
-				tabs={[buildList,postList]}
 			/>
 		)
 	}
 }
 
-export default connect (mapStateToProps, mapDispatchToProps) (Home)
+export default connect (mapStateToProps) (Home)

@@ -8,11 +8,10 @@ export default class ErrorView extends Component {
   render () {
     let {onPress, caption} = this.props
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 1}}>
       <F8Button type='error'
         caption={caption?caption:'No data loaded :('}
-        onPress={onPress}
-        icon={require ('../common/img/empty.png')}/>
+        onPress={onPress}/>
       </View>
     )
   }

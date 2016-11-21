@@ -30,7 +30,7 @@ export default class List extends Component {
   componentDidMount () {
     let {fetchTags, fetchData, pagination} = this.props
     fetchTags && fetchTags ()
-    fetchData (pagination.nextPageUrl)
+    fetchData && fetchData (pagination.nextPageUrl)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -47,7 +47,7 @@ export default class List extends Component {
 
   render () {
     let {dataSource, pagination} = this.state
-      , {title, fetchData, fetchTags, tags, renderRow} = this.props
+      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg} = this.props
       , {nextPageUrl, isFetching, hasError} = pagination
       , header = title?(<F8Header foreground="dark" title={title.toUpperCase()} leftItem={{title:'Back', onPress: Actions.pop}}/>):<View/>
       , content
@@ -62,7 +62,7 @@ export default class List extends Component {
                     />)
       }
       else if (!dataSource.getRowCount()) {
-        content = (<EmptyView/>)
+        content = (<EmptyView emptyMsg={emptyMsg}/>)
       }
       else {
         content = (
@@ -79,7 +79,7 @@ export default class List extends Component {
       }
 
     return (
-      <View style={{flex: 1, marginBottom: 50}}>
+      <View style={{flex: 1}}>
         {header}
         {content}
       </View>

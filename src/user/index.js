@@ -13,6 +13,7 @@ import Notifications from './Notifications'
 import PreviewBuild from './PreviewBuild'
 import PreviewPost from './PreviewPost'
 import ProfileContainer from './ProfileContainer'
+import UserPage from './UserPage'
 
 module.exports.Comments = Comments
 module.exports.Home = Home
@@ -27,3 +28,4 @@ module.exports.PreviewBuild = PreviewBuild
 module.exports.PreviewPost = PreviewPost
 module.exports.NewPart = NewPart
 module.exports.ProfileContainer = ProfileContainer
+module.exports.UserPage = UserPage

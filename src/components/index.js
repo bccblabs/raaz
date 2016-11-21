@@ -18,6 +18,7 @@ import Tag from './Tag'
 import TabIcon from './TabIcon'
 import TagFilter from './TagFilter'
 import TagsHeader from './TagsHeader'
+import InfoContainer from './InfoContainer'
 
 import MakesList from './Makes'
 import ModelsList from './Models'
@@ -51,3 +52,5 @@ module.exports.MakesList = MakesList
 module.exports.ModelsList = ModelsList
 module.exports.SubmodelsList = SubmodelsList
 module.exports.SpecsList = SpecsList
+
+module.exports.InfoContainer = InfoContainer

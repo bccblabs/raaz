@@ -163,7 +163,12 @@ export const Requests = {
           })
           .catch ((err) => {throw err})
   },
-
+  fetchUserDetails (userId) {
+    let url = API_ENDPOINT + '/user/' + userId
+    return fetchWithTimeout (REQ_TIMEOUT, url, GET_OPTS)
+            .then ((resp) => {return resp.json()})
+            .catch ((err) => {throw err})
+  }
 }
 
 

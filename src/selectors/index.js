@@ -2,6 +2,17 @@
 import {createSelector} from 'reselect'
 import keys from 'lodash/keys'
 
+/* specs selectors */
+export const specDetailsEntitiesSelector = (state) => (state.entities.specDetails || {})
+export const specDetailsPaginationSelector = (state, props) => (state.pagination.specDetailsPagination && state.pagination.specDetailsPagination[props.specId] || {})
+export const specDetailsSelector = createSelector (
+  [specDetailsEntitiesSelector, specDetailsPaginationSelector],
+  (specDetails, specsPagination) => {
+      let ids = specsPagination.ids?specsPagination.ids:[]
+      return ids.map (id=>specDetails[id]).filter (elem=>elem)
+  }
+)
+
 /* post selectors */
   export const postEntitiesSelector = (state) => (state.entities.posts || {})
 

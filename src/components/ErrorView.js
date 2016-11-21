@@ -14,7 +14,7 @@ export default class ErrorView extends Component {
           justifyContent: 'center',
           backgroundColor: 'transparent'
         }}>
-      <F8Button type='error' caption={'Error happened, try loading again!'} onPress={onPress} icon={require ('../common/img/error.png')}/>
+      <F8Button type='error' caption={'Error happened, try loading again!'} onPress={onPress}/>
       </View>
     )
   }

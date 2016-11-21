@@ -3,7 +3,8 @@ import React, {Dimensions, StyleSheet, Platform} from 'react-native'
 import F8Colors from '../common/F8Colors'
 const window = Dimensions.get ('window')
 export const btnColor = '#b8cdfb'
-
+export const HEIGHT = window.height
+export const WIDTH = window.width
 export const General = StyleSheet.create ({
   headerStyle: {
     backgroundColor: 'white'
@@ -84,20 +85,17 @@ export const Specs = StyleSheet.create ({
   },
   subtitle1: {
     flex: -1,
-    fontSize: 8,
+    fontSize: 10,
     color: 'black',
-    padding: 4,
-    paddingTop: 2,
-    paddingBottom: 0,
+    fontWeight: '700',
+    marginHorizontal: 4 ,
   },
   subtitle2: {
     flex: -1,
     fontSize: 16,
     color: 'black',
-    padding: 5,
-    paddingTop: 2,
-    paddingBottom: 0,
-    fontWeight: '700'
+    fontWeight: '700',
+    marginHorizontal: 4 ,
   },
   data: {
     flex: 1,
@@ -470,11 +468,12 @@ export const PostStyles = StyleSheet.create({
   },
 
   scrollTitleContainer: {
-    flex: 1,
-    padding: 6,
+    marginVertical: 8,
+    flex: -1,
+    flexDirection: 'row',
     backgroundColor: 'white',
-    borderRightWidth: 0.5,
-    borderColor: 'lightgray'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   primaryTitle: {
@@ -513,7 +512,7 @@ export const CarmeraStyles = StyleSheet.create ({
 
 export const DetailStyles = StyleSheet.create ({
     infoContainer: {
-      flex: 1,
+      flex: -1,
       position: 'absolute',
       bottom: 8,
       left: 8,
@@ -527,11 +526,11 @@ export const DetailStyles = StyleSheet.create ({
       marginVertical: 8,
     },
     primaryTitle: {
-      flex: 1,
+      flex: -1,
       fontSize: 20,
       fontWeight: '700',
-      backgroundColor: 'white',
       padding: 8,
+      backgroundColor: 'white',
       paddingHorizontal: 12,
     },
     bottomButton: {

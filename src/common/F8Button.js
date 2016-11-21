@@ -175,7 +175,7 @@ var styles = StyleSheet.create({
     borderRadius: 10,
     padding: 3,
     margin: 8,
-    backgroundColor: 'lightgray',
+    backgroundColor: 'white',
   },
   button: {
     flex: 1,
@@ -200,7 +200,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#6A6AD5',
   },
   carTagCaption: {
-    color: 'white',
+    color: 'black',
     fontWeight: '600',
     fontSize: 8,
     padding: 3,
