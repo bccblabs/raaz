@@ -118,7 +118,7 @@ export const Titles = StyleSheet.create ({
     letterSpacing: 1,
   },
   filterSectionTitle: {
-    padding: 16,
+    margin: 16,
     fontWeight:'bold',
     color: 'black',
     alignSelf: 'flex-start',

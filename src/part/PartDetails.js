@@ -103,7 +103,7 @@ export default class PartDetails extends Component {
           {
             details.map ((detail, idx)=> {
               return (
-                <Heading3 key={`dtls-${idx}`}  style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 4}]}>{`- ${detail}`}</Heading3>
+                <Heading3 key={`dtls-${idx}`}  style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 8, marginHorizontal: 16}]}>{`- ${detail}`}</Heading3>
               )
             })
           }
@@ -123,13 +123,13 @@ export default class PartDetails extends Component {
           <View style={{flex: 1, flexDirection: 'column',  alignItems: 'center', justifyContent: 'center'}}>
           <ImagesScroll media={media}/>
           <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
-          <Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>
+          <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
           {specsContent}
           <BuildsPagerByPartId style={{flex: 1}} partId={partId}/>
           <View style={{backgroundColor: 'white'}}>
-          {description && (<Paragraph style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Paragraph>)}
+          {description && (<Heading3 style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Heading3>)}
           {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 16}]}>{`${description}`}</Heading3>)}
-          {detailsContent && (<Paragraph style={Titles.filterSectionTitle}>{"DETAILS"}</Paragraph>)}
+          {detailsContent && (<Heading3 style={Titles.filterSectionTitle}>{"DETAILS"}</Heading3>)}
           {detailsContent}
           </View>
           <Paragraph style={Titles.filterSectionTitle}>{"POSTS"}</Paragraph>
