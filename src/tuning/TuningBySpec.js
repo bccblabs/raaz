@@ -22,7 +22,14 @@ import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 import {Heading1, Heading2, Heading3, EmptyHeading, Paragraph} from '../common/F8Text'
 
-import {LoadingView, ErrorView, Manufacturers, MetricsGraph, PostCard} from '../components'
+import {
+  BackSquare,
+  LoadingView, 
+  ErrorView, 
+  Manufacturers, 
+  MetricsGraph, 
+  PostCard
+} from '../components'
 
 import {DetailStyles, General, Specs, Titles, PartStyles, PostStyles} from '../styles'
 
@@ -145,28 +152,12 @@ class TuningBySpec extends Component {
             contentBackgroundColor="white"
             backgroundSpeed={1}
             parallaxHeaderHeight={300+64}
-            renderFixedHeader={()=>(
-              <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
-              <TouchableWithoutFeedback onPress={Actions.pop}>
-                <Image source={require ('../common/img/x.png')} style={{flex: -1}}/>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
+            stickyHeaderHeight={64}
+            renderFixedHeader={()=><BackSquare/>}
             fixedHeaderHeight={64}
             renderForeground={()=>{
               let string = (make + ' ' + model + ' ' + submodel).toUpperCase()
-              return (
-                <View style={DetailStyles.infoContainer}>
-                <TouchableWithoutFeedback onPress={()=>Actions.BuildsBySpecId ({specId: this.props.specId})}>
-                <View style={{flexDirection: 'row', backgroundColor: 'white', justifyContent: 'center'}}>
-                  <Image source={require ('../common/img/tuning.png')}/>
-                  <Text style={DetailStyles.primaryTitle}>
-                    {string}
-                  </Text>
-                </View>
-                </TouchableWithoutFeedback>
-                </View>
-                )
+              return (<Text style={[DetailStyles.primaryTitle, DetailStyles.infoContainer]}>{string}</Text>)
             }}
             renderBackground={() => <WebView source={{uri: "https://storage.googleapis.com/vrview/index.html?image=https://s3.amazonaws.com/vr-web/images/IMG_3656.JPG&is_stereo=false"}} style={DetailStyles.VRImageHolder}/>}
             >

@@ -21,9 +21,10 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 import {BuildsPager} from '../build'
 import {PostsByUserId} from '../post'
 
+import {BackSquare} from '../components'
 export default class ProfileContainer extends Component {
   render () {
-    let {profileData, btnContent, userId} = this.props
+    let {profileData, btnContent, userId, initial} = this.props
       , foregroundContent = profileData?(
         <View style={{flex: 1}}>
           <View style={DetailStyles.userInfoContainer}>
@@ -39,16 +40,10 @@ export default class ProfileContainer extends Component {
         contentBackgroundColor="white"
         backgroundSpeed={1}
         parallaxHeaderHeight={300}
-        fixedHeaderHeight={64}
+        stickyHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
         renderBackground={() => <Image source={require ('../common/img/2jz.png')} style={DetailStyles.VRImageHolder}/>}
-        renderFixedHeader={()=>(
-          <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
-          <TouchableWithoutFeedback onPress={Actions.pop}>
-            <Image source={require ('../common/img/back_white.ios.png')} style={{flex: -1}}/>
-            </TouchableWithoutFeedback>
-          </View>
-        )}
+        renderFixedHeader={()=>{return initial?(<View/>):(<BackSquare/>)}}
         >
         <View style={{flex: 1, margin:8, alignItems: 'center', flexDirection: 'column'}}>
         {btnContent}

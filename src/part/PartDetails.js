@@ -11,17 +11,22 @@ import {
 
 import {Actions} from 'react-native-router-flux'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-
 import {Requests} from '../utils'
 
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 import {Heading3, Paragraph} from '../common/F8Text'
 
-import {LoadingView, ErrorView, MetricsGraph, SaveProductButton} from '../components'
-
 import {General, Titles, DetailStyles, PostStyles, Specs} from '../styles'
-
+import {
+  BackSquare,
+  ErrorView, 
+  ImagesScroll,
+  LoadingView, 
+  MetricsGraph, 
+  SaveProductButton
+} from '../components'
+import {PostsByPartId} from '../post'
 
 export default class PartDetails extends Component {
   constructor (props) {
@@ -54,22 +59,17 @@ export default class PartDetails extends Component {
   }
 
   render() {
-    let {partId} = this.props.data, content
-    const leftItem = {
+    let {hasError, isLoading} = this.state
+        , content
+        , leftItem = {
             icon: require ('../common/img/back.ios.png'),
             onPress: ()=> {Actions.pop()}
           }
-        , rightItem = {
-            icon: require ('../common/img/cart.png'),
-            onPress: ()=> {Actions.Listings({partId})}
-        }
-        , {data, hasError, isLoading} = this.state
         , header = (
             <F8Header
               foreground="dark"
               style={General.headerStyle}
-              leftItem={leftItem}
-              rightItem={(!hasError && !isLoading)?rightItem:null}/>
+              leftItem={leftItem}/>
         )
 
     if (isLoading) {
@@ -79,9 +79,8 @@ export default class PartDetails extends Component {
       return (<View style={{flex: 1}}>{header}<ErrorView/></View>)
     }
     else {
-      let {part, manufacturer, listings, comments, tuning, buildCnt} = data
+      let {part, manufacturer, tuning} = this.state.data
         , {name, partId, details, description, media} = part
-        , {emission, included} = tuning
         , graphKeys = [
           'tqGain', 'hpGain', 'maxHp', 'maxTq', 'labor', 'weight',
           'rearLowering', 'frontLowering',
@@ -90,24 +89,13 @@ export default class PartDetails extends Component {
         , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}})
         , specsContent = (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):undefined
         , foregroundContent = (
-          <View style={DetailStyles.foregroundContainer}>
-          <Text style={DetailStyles.partTitle}>{name}</Text>
-            {manufacturer && (
-              <View style={{flex: 1, backgroundColor: 'white', height: 20, width: 80, marginVertical: 8}}>
-              <Image source={{uri: manufacturer.logo}}
-                      style={PostStyles.manufacturerLogo}/>
-              </View>
-            )
-            }
+          <View style={DetailStyles.infoContainer}>
+            <Image 
+              style={[DetailStyles.userPhotoStyle, {resizeMode: 'contain', backgroundColor: 'white'}]} 
+              source={{uri: manufacturer.logo}}
+            />
+            <Text style={DetailStyles.partTitle}>{name}</Text>
           </View>
-        )
-        , images = (
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}>
-            {media.map ((mediaLink, idx)=> (<Image key={`${partId}-${idx}`} style={DetailStyles.scrollImage} source={{uri:mediaLink}}/>))}
-          </ScrollView>
-
         )
         , detailsContent = (details && details.length)?(
           <View style={DetailStyles.descriptionContainer}>
@@ -127,20 +115,14 @@ export default class PartDetails extends Component {
           backgroundSpeed={1}
           parallaxHeaderHeight={300+64}
           stickyHeaderHeight={64}
-          renderFixedHeader={()=>(
-            <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
-            <TouchableWithoutFeedback onPress={Actions.pop}>
-              <Image source={require ('../common/img/back.ios.png')} style={{flex: -1}}/>
-              </TouchableWithoutFeedback>
-            </View>
-          )}
+          renderFixedHeader={()=>(<BackSquare/>)}
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={{uri: media[0]}} style={DetailStyles.VRImageHolder}/>}
           >
           <View style={{margin:8, alignItems: 'center'}}>
-          {images}
+          <ImagesScroll media={media}/>
           <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
-          {specsContent && (<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>)}
+          <Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>
           {specsContent}
           {description && (<Paragraph style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Paragraph>)}
           {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 4}]}>{`${description}`}</Heading3>)}

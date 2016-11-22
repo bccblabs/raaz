@@ -33,22 +33,17 @@ class Home extends Component {
 	          <View style={{
 	          	flexDirection: 'row', justifyContent: 'space-between', flex: -1
 	          }}>
-		          <F8Button 
-		            icon={require ('../common/img/car.png')} 
-		            onPress={Actions.NewBuild}
-		            style={{flex: 1}}            
-		            type="search" caption="New Build"/>
-		          <F8Button 
-		            icon={require ('../common/img/comment.png')} 
-		            onPress={Actions.NewPost}
-		            type="search" 
-		            style={{flex: 1}}            
-		            caption="New Post"/>        
+	          <F8Button 
+	            icon={require ('../common/img/car.png')} 
+	            onPress={Actions.NewBuild}
+	            style={{flex: 1}}            
+	            type="search" caption="New Build"/>
 	          </View>
 			)
 
 		return (
 			<ProfileContainer
+				initial={true}
 				userId={userId}
 				profileData={profileData}
 				btnContent={btnContent}
