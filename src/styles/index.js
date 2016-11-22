@@ -421,7 +421,6 @@ export const PostStyles = StyleSheet.create({
   largeUserPhoto: {
     height: 80,
     width: 80,
-    marginHorizontal: 8,
     resizeMode: 'cover'
   },
 
@@ -550,10 +549,12 @@ export const DetailStyles = StyleSheet.create ({
       width: window.width/3,
     },
     userInfoContainer: {
+      left: 8,
       position: 'absolute',
       bottom: 8,
-      left: 8,
-      width: window.width/4,
+      flex: -1,
+      justifyContent: 'center',
+      alignItems: 'flex-start'
     },
     userActionButton: {
       margin: 4, 
@@ -577,8 +578,8 @@ export const DetailStyles = StyleSheet.create ({
     lightTitle: {
       fontSize: 16,
       fontWeight: '700',
-      color: 'black',
-      backgroundColor: 'white',
+      color: 'white',
+      backgroundColor: 'transparent',
       padding: 8,
       paddingHorizontal: 12,
 

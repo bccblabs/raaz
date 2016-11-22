@@ -2,7 +2,7 @@ import React from 'react'
 import {Scene, Actions, ActionConst} from 'react-native-router-flux'
 
 import { General } from '../styles'
-import { BuildDetails, BuildsByPartId, BuildsBySpecId, BuildsByTag, BuildsByUserId } from '../build'
+import { BuildDetails, BuildsListByPartId, BuildsListBySpecId, BuildsListByUserId } from '../build'
 import { Parts, PartDetails, PartsByBuild, PartFilter, PartsByManufacturer } from '../part'
 import { PostsByBuildId, PostsByUserId } from '../post' 
 import { Makes, Models, Submodels, Specs } from '../picker'
@@ -39,9 +39,9 @@ export default scenes = Actions.create (
     <Scene key="PreviewPost" component={PreviewPost} hideNavBar/>
     <Scene key="EditSpecs" component={EditSpecs} hideNavBar/>
 
-    <Scene key="BuildsByUserId" component={BuildsByUserId} hideNavBar/>
-    <Scene key="BuildsByPartId" component={BuildsByPartId} hideNavBar/>
-    <Scene key="BuildsBySpecId" component={BuildsBySpecId} hideNavBar/>
+    <Scene key="BuildsByUserId" component={BuildsListByUserId} hideNavBar/>
+    <Scene key="BuildsByPartId" component={BuildsListByPartId} hideNavBar/>
+    <Scene key="BuildsBySpecId" component={BuildsListBySpecId} hideNavBar/>
 
     <Scene key="PostsByBuildId" component={PostsByBuildId} hideNavBar/>
     <Scene key="PostsByUserId" component={PostsByUserId} hideNavBar/>

@@ -18,7 +18,7 @@ import {Heading3} from '../common/F8Text'
 import {DetailStyles, PostStyles, General, Titles} from '../styles'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
-import {BuildsPager} from '../build'
+import {BuildsPagerByUserId} from '../build'
 import {PostsByUserId} from '../post'
 
 import {BackSquare} from '../components'
@@ -29,7 +29,10 @@ export default class ProfileContainer extends Component {
         <View style={{flex: 1}}>
           <View style={DetailStyles.userInfoContainer}>
             <Image style={PostStyles.largeUserPhoto} source={{uri: profileData.picture}}/>
-            <Text style={DetailStyles.lightTitle}>{profileData.name}</Text>
+            <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.6)'}]}>{profileData.name}</Text>
+          </View>
+          <View style={{right: 8, position: 'absolute', bottom: 0}}>
+          {btnContent}
           </View>
         </View>
       ):(<View/>)
@@ -42,14 +45,11 @@ export default class ProfileContainer extends Component {
         parallaxHeaderHeight={300}
         stickyHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
-        renderBackground={() => <Image source={require ('../common/img/2jz.png')} style={DetailStyles.VRImageHolder}/>}
+        renderBackground={() => <Image source={require ('../common/img/r34.png')} style={DetailStyles.VRImageHolder}/>}
         renderFixedHeader={()=>{return initial?(<View/>):(<BackSquare/>)}}
         >
-        <View style={{flex: 1, margin:8, alignItems: 'center', flexDirection: 'column'}}>
-        {btnContent}
-        <View>
-        <BuildsPager style={{flex: 1}} userId={userId}/>
-        </View>
+        <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
+        <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
         <Heading3 style={Titles.filterSectionTitle}>{"POSTS"}</Heading3>
         <PostsByUserId style={{flex: 1}} userId={userId}/>
         </View>

@@ -15,7 +15,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchData: (pageUrl) => {dispatch (fetchPostsByPartId (pageUrl, props.PartId))}
+    fetchData: (pageUrl) => {dispatch (fetchPostsByPartId (pageUrl, props.partId))}
   }
 }
 

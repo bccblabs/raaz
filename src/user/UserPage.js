@@ -4,7 +4,6 @@ import React, {Component} from 'react'
 import {View} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import ProfileContainer from './ProfileContainer'
-import {BuildsPager} from '../build'
 import {PostsByUserId} from '../post'
 import {Requests} from '../utils'
 import F8Button from '../common/F8Button'
@@ -57,17 +56,11 @@ export default class UserPage extends Component {
 		        style={General.headerStyle}/>
 		    )
 			, btnContent = (
-	          <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
 				<F8Button 
+					icon={require ('../common/img/helmet.png')}
 					onPress={Actions.NewBuild}
-					style={{flex: 1}}            
+					style={{flex: -1}}            
 					type="search" caption="Follow"/>
-				<F8Button 
-					onPress={Actions.NewPost}
-					type="search" 
-					style={{flex: 1}}            
-					caption="Message"/>        
-	          </View>
 			)
 
 	    if (isLoading) {

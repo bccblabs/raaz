@@ -8,17 +8,19 @@ export default class ImagesScroll extends Component {
   render () {
     let {media} = this.props
     return (
+        <View>
         <ScrollView
-          style={{marginTop: 8, flex: 1, height: 150}}
-          containerStyle={{flex: 1, height: 150}}
+          style={{marginTop: 8, height: 150}}
+          containerStyle={{height: 150}}
           showsHorizontalScrollIndicator={false}
           horizontal={true}>
           {media.map ((mediaLink, idx)=> (
-            <TouchableWithoutFeedback style={{flex: 1}} key={`${idx}`} onPress={()=>Actions.PhotoSwiper({showIndex: idx, imgList: media})}>
+            <TouchableWithoutFeedback key={`${idx}`} onPress={()=>Actions.PhotoSwiper({showIndex: idx, imgList: media})}>
             <Image style={DetailStyles.scrollImage} source={{uri:mediaLink}}/>
             </TouchableWithoutFeedback>
           ))}
         </ScrollView>
+        </View>
     )    
   }
 }

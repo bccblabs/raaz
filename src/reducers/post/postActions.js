@@ -12,6 +12,10 @@ const {
   POSTS_SUCCESS_BUILD,
   POSTS_ERROR_BUILD,
 
+  POSTS_REQUEST_PART,
+  POSTS_SUCCESS_PART,
+  POSTS_ERROR_PART,
+
 } = require ('../../constants').default
 
 import {
@@ -53,6 +57,19 @@ export function fetchPostsByBuildId (nextPageUrl, buildId) {
     [CALL_API]: {
       endpoint,
       types: [POSTS_REQUEST_BUILD, POSTS_SUCCESS_BUILD, POSTS_ERROR_BUILD],
+      schema: Schemas.POSTS_ARRAY,
+    }
+  }
+}
+
+export function fetchPostsByPartId (nextPageUrl, partId) {
+  let endpoint = '/post/part/' + partId
+  if (nextPageUrl) endpoint += nextPageUrl
+  return {
+    partId,
+    [CALL_API]: {
+      endpoint,
+      types: [POSTS_REQUEST_PART, POSTS_SUCCESS_PART, POSTS_ERROR_PART],
       schema: Schemas.POSTS_ARRAY,
     }
   }

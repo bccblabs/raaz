@@ -43,6 +43,16 @@ export const specDetailsSelector = createSelector (
     }
   )
 
+  export const postPaginationByPartIdSelector = (state, props) => (state.pagination.postPaginationByPartId && state.pagination.postPaginationByPartId[props.partId] || {})
+  export const postByPartIdSelector = createSelector (
+    [postEntitiesSelector, postPaginationByPartIdSelector],
+    (postEntities, postPagination) => {
+      let ids = postPagination.ids?postPagination.ids:[]
+      return ids.map (id=>postEntities[id]).filter (elem=>elem)
+    }
+  )
+  
+
 /* car selector entities */
 
 export const makesSelector = (state) => (keys (state.entities.makes).sort())

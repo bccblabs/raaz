@@ -70,7 +70,7 @@ class Tuning extends Component {
 
   render () {
     let rightItem = {
-        icon: require ('../common/img/cart.png'), 
+        icon: require ('../common/img/tuning.png'), 
         onPress:Actions.Saved
       }
     , {
@@ -93,9 +93,9 @@ class Tuning extends Component {
                   onPress={Actions.QRScan}
                   type="search"
                   icon={require ('../common/img/qr.png')}
-                  caption={"By QR Code"}/>
+                  caption={"Raaz qr"}/>
         <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                  caption="search by car" type="search"
+                  caption="By car" type="search"
                   icon={require ('../common/img/search.png')}/>
         </View>
         <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>

@@ -16,7 +16,6 @@ import {Requests} from '../utils'
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 import {Heading3, Paragraph} from '../common/F8Text'
-
 import {General, Titles, DetailStyles, PostStyles, Specs} from '../styles'
 import {
   BackSquare,
@@ -26,6 +25,8 @@ import {
   MetricsGraph, 
   SaveProductButton
 } from '../components'
+
+import {BuildsPagerByPartId} from '../build'
 import {PostsByPartId} from '../post'
 
 export default class PartDetails extends Component {
@@ -119,15 +120,20 @@ export default class PartDetails extends Component {
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={{uri: media[0]}} style={DetailStyles.VRImageHolder}/>}
           >
-          <View style={{margin:8, alignItems: 'center'}}>
+          <View style={{flex: 1, flexDirection: 'column',  alignItems: 'center', justifyContent: 'center'}}>
           <ImagesScroll media={media}/>
           <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
           <Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>
           {specsContent}
+          <BuildsPagerByPartId style={{flex: 1}} partId={partId}/>
+          <View style={{backgroundColor: 'white'}}>
           {description && (<Paragraph style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Paragraph>)}
-          {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 4}]}>{`${description}`}</Heading3>)}
+          {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 16}]}>{`${description}`}</Heading3>)}
           {detailsContent && (<Paragraph style={Titles.filterSectionTitle}>{"DETAILS"}</Paragraph>)}
           {detailsContent}
+          </View>
+          <Paragraph style={Titles.filterSectionTitle}>{"POSTS"}</Paragraph>
+          <PostsByPartId style={{flex: 1}} partId={partId}/>
           </View>
         </ParallaxScrollView>
       )

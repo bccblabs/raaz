@@ -22,6 +22,7 @@ import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 import {Heading1, Heading2, Heading3, EmptyHeading, Paragraph} from '../common/F8Text'
 
+import {BuildsPagerBySpecId} from '../build'
 import {
   BackSquare,
   LoadingView, 
@@ -121,24 +122,8 @@ class TuningBySpec extends Component {
             </View>
         ): (<View/>)
 
-        , postsContent = (posts && posts.length)?(
-          <View style={[DetailStyles.descriptionContainer]}>
-          <Heading3 style={Titles.filterSectionTitle}>{"BUILDS"}</Heading3>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} >
-            {posts.map ((post, idx)=>(<PostCard key={`pc-${idx}`} data={post}/>))}
-          </ScrollView>
-          <F8Button
-            style={{alignSelf: 'center', marginTop: 16}}
-            onPress={()=>{Actions.BuildsBySpecId({specId})}}
-            type="tertiary" caption={`All Builds`}
-            icon={require ('../common/img/comment.png')}
-          />
-          </View>
-
-        ):(<View/>)
-
         , descContent = (
-          <View style={DetailStyles.descriptionContainer}>
+          <View style={[DetailStyles.descriptionContainer, {marginVertical: 0}]}>
           <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
           <Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>
           <Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>
@@ -161,9 +146,11 @@ class TuningBySpec extends Component {
             }}
             renderBackground={() => <WebView source={{uri: "https://storage.googleapis.com/vrview/index.html?image=https://s3.amazonaws.com/vr-web/images/IMG_3656.JPG&is_stereo=false"}} style={DetailStyles.VRImageHolder}/>}
             >
+            <View style={{flex: 1}}>
+            <BuildsPagerBySpecId specId={specId}/>
             {descContent}
-            {postsContent}
             {tuningcomponent}
+            </View>
           </ParallaxScrollView>
           <F8Button
             style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}

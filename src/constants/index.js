@@ -38,6 +38,9 @@ export default keyMirror ({
   POSTS_SUCCESS_BUILD: null,
   POSTS_ERROR_BUILD: null,
 
+  POSTS_REQUEST_PART: null,
+  POSTS_SUCCESS_PART: null,
+  POSTS_ERROR_PART: null,
 
 
 

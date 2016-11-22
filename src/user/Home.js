@@ -30,15 +30,11 @@ class Home extends Component {
 	render () {
 	  	let {profileData, userId} = this.props
 			, btnContent = (
-	          <View style={{
-	          	flexDirection: 'row', justifyContent: 'space-between', flex: -1
-	          }}>
 	          <F8Button 
 	            icon={require ('../common/img/car.png')} 
 	            onPress={Actions.NewBuild}
-	            style={{flex: 1}}            
+	            style={{flex: -1}}            
 	            type="search" caption="New Build"/>
-	          </View>
 			)
 
 		return (

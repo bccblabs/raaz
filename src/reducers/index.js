@@ -58,6 +58,9 @@ const {
   POSTS_SUCCESS_BUILD,
   POSTS_ERROR_BUILD,
 
+  POSTS_REQUEST_PART,
+  POSTS_SUCCESS_PART,
+  POSTS_ERROR_PART,
 
   MAKE_REQUEST,
   MAKE_SUCCESS,
@@ -172,6 +175,15 @@ const pagination = combineReducers ({
       POSTS_REQUEST_USER,
       POSTS_SUCCESS_USER,
       POSTS_ERROR_USER,
+    ]
+  }),
+
+  postPaginationByPartId: paginate ({
+    mapActionToKey: action =>action.partId,
+    types: [
+      POSTS_REQUEST_PART,
+      POSTS_SUCCESS_PART,
+      POSTS_ERROR_PART,
     ]
   }),
 
