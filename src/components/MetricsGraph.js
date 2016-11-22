@@ -103,7 +103,6 @@ export default class MetricsGraph extends Component {
   render () {
     let {currentIndex, entriesOnDisplay, data} = this.state
       , {onDoneEdit} = this.props
-    console.log (data)
     return (
           <View style={Specs.container}>
           {

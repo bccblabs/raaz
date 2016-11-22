@@ -159,6 +159,11 @@ export default keyMirror ({
   PARTS_MANU_SUCCESS: null,
   PARTS_MANU_ERROR: null,
 
+  PARTS_BUILD_REQUEST: null,
+  PARTS_BUILD_SUCCESS: null,
+  PARTS_BUILD_ERROR: null,
+
+
   DEALS_REQUEST: null,
   DEALS_SUCCESS: null,
   DEALS_ERROR: null,

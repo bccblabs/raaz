@@ -11,6 +11,8 @@ import List from './List'
 import LoadingView from './LoadingView'
 import Manufacturers from './Manufacturers'
 import MetricsGraph from './MetricsGraph'
+import PartTags from './PartTags'
+import PhotoSwiper from './PhotoSwiper'
 import PostCard from './Manufacturers'
 import SaveProductButton from './SaveProductButton'
 import SpecsHistoryHeader from './SpecsHistoryHeader'
@@ -24,6 +26,7 @@ import MakesList from './Makes'
 import ModelsList from './Models'
 import SubmodelsList from './Submodels'
 import SpecsList from './Specs'
+
 
 
 module.exports.CategoryFilter = CategoryFilter
@@ -40,6 +43,8 @@ module.exports.List = List
 module.exports.LoadingView = LoadingView
 module.exports.Manufacturers = Manufacturers
 module.exports.MetricsGraph = MetricsGraph
+module.exports.PartTags = PartTags
+module.exports.PhotoSwiper = PhotoSwiper
 module.exports.PostCard = PostCard
 module.exports.SaveProductButton = SaveProductButton
 module.exports.SpecsHistoryHeader = SpecsHistoryHeader

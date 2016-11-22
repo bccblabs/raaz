@@ -10,7 +10,6 @@ const mapStateToProps = (state, props) => {
   return {
     data: postByBuildIdSelector(state, props),
     pagination: postPaginationByBuildIdSelector(state, props),
-    title: 'Posts'
   }
 }
 

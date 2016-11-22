@@ -5,7 +5,8 @@ import {
   Image,
   ScrollView,
   Text,
-  View
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native'
 
 import {Actions} from 'react-native-router-flux'
@@ -120,14 +121,19 @@ export default class PartDetails extends Component {
           </View>
         ):undefined
       return (
-        <View style={{flex: 1}}>
         <ParallaxScrollView
           backgroundColor="transparent"
           contentBackgroundColor="white"
           backgroundSpeed={1}
           parallaxHeaderHeight={300+64}
           stickyHeaderHeight={64}
-          renderFixedHeader={() => header}
+          renderFixedHeader={()=>(
+            <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
+            <TouchableWithoutFeedback onPress={Actions.pop}>
+              <Image source={require ('../common/img/back.ios.png')} style={{flex: -1}}/>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={{uri: media[0]}} style={DetailStyles.VRImageHolder}/>}
           >
@@ -142,13 +148,6 @@ export default class PartDetails extends Component {
           {detailsContent}
           </View>
         </ParallaxScrollView>
-        <F8Button
-          style={DetailStyles.bottomButton}
-          type="tertiary" caption={`${buildCnt} Builds`}
-          icon={require ('../common/img/tuning.png')}
-          onPress={()=>Actions.BuildsByPartId ({partId})}
-        />
-        </View>
       )
     }
   }

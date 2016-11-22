@@ -10,7 +10,6 @@ const mapStateToProps = (state, props) => {
   return {
     data: postByUserIdSelector(state, props),
     pagination: postPaginationByUserIdSelector(state, props),
-    title: props.userName
   }
 }
 

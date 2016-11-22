@@ -3,12 +3,12 @@ import {Scene, Actions, ActionConst} from 'react-native-router-flux'
 
 import { General } from '../styles'
 import { BuildDetails, BuildsByPartId, BuildsBySpecId, BuildsByTag, BuildsByUserId } from '../build'
-import { Parts, PartDetails, PartFilter, PartsByManufacturer } from '../part'
+import { Parts, PartDetails, PartsByBuild, PartFilter, PartsByManufacturer } from '../part'
 import { PostsByBuildId, PostsByUserId } from '../post' 
 import { Makes, Models, Submodels, Specs } from '../picker'
 import { Tuning, TuningBySpec, QRScreen } from '../tuning'
 import { UserPage, Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, NewPart, Notifications, Posts, PreviewBuild, PreviewPost, Saved, Settings } from '../user'
-import { TabIcon, EditSpecs } from '../components'
+import { TabIcon, EditSpecs, PhotoSwiper} from '../components'
 export default scenes = Actions.create (
   <Scene key="root">
     <Scene key="login" component={Login} title="Login" hideNavBar={true} />
@@ -25,7 +25,8 @@ export default scenes = Actions.create (
     <Scene key="PartDetails" component={PartDetails} hideNavBar/>
     <Scene key="PartFilter" component={PartFilter} hideNavBar/>
     <Scene key="PartsByManufacturer" component={PartsByManufacturer} hideNavBar/>
-
+    <Scene key="PartsByBuild" component={PartsByBuild} hideNavBar/>
+    
     <Scene key="Makes" component={Makes} title="Makes" hideNavBar/>
     <Scene key="Models" type={ActionConst.REPLACE} component={Models} title="Models" hideNavBar/>
     <Scene key="Submodels" type={ActionConst.REPLACE} component={Submodels} title="Trims" hideNavBar/>
@@ -41,9 +42,11 @@ export default scenes = Actions.create (
     <Scene key="BuildsByUserId" component={BuildsByUserId} hideNavBar/>
     <Scene key="BuildsByPartId" component={BuildsByPartId} hideNavBar/>
     <Scene key="BuildsBySpecId" component={BuildsBySpecId} hideNavBar/>
+
     <Scene key="PostsByBuildId" component={PostsByBuildId} hideNavBar/>
     <Scene key="PostsByUserId" component={PostsByUserId} hideNavBar/>
 
     <Scene key="UserPage" component={UserPage} hideNavBar/>
+    <Scene key="PhotoSwiper" component={PhotoSwiper} hideNavBar/>
   </Scene>
 )

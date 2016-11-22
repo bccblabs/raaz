@@ -42,6 +42,10 @@ const {
   PARTS_MANU_SUCCESS,
   PARTS_MANU_ERROR,
 
+  PARTS_BUILD_REQUEST,
+  PARTS_BUILD_SUCCESS,
+  PARTS_BUILD_ERROR,
+
   POSTS_REQUEST,
   POSTS_SUCCESS,
   POSTS_ERROR,
@@ -204,6 +208,15 @@ const pagination = combineReducers ({
       PARTS_MANU_REQUEST,
       PARTS_MANU_SUCCESS,
       PARTS_MANU_ERROR,
+    ]
+  }),
+
+  partsPaginationByBuildId: paginate ({
+    mapActionToKey: action => action.buildId,
+    types: [
+      PARTS_BUILD_REQUEST,
+      PARTS_BUILD_SUCCESS,
+      PARTS_BUILD_ERROR,
     ]
   })
 })

@@ -38,6 +38,10 @@ const {
     PARTS_MANU_SUCCESS,
     PARTS_MANU_ERROR,
 
+    PARTS_BUILD_REQUEST,
+    PARTS_BUILD_SUCCESS,
+    PARTS_BUILD_ERROR,
+
     DEALS_REQUEST,
     DEALS_SUCCESS,
     DEALS_ERROR,
@@ -222,4 +226,18 @@ export function fetchPartsByManufacturer (manufacturerId, nextPageUrl, specId, c
     }
   }
 
+}
+
+export function fetchPartsByBuildId (buildId, nextPageUrl, tag) {
+  let endpoint = '/build/details/' + buildId + '/part/' + tag
+    , url = nextPageUrl ? (endpoint + nextPageUrl) : endpoint
+
+  return {
+    buildId,
+    [CALL_API]: {
+      types: [PARTS_BUILD_REQUEST, PARTS_BUILD_SUCCESS, PARTS_BUILD_ERROR],
+      endpoint: url,
+      schema: Schemas.PARTS_ARRAY,
+    }
+  }
 }

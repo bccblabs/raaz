@@ -38,14 +38,14 @@ export default class ProfileContainer extends Component {
         backgroundColor="transparent"
         contentBackgroundColor="white"
         backgroundSpeed={1}
-        parallaxHeaderHeight={300+64}
+        parallaxHeaderHeight={300}
         fixedHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
         renderBackground={() => <Image source={require ('../common/img/2jz.png')} style={DetailStyles.VRImageHolder}/>}
         renderFixedHeader={()=>(
           <View style={{marginTop: 24, marginLeft: 16, backgroundColor: 'transparent', flex: 1}}>
           <TouchableWithoutFeedback onPress={Actions.pop}>
-            <Image source={require ('../common/img/x.png')} style={{flex: -1}}/>
+            <Image source={require ('../common/img/back_white.ios.png')} style={{flex: -1}}/>
             </TouchableWithoutFeedback>
           </View>
         )}

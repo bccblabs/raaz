@@ -370,7 +370,7 @@ export const EmptyViewStyles = StyleSheet.create ({
 export const PostStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     marginVertical: 8,
     padding: 8
   },
@@ -589,7 +589,6 @@ export const DetailStyles = StyleSheet.create ({
       right: 8,
     },
     scrollImage: {
-      flex: -1,
       width: 150,
       height: 150,
       resizeMode: 'cover',

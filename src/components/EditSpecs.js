@@ -60,7 +60,6 @@ export default class EditSpecs extends Component {
 	          style={[General.bottomButtonStyle, {backgroundColor: 'red', position: 'absolute', bottom: 0}]}
 	          type="saved" caption="Done!"
 	          onPress={()=>{
-	          	console.log (this.state)
 	          	onDoneEdit(this.state.name, parseInt (this.state.value))
 	          	Actions.pop()
 	          }}

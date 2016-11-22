@@ -182,6 +182,17 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
     }
   )
 
+  export const partsByBuildIdPaginationSelector = (state, props) => (state.pagination.partsPaginationByBuildId && state.pagination.partsPaginationByBuildId[props.buildId] || {})
+  export const partsByBuildIdSelector = createSelector (
+    [partsEntitiesSelector, partsByBuildIdPaginationSelector],
+    (partsEntities, partsPagination) => {
+      let ids = partsPagination.ids?partsPagination.ids:[]
+      return ids.map (id=>partsEntities[id]).filter (elem=>elem)
+    }
+  )
+
+
+
   export const isFollowing = (state, props) => {
     return false
   }
