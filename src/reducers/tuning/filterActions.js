@@ -29,6 +29,10 @@ const {
     BUILDS_SUCCESS_SPECID,
     BUILDS_ERROR_SPECID,
 
+    BUILDS_REQUEST_MANU,
+    BUILDS_SUCCESS_MANU,
+    BUILDS_ERROR_MANU,
+
 
     PARTS_REQUEST,
     PARTS_SUCCESS,
@@ -126,6 +130,21 @@ export function fetchBuildsByUserId (paging, userId) {
     }
   }
 }
+
+export function fetchBuildsByManufacturerId (paging, manufacturerId) {
+  let endpoint = '/build/manufacturer/' + manufacturerId
+  if (paging) endpoint += paging
+  return {
+    manufacturerId,
+    [CALL_API]: {
+      types: [BUILDS_REQUEST_MANU, BUILDS_SUCCESS_MANU, BUILDS_ERROR_MANU],
+      endpoint: endpoint,
+      schema: Schemas.BUILDS_ARRAY,
+    }
+  }
+}
+
+
 
 export function clearPartTags () {
   return {

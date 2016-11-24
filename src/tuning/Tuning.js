@@ -86,7 +86,7 @@ class Tuning extends Component {
     , {showModal} = this.state
 
     return (
-      <View style={{flex: 1, backgroundColor:'transparent'}}>
+      <View style={{flex: 1, backgroundColor:'transparent', marginBottom: 50}}>
         <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
         <F8Button style={{flex: 1}}
@@ -95,7 +95,7 @@ class Tuning extends Component {
                   icon={require ('../common/img/qr.png')}
                   caption={"Raaz qr"}/>
         <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                  caption="By car" type="search"
+                  caption="Parts By car" type="search"
                   icon={require ('../common/img/search.png')}/>
         </View>
         <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>

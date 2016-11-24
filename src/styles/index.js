@@ -148,19 +148,19 @@ export const ListingStyles = StyleSheet.create ({
 
 export const PartStyles = StyleSheet.create ({
   partsScrollStyle: {
-    height: window.height/6,
+    height: 150,
     margin: 16,
   },
   partContainer: {
-    height: window.height/6,
-    width: window.height/6,
-    backgroundColor: 'black',
+    height: 150,
+    width: 150,
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center'
   },
   partImage: {
-    height: window.height/8,
-    width: window.height/8,
+    height: 150,
+    width: 150,
     resizeMode: 'contain'
   },
   partTitle: {
@@ -419,9 +419,9 @@ export const PostStyles = StyleSheet.create({
   },
 
   largeUserPhoto: {
-    height: 80,
-    width: 80,
-    resizeMode: 'cover'
+    height: 60,
+    width: 60,
+    resizeMode: 'contain',
   },
 
   primaryImage: {

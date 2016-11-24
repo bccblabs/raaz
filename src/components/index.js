@@ -30,6 +30,8 @@ import ModelsList from './Models'
 import SubmodelsList from './Submodels'
 import SpecsList from './Specs'
 
+import PartsByManufactuer from './PartsByManufactuer'
+
 module.exports.BackSquare = BackSquare
 module.exports.CategoryFilter = CategoryFilter
 module.exports.CommentBtn = CommentBtn
@@ -62,3 +64,5 @@ module.exports.SubmodelsList = SubmodelsList
 module.exports.SpecsList = SpecsList
 
 module.exports.InfoContainer = InfoContainer
+module.exports.PartsByManufactuer = PartsByManufactuer
+

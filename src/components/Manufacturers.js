@@ -1,8 +1,6 @@
 'use strict'
 import React, {Component} from 'react'
 import {
-  Text,
-  TextInput,
   View,
   ScrollView,
   StyleSheet,
@@ -12,13 +10,10 @@ import {
 
 import {Paragraph} from '../common/F8Text'
 import {Actions} from 'react-native-router-flux'
-import {connect} from 'react-redux'
-import {createSelector} from 'reselect'
 
-import isArray from 'lodash/isArray'
 import {PartStyles} from '../styles'
 
-class Manufacturers extends Component {
+export default class Manufacturers extends Component {
   constructor (props) {
     super (props)
   }
@@ -70,4 +65,3 @@ var styles = StyleSheet.create({
   },
 })
 
-export default connect () (Manufacturers)

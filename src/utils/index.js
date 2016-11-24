@@ -168,6 +168,13 @@ export const Requests = {
     return fetchWithTimeout (REQ_TIMEOUT, url, GET_OPTS)
             .then ((resp) => {return resp.json()})
             .catch ((err) => {throw err})
+  },
+  fetchPartsByManufacturer (specId, manufacturerId) {
+    let url = API_ENDPOINT + '/tuning/manufacturer/' + manufacturerId + '/parts'
+    return fetchWithTimeout (REQ_TIMEOUT, url, GET_OPTS)
+            .then ((resp) => {return resp.json()})
+            .catch ((err) => {throw err})
+
   }
 }
 

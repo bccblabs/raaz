@@ -154,6 +154,10 @@ export default keyMirror ({
   BUILDS_SUCCESS_SPECID: null,
   BUILDS_ERROR_SPECID: null,
 
+  BUILDS_REQUEST_MANU: null,
+  BUILDS_SUCCESS_MANU: null,
+  BUILDS_ERROR_MANU: null,
+
   PARTS_REQUEST: null,
   PARTS_SUCCESS: null,
   PARTS_ERROR: null,

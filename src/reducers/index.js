@@ -33,6 +33,10 @@ const {
   BUILDS_SUCCESS_SPECID,
   BUILDS_ERROR_SPECID,
 
+  BUILDS_REQUEST_MANU,
+  BUILDS_SUCCESS_MANU,
+  BUILDS_ERROR_MANU,
+
 
   PARTS_REQUEST,
   PARTS_SUCCESS,
@@ -140,6 +144,11 @@ const pagination = combineReducers ({
   buildPaginationByUserId: paginate ({
     mapActionToKey: action =>action.userId,
     types: [BUILDS_REQUEST_USER, BUILDS_SUCCESS_USER, BUILDS_ERROR_USER],
+  }),
+
+  buildPaginationByManufacturerId: paginate ({
+    mapActionToKey: action => action.manufacturerId,
+    types: [BUILDS_REQUEST_MANU, BUILDS_SUCCESS_MANU, BUILDS_ERROR_MANU]
   }),
 
   dealsPagination: paginate ({

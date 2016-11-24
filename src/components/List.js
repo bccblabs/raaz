@@ -35,11 +35,18 @@ export default class List extends Component {
 
   componentWillReceiveProps (nextProps) {
     let {data, tags, pagination} = nextProps
-    if (!isEqual(data, this.props.data)) {
+    if (!isEqual(data, this.state.data)) {
       let newBlob = union (this.state.data, data)
       this.setState ({
-        dataSource: this.state.dataSource.cloneWithRows (newBlob),
-        data: newBlob,
+        dataSource: this.state.dataSource.cloneWithRows (data),
+        data: data,
+        pagination,
+      })
+    } else {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      this.setState ({
+        dataSource: ds.cloneWithRows (data),
+        data: data,
         pagination,
       })
     }

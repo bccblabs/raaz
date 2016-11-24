@@ -158,6 +158,15 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
     }
   )
 
+  export const buildPaginationByManufacturerIdSelector = (state, props) => (state.pagination.buildPaginationByManufacturerId && state.pagination.buildPaginationByManufacturerId[props.manufacturerId] || {})
+  export const buildByManufacturerIdSelector = createSelector (
+    [buildsEntitiesSelector, buildPaginationByManufacturerIdSelector],
+    (buildsEntities, buildsPagination) => {
+      let ids = buildsPagination.ids?buildsPagination.ids:[]
+      return ids.map (id=>buildsEntities[id]).filter (elem=>elem)
+    }
+  )
+
   export const newBuildSelector = (state) => (state.newbuild.toJS())
 
 
