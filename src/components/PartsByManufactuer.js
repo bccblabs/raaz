@@ -37,14 +37,12 @@ export default class Manufacturers extends Component {
       let {specId, manufacturerId} = this.props
         , data = await Requests.fetchPartsByManufacturer (specId, manufacturerId)
 
-      console.log (data)
       this.setState ({
         hasError: false,
         isFetching: false,
         data: data
       })
     } catch (err) {
-      console.log (err)
       this.setState ({hasError: true, isLoading: false})
     }
   }
@@ -80,13 +78,13 @@ export default class Manufacturers extends Component {
                         passProps = Object.assign ({}, {partId}, {name}, {specId})
 
                     return (
-                      <TouchableWithoutFeedback style={{margin: 16}} key={`pelem-${cidx}`} onPress={()=>{Actions.PartDetails ({...passProps})}}>
+                      <TouchableWithoutFeedback style={{margin: 16}} key={`pelem-${cidx}`} onPress={()=>{Actions.PartDetails ({data: passProps})}}>
                       <View style={{flex: 1}}>
                         <Image
                           source={{uri: media}}
                           style={DetailStyles.scrollImage, {height: 200, width: 200, margin: 16}}>
                         </Image>
-                        <Text style={{fontSize: 12, fontWeight: '700', color: 'black', position: 'absolute', top: 8, left: 8, maxWidth: 150, flex: -1}}>{name}</Text>
+                        <Text style={{fontSize: 15, paddingLeft: 12, paddingVertical: 8, fontWeight: '700', color: 'black', position: 'absolute', width: 150, top: 8, left: 8, flex: -1}}>{name}</Text>
                         </View>
                       </TouchableWithoutFeedback>
                     )

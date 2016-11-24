@@ -207,13 +207,15 @@ export default keyMirror ({
   SPECS_DETAILS_SUCCESS: null,
   SPECS_DETAILS_ERROR: null,
 
+  SPECS_MANU_REQUEST: null,
+  SPECS_MANU_SUCCESS: null,
+  SPECS_MANU_ERROR: null,
+
+
   SET_SELECTED_MAKE: null,
   SET_SELECTED_MODEL: null,
   SET_SELECTED_SUBMODEL: null,
   SET_SELECTED_SPECID: null,
-
-
-
 
   /* History */
 

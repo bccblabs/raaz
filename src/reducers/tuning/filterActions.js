@@ -58,6 +58,11 @@ const {
     SPECS_DETAILS_SUCCESS,
     SPECS_DETAILS_ERROR,
 
+    SPECS_MANU_REQUEST,
+    SPECS_MANU_SUCCESS,
+    SPECS_MANU_ERROR,
+
+
     CAT_REQUEST,
     CAT_SUCCESS,
     CAT_ERROR,
@@ -260,3 +265,19 @@ export function fetchPartsByBuildId (buildId, nextPageUrl, tag) {
     }
   }
 }
+
+export function fetchSpecsByManufacturer (manufacturerId, nextPageUrl) {
+  let endpoint = '/manufacturer/' + manufacturerId + '/specs/'
+      , url = nextPageUrl ? (endpoint + nextPageUrl) : endpoint
+
+  return {
+    manufacturerId,
+    [CALL_API]: {
+      types: [SPECS_MANU_REQUEST, SPECS_MANU_SUCCESS, SPECS_MANU_ERROR],
+      endpoint: url,
+      schema: Schemas.SPEC_ARRAY,
+    }
+  }
+}
+
+

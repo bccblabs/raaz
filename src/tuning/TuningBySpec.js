@@ -144,7 +144,7 @@ class TuningBySpec extends Component {
               let string = (make + ' ' + model + ' ' + submodel).toUpperCase()
               return (<Text style={[DetailStyles.primaryTitle, DetailStyles.infoContainer]}>{string}</Text>)
             }}
-            renderBackground={() => <WebView source={{uri: "https://storage.googleapis.com/vrview/index.html?image=https://s3.amazonaws.com/vr-web/images/IMG_3656.JPG&is_stereo=false"}} style={DetailStyles.VRImageHolder}/>}
+          renderBackground={() => <Image source={require ('../common/img/r34.png')} style={DetailStyles.VRImageHolder}/>}
             >
             <View style={{flex: 1}}>
             <BuildsPagerBySpecId specId={specId}/>

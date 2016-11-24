@@ -10,6 +10,7 @@ import {
 
 import F8Button from '../common/F8Button'
 import {Actions} from 'react-native-router-flux'
+import {connect} from 'react-redux'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {BuildsPagerByManufacturerId} from '../build'
 
@@ -18,11 +19,29 @@ import {Heading3, Paragraph} from '../common/F8Text'
 
 import {
 	BackSquare,
-	PartsByManufactuer
+	PartsByManufactuer,
+	SpecSelector,
 } from '../components'
 
+const mapStateToProps = (state, props) => {
+	return {
+		specId: state.car.selectedSpecId
+	}
+}
 
-export default class Manufacturer extends Component {
+class Manufacturer extends Component {
+	constructor (props) {
+		super (props)
+		this.state = {
+			specId: props.specId
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		let {specId} = nextProps
+		this.setState ({specId})
+	}
+
 	render () {
 		let {specId, manufacturer} = this.props
 	      , foregroundContent = manufacturer?(
@@ -52,10 +71,13 @@ export default class Manufacturer extends Component {
 	        renderFixedHeader={()=>(<BackSquare/>)}
 	        >
 	        <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
-	        <BuildsPagerByManufacturerId style={{flex: 1}} manufacturerId={manufacturer.manufacturerId}/>
+	        <SpecSelector style={{marginTop: 16, flex: 1}} manufacturerId={manufacturer.manufacturerId}/>
+	        <BuildsPagerByManufacturerId style={{flex: 1}} specId={specId} manufacturerId={manufacturer.manufacturerId}/>
 	        <PartsByManufactuer specId={specId} manufacturerId={manufacturer.manufacturerId}/>
 	        </View>
 	      </ParallaxScrollView>
 		)		
 	}
 }
+
+export default connect (mapStateToProps) (Manufacturer)

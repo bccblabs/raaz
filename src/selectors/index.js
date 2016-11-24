@@ -210,6 +210,15 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
     }
   )
 
+  export const specsByManufacturerEntities = (state, props) => (state.entities.specOptions)
+  export const specsPaginationByManufacturerIdSelector = (state, props) => (state.pagination.specsPaginationByManufacturerId && state.pagination.specsPaginationByManufacturerId[props.manufacturerId] || {})
+  export const specsByManufacturerIdSelector = createSelector (
+    [specsByManufacturerEntities, specsPaginationByManufacturerIdSelector],
+    (specsEntities, specsPagination) => {
+      let ids = specsPagination.ids?specsPagination.ids:[]
+      return ids.map (id=>specsEntities[id]).filter (elem=>elem)
+    }
+  )
 
 
   export const isFollowing = (state, props) => {

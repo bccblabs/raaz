@@ -86,6 +86,10 @@ const {
   SPECS_DETAILS_SUCCESS,
   SPECS_DETAILS_ERROR,
 
+  SPECS_MANU_REQUEST,
+  SPECS_MANU_SUCCESS,
+  SPECS_MANU_ERROR,
+
   DEALS_REQUEST,
   DEALS_SUCCESS,
   DEALS_ERROR,
@@ -109,6 +113,7 @@ let initState = {
   newpost: {},
   newbuild: {},
   newpart: {},
+  specsOptions: {},
 }
 
 function entities(state=initState, action) {
@@ -211,6 +216,15 @@ const pagination = combineReducers ({
       SPECS_DETAILS_REQUEST,
       SPECS_DETAILS_SUCCESS,
       SPECS_DETAILS_ERROR,
+    ]
+  }),
+
+  specsPaginationByManufacturerId: paginate ({
+    mapActionToKey: action=>action.manufacturerId,
+    types: [
+      SPECS_MANU_REQUEST,
+      SPECS_MANU_SUCCESS,
+      SPECS_MANU_ERROR,
     ]
   }),
 

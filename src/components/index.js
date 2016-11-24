@@ -18,7 +18,11 @@ import PartTags from './PartTags'
 import PhotoSwiper from './PhotoSwiper'
 import PostCard from './Manufacturers'
 import SaveProductButton from './SaveProductButton'
+
 import SpecsHistoryHeader from './SpecsHistoryHeader'
+import SpecSelector from './SpecSelector'
+import SpecsByManufacturer from './SpecsByManufacturer'
+
 import Tag from './Tag'
 import TabIcon from './TabIcon'
 import TagFilter from './TagFilter'
@@ -51,8 +55,11 @@ module.exports.MetricsGraph = MetricsGraph
 module.exports.PartTags = PartTags
 module.exports.PhotoSwiper = PhotoSwiper
 module.exports.PostCard = PostCard
+
 module.exports.SaveProductButton = SaveProductButton
 module.exports.SpecsHistoryHeader = SpecsHistoryHeader
+module.exports.SpecSelector = SpecSelector
+
 module.exports.Tag = Tag
 module.exports.TagFilter = TagFilter
 module.exports.TagsHeader = TagsHeader
@@ -66,3 +73,4 @@ module.exports.SpecsList = SpecsList
 module.exports.InfoContainer = InfoContainer
 module.exports.PartsByManufactuer = PartsByManufactuer
 
+module.exports.SpecsByManufacturer = SpecsByManufacturer

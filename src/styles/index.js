@@ -436,18 +436,15 @@ export const PostStyles = StyleSheet.create({
     resizeMode: 'cover',
   },
   manufacturerLogo: {
-    margin: 4,
     flex: 1,
     height: 40,
     width: 80,
+    padding: 8,
+    backgroundColor: 'transparent',
     resizeMode: 'contain',
   },
   manufacturerContainer: {
-    position: 'absolute',
-    backgroundColor: 'black',
     flex: 1,
-    top: 8,
-    right: 8,
   },
   postsHorizontal: {
     width: window.width,

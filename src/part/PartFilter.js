@@ -20,9 +20,6 @@ export default class PartFilter extends Component {
     return (
       <View style={{flex: 1}}>
       <F8Header title={title.toUpperCase()} foreground='dark' leftItem={leftItem} />
-      <F8Button onPress={Actions.SearchTuning}
-                caption="search" type="search"
-                icon={require ('../common/img/search.png')}/>
       <CategoryFilter filterId={filterId} title={title} toggleAction={togglePartTag}/>
       </View>
     )
