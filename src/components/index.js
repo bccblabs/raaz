@@ -34,7 +34,11 @@ import ModelsList from './Models'
 import SubmodelsList from './Submodels'
 import SpecsList from './Specs'
 
+import AddPost from './AddPost'
+
 import PartsByManufactuer from './PartsByManufactuer'
+
+module.exports.AddPost = AddPost
 
 module.exports.BackSquare = BackSquare
 module.exports.CategoryFilter = CategoryFilter

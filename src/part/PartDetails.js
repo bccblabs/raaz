@@ -18,6 +18,7 @@ import F8Header from '../common/F8Header'
 import {Heading3, Paragraph} from '../common/F8Text'
 import {General, Titles, DetailStyles, PostStyles, Specs} from '../styles'
 import {
+  AddPost,
   BackSquare,
   ErrorView, 
   ImagesScroll,
@@ -132,7 +133,8 @@ export default class PartDetails extends Component {
           {detailsContent && (<Heading3 style={Titles.filterSectionTitle}>{"DETAILS"}</Heading3>)}
           {detailsContent}
           </View>
-          <Paragraph style={Titles.filterSectionTitle}>{"POSTS"}</Paragraph>
+          <Paragraph style={Titles.filterSectionTitle}>{"WALL"}</Paragraph>
+          <AddPost style={{flex: 1}}/>
           <PostsByPartId style={{flex: 1}} partId={partId}/>
           </View>
         </ParallaxScrollView>

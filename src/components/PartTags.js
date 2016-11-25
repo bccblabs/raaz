@@ -9,12 +9,12 @@ export default class PartTags extends Component {
 		let {tags, buildId, specId} = this.props
 		   return (tags && keys(tags).length) ? (
 		    <View flexDirection="row" justifyContent="center" alignItems="center">
-				<Text style={{fontWeight:'bold', color: 'black', fontSize: 10, marginHorizontal: 8}}>{"Tuned:"}</Text>
 			    <ScrollView contentContainerStyle={{
-			        backgroundColor: 'white', 
+			        backgroundColor: 'transparent', 
 			        flexDirection: 'row',
 			        alignItems: 'center',
 			        flex: 1,
+			        marginVertical: 4,
 			      }}>
 			      {keys(tags).map((partTag, idx)=>{
 			        return (
@@ -24,7 +24,7 @@ export default class PartTags extends Component {
 			            justifyContent: 'center',
 			            alignItems: 'center',
 			            flex: -1, 
-			            backgroundColor: 'orange',
+			            backgroundColor: 'red',
 			            borderRadius: 4, 
 			            margin: 4,}}>
 			          <Text style={{fontSize: 10,color: 'white', marginLeft: 8, fontWeight: 'bold'}}>{tags[partTag]}</Text>

@@ -21,7 +21,11 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 import {BuildsPagerByUserId} from '../build'
 import {PostsByUserId} from '../post'
 
-import {BackSquare} from '../components'
+import {  
+  AddPost,
+  BackSquare
+} from '../components'
+
 export default class ProfileContainer extends Component {
   render () {
     let {profileData, btnContent, userId, initial} = this.props
@@ -50,7 +54,8 @@ export default class ProfileContainer extends Component {
         >
         <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
         <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
-        <Heading3 style={Titles.filterSectionTitle}>{"POSTS"}</Heading3>
+        <Heading3 style={Titles.filterSectionTitle}>{"WALL"}</Heading3>
+        <AddPost style={{flex: 1}}/>
         <PostsByUserId style={{flex: 1}} userId={userId}/>
         </View>
       </ParallaxScrollView>

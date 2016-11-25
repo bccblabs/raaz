@@ -12,6 +12,7 @@
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
+#import <AVFoundation/AVFoundation.h>  // import
 
 #import "CodePush.h"
 @implementation AppDelegate
@@ -25,6 +26,7 @@
   jsCodeLocation = [CodePush bundleURL];
 #endif
   
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];  // allow
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Raaz"
                                                initialProperties:nil

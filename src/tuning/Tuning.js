@@ -2,7 +2,8 @@
 import React, {Component} from 'react'
 import {
   Image,
-  Modal, 
+  Modal,
+  ScrollView, 
   Text,
   TouchableWithoutFeedback,
   View
@@ -12,7 +13,7 @@ import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 import {DetailStyles, General} from '../styles'
 
-
+import {AddPost} from '../components'
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 
@@ -98,7 +99,10 @@ class Tuning extends Component {
                   caption="Parts By car" type="search"
                   icon={require ('../common/img/search.png')}/>
         </View>
+        <ScrollView>
+        <AddPost/>
         <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>
+        </ScrollView>
         <Modal 
           animationType={"slide"}
           transparent={true}

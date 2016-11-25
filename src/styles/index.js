@@ -295,11 +295,10 @@ export const NewPostStyles = StyleSheet.create ({
     fontSize: 32,
   },
   singleLineBlockInput: {
-    margin: 8,
-    width: window.width,
-    height: window.height/16,
-    fontSize: 18,
-    fontWeight: '800'
+    flex: -1,
+    height: 60,
+    backgroundColor: '#f8f8f8',
+    fontSize: 14,
   },
   commentInput: {
     flex: -1,
@@ -421,7 +420,7 @@ export const PostStyles = StyleSheet.create({
   largeUserPhoto: {
     height: 60,
     width: 60,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
 
   primaryImage: {
@@ -439,12 +438,12 @@ export const PostStyles = StyleSheet.create({
     flex: 1,
     height: 40,
     width: 80,
-    padding: 8,
     backgroundColor: 'transparent',
     resizeMode: 'contain',
   },
   manufacturerContainer: {
     flex: 1,
+    marginVertical: 4,
   },
   postsHorizontal: {
     width: window.width,

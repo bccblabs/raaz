@@ -10,7 +10,6 @@ import TagsHeader from './TagsHeader'
 import ErrorView from './ErrorView'
 import LoadingView from './LoadingView'
 import EmptyView from './EmptyView'
-
 import {General, btnColor} from '../styles'
 
 export default class List extends Component {
@@ -54,7 +53,7 @@ export default class List extends Component {
 
   render () {
     let {dataSource, pagination} = this.state
-      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg} = this.props
+      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg, wall} = this.props
       , {nextPageUrl, isFetching, hasError} = pagination
       , header = title?(<F8Header foreground="dark" title={title.toUpperCase()} leftItem={{title:'Back', onPress: Actions.pop}}/>):<View/>
       , content
@@ -67,9 +66,6 @@ export default class List extends Component {
                       fetchData && fetchData()
                     }}
                     />)
-      }
-      else if (!dataSource.getRowCount()) {
-        content = (<EmptyView emptyMsg={emptyMsg}/>)
       }
       else {
         content = (
