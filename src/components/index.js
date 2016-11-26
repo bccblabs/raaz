@@ -22,7 +22,7 @@ import SaveProductButton from './SaveProductButton'
 import SpecsHistoryHeader from './SpecsHistoryHeader'
 import SpecSelector from './SpecSelector'
 import SpecsByManufacturer from './SpecsByManufacturer'
-
+import SpecsView from './SpecsView'
 import Tag from './Tag'
 import TabIcon from './TabIcon'
 import TagFilter from './TagFilter'
@@ -63,6 +63,7 @@ module.exports.PostCard = PostCard
 module.exports.SaveProductButton = SaveProductButton
 module.exports.SpecsHistoryHeader = SpecsHistoryHeader
 module.exports.SpecSelector = SpecSelector
+module.exports.SpecsView = SpecsView
 
 module.exports.Tag = Tag
 module.exports.TagFilter = TagFilter

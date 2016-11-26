@@ -103,19 +103,6 @@ class Tuning extends Component {
         <AddPost/>
         <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>
         </ScrollView>
-        <Modal 
-          animationType={"slide"}
-          transparent={true}
-          visible={showModal} 
-          onRequestClose={toggleOnStart}>
-          <View style={General.modalStyle}>
-          <Text style={{fontFamily: 'Futura-CondensedExtraBold', color: 'black'}}>You haven't added ur ride, bruh</Text>
-          <View style={{flexDirection: 'row', marginTop: 40}}>
-          <F8Button type="saved" style={{flex: 0, margin: 4}} caption="Add My Car" onPress={()=>{toggleOnStart(); Actions.NewBuild()}}/>          
-          <F8Button type="unsaved" style={{flex: 0, margin: 4}} onPress={()=>{toggleOnStart() && this.setState ({showModal: false})}} caption="Got it, Later!"/>          
-          </View>
-          </View>
-        </Modal>
       </View>
     )
   }

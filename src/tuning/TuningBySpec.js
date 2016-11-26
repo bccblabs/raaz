@@ -29,7 +29,8 @@ import {
   ErrorView, 
   Manufacturers, 
   MetricsGraph, 
-  PostCard
+  PostCard,
+  SpecsView,
 } from '../components'
 
 import {DetailStyles, General, Specs, Titles, PartStyles, PostStyles} from '../styles'
@@ -106,30 +107,13 @@ class TuningBySpec extends Component {
     }
     else {
       let {make, model, submodel, specId, tuning, specs, posts} = specsInfo
-        , {
-            cylinders, compressor, configuration,
-            transmissionSpeed, transmission, drivenWheels, size,
-          } = specs
-        , graphKeys = ['horsepower', 'torque']
-
-      const dataArray = graphKeys.map ((key)=>{return {name: key, value: specs[key]}})
-
-      let tuningcomponent = (
+        , tuningcomponent = (
         specsInfo.tuning && specsInfo.tuning.length )?(
           <View style={DetailStyles.descriptionContainer}>
               <Heading3 style={Titles.filterSectionTitle}>{"BRANDS BY CATEGORY"}</Heading3>
               <Manufacturers data={tuning} specId={specId}/>
             </View>
         ): (<View/>)
-
-        , descContent = (
-          <View style={[DetailStyles.descriptionContainer, {marginVertical: 0}]}>
-          <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
-          <Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>
-          <Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>
-          <MetricsGraph data={[{entries:dataArray}]}/>
-          </View>
-        )
 
         return (
           <View style={{flex: 1}}>
@@ -148,7 +132,7 @@ class TuningBySpec extends Component {
             >
             <View style={{flex: 1}}>
             <BuildsPagerBySpecId specId={specId}/>
-            {descContent}
+            <SpecsView specs={specs}/>
             {tuningcomponent}
             </View>
           </ParallaxScrollView>

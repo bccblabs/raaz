@@ -169,16 +169,8 @@ class AddPost extends Component {
 	    	content = (<Bar style={{marginTop: 8, marginBottom: 24}} height={24} width={300} progress={this.state.progress} color='red' />)
 	    } else {
 	    	content = (
-			<View style={{flex :1}}>
+			<View style={{flex :1, margin: 8}}>
 			{this.renderMedia()}
-				<TextInput
-					placeholder={placeholder?placeholder:"  OMG IT'S FAST"}
-					multiline={true}
-					maxLength={140}
-					onChangeText={(text) => {
-						this.setState({text});
-					}}
-					style={NewPostStyles.singleLineBlockInput}/>
 	      	<View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 8, flex: -1}}>
 			<Image source={{uri: profileData.picture}} style={{height: 45, width: 45, marginVertical: 8}}/>
 		        <F8Button 
@@ -200,6 +192,14 @@ class AddPost extends Component {
 		          caption="Publish" 
 		          style={{flex: -1}}/>
 			</View>
+				<TextInput
+					placeholder={placeholder?placeholder:"  OMG IT'S FAST"}
+					multiline={true}
+					maxLength={140}
+					onChangeText={(text) => {
+						this.setState({text});
+					}}
+					style={NewPostStyles.singleLineBlockInput}/>
 			</View>
     		)
 	    }

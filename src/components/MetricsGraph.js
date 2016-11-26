@@ -104,7 +104,7 @@ export default class MetricsGraph extends Component {
     let {currentIndex, entriesOnDisplay, data} = this.state
       , {onDoneEdit} = this.props
     return (
-          <View style={Specs.container}>
+          <View>
           {
             entriesOnDisplay && keys (entriesOnDisplay).map ((entryKey, idx)=>{
               let dataEntry = entriesOnDisplay[entryKey]
