@@ -370,8 +370,6 @@ export const PostStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'transparent',
-    marginVertical: 8,
-    padding: 8
   },
   header: {
     backgroundColor: 'transparent',
