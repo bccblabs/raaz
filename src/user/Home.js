@@ -38,12 +38,13 @@ class Home extends Component {
 			)
 
 		return (
-			<ProfileContainer
-				initial={true}
-				userId={userId}
-				profileData={profileData}
-				btnContent={btnContent}
-			/>
+			<View style={{flex: 1,marginBottom: 50}}>
+				<ProfileContainer
+					initial={true}
+					userId={userId}
+					profileData={profileData}
+					btnContent={btnContent}/>
+			</View>
 		)
 	}
 }

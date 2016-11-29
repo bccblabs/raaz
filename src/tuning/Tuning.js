@@ -18,35 +18,29 @@ import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 
 
-import {BuildList} from '../build'
-import {buildsSelector, buildsPaginationSelector, buildCategoriesSelector} from '../selectors'
-import {fetchCategoriesFromApi, fetchBuilds} from '../reducers/tuning/filterActions'
+import {PostList} from '../post'
+import {homePostSelector, homePostPaginationSelector} from '../selectors'
+import {fetchPosts} from '../reducers/post/postActions'
 
-import {userIdSelector, profileSelector, myBuildsSelector, onStartSelector} from '../selectors'
+import {userIdSelector, profileSelector} from '../selectors'
 
-import {setUserData, fetchUserBuilds, toggleOnStart} from '../reducers/user/userActions'
+import {setUserData} from '../reducers/user/userActions'
 import {setAccessToken} from '../reducers/history/historyActions'
 
 const mapStateToProps = (state, props) => {
   return {
-    data: buildsSelector (state),
-    pagination: buildsPaginationSelector(state),
-    tags: buildCategoriesSelector (state),
+    data: homePostSelector (state),
+    pagination: homePostPaginationSelector(state),
     user: props.user,
     access_token: props.access_token,
-    myBuilds: myBuildsSelector (state),
-    onStart: onStartSelector (state),
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchTags: () => { dispatch (fetchCategoriesFromApi ('car'))},
-    fetchData: (pageUrl) => {dispatch (fetchBuilds (pageUrl))},
+    fetchData: (pageUrl) => {dispatch (fetchPosts (pageUrl, null))},
     setUserData: () => { dispatch (setUserData (props.user))},
     setAccessToken: () => {dispatch (setAccessToken (props.access_token))},
-    fetchUserBuilds: () => {dispatch (fetchUserBuilds ())},
-    toggleOnStart: () => {dispatch (toggleOnStart())}
   }
 }
 
@@ -59,7 +53,6 @@ class Tuning extends Component {
   componentWillMount() {
     this.props.setUserData()
     this.props.setAccessToken()
-    this.props.fetchUserBuilds()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,11 +70,7 @@ class Tuning extends Component {
     , {
       data, 
       pagination, 
-      tags, 
-      userId, 
-      fetchTags, 
       fetchData,
-      toggleOnStart
     } = this.props
 
     , {showModal} = this.state
@@ -101,7 +90,7 @@ class Tuning extends Component {
         </View>
         <ScrollView>
         <AddPost/>
-        <BuildList key="builds-home" data={data} pagination={pagination} tags={tags} fetchTags={fetchTags} fetchData={fetchData}/>
+        <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
       </View>
     )

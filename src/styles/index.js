@@ -45,14 +45,11 @@ export const General = StyleSheet.create ({
 
 export const Header = StyleSheet.create ({
   container: {
-    height: 44,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderWidth: 0.5,
-    borderColor: 'black'
+    marginHorizontal: 8,
+    marginVertical: 12,
   },
   clear: {
     marginHorizontal: 2,
@@ -369,7 +366,11 @@ export const EmptyViewStyles = StyleSheet.create ({
 export const PostStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
+    height: window.height/2,
+    marginBottom: 32,
+    width: window.width,
+    borderBottomColor: 'black', 
   },
   header: {
     backgroundColor: 'transparent',
@@ -381,12 +382,12 @@ export const PostStyles = StyleSheet.create({
   tags: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    width: window.width,
-    paddingVertical: 8,
+    flex: 1,
   },
   tagsContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
+    backgroundColor: 'transparent', 
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
@@ -395,7 +396,8 @@ export const PostStyles = StyleSheet.create({
   },
   tag: {
     color: 'black',
-    fontSize: 10,
+    fontWeight: '300',
+    fontSize: 12,
     paddingHorizontal: 4,
   },
   created: {
@@ -410,8 +412,8 @@ export const PostStyles = StyleSheet.create({
     fontWeight: '500',
   },
   userPhotoStyle: {
-    height: 60,
-    width: 60,
+    height: 45,
+    width: 45,
     resizeMode: 'cover'
   },
 
@@ -428,9 +430,10 @@ export const PostStyles = StyleSheet.create({
     alignSelf: 'center'
   },
   secondaryImage: {
-    width: window.width/2,
-    height: window.height/3,
+    margin: 8,
+    flex: 1,
     resizeMode: 'cover',
+    height: window.height/2
   },
   manufacturerLogo: {
     flex: 1,
@@ -471,7 +474,7 @@ export const PostStyles = StyleSheet.create({
 
   primaryTitle: {
     flex: -1,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '700',
     backgroundColor: 'white',
     padding: 8,

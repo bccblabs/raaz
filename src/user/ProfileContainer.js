@@ -56,7 +56,7 @@ export default class ProfileContainer extends Component {
         <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
         <Heading3 style={Titles.filterSectionTitle}>{"WALL"}</Heading3>
         <AddPost style={{flex: 1}}/>
-        <PostsByUserId style={{flex: 1}} userId={userId}/>
+        <PostsByUserId userId={userId}/>
         </View>
       </ParallaxScrollView>
     )

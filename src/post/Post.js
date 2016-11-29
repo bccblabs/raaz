@@ -5,7 +5,7 @@ import {
   PropTypes,
   ScrollView,
   Text,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native'
 
@@ -13,7 +13,7 @@ import {Actions} from 'react-native-router-flux'
 import moment from 'moment'
 
 import ProfilePicture from '../common/ProfilePicture'
-import {PostStyles, General} from '../styles'
+import {WIDTH, HEIGHT, PostStyles, General, Header} from '../styles'
 import {LikeBtn, CommentBtn} from '../components'
 
 export default class Post extends Component {
@@ -22,40 +22,77 @@ export default class Post extends Component {
   }
 
   render () {
-    console.log ('posts.props', this.props)
-    return (<View/>)
-    // let {post, tags, user, likes, postId, comments} = this.props.data,
-    //     {media, created, title, original} = post
-    //   , daysAgo = moment(created).fromNow()
-    //   , imageContent
+    let {post, tags, user, likes, postId, comments, postType, build, part, specId} = this.props.data
+      , {media, created, mediaType} = post
+      , {user_id, picture} = user
+      , daysAgo = moment(created).fromNow()
+      , imageContent
+      , descText 
+      , name
     //   , likesContent = (<LikeBtn postId={postId} numlikes={likes.length}/>)
     //   , commentsContent = (<CommentBtn postId={postId} commentsCnt={comments}/>)
-    //   , tagsContent = (tags && tags.length)?(<ScrollView style={PostStyles.tags} showsHorizontalScrollIndicator={false} horizontal={true} containerStyle={PostStyles.tagsContainer}>}
-    //             {tags.map ((tag, idx)=> {return ( <Text key={idx} style={PostStyles.tag}>{`#${tag}`}</Text> )})}
-    //             </ScrollView>):(<View/>)
-    // imageContent = (
-    //   <View style={{flex: 1}}>
-    //   <View style={PostStyles.header}>
-    //     {title && (<Text style={PostStyles.title}>{'YOOO'}</Text>)}
-    //     <Image source={{uri:user.picture}} style={PostStyles.userPhotoStyle}/>
-    //       <View style={{flexDirection: 'column', flex: 1, justifyContent: 'center'}}>
-    //         <Text style={PostStyles.authorName}>{`${user.name}`}</Text>
-    //         <Text style={PostStyles.created}>{`${daysAgo}`}</Text>
-    //       </View>
-    //   </View>
-    //   <Image resizeMode='contain' style={PostStyles.primaryImage} source={{uri: original[0]}}/>
-    //   {tagsContent}
-    //   </View>
-    // )
 
-    // return (
-    //     <View style={PostStyles.container}>
-    //       {imageContent}
-    //       <View style={{flexDirection:"row", justifyContent: 'flex-start'}}>
-    //       {likesContent}
-    //       {commentsContent}
-    //       </View>
-    //     </View>
-    // )
+      if (postType === 'new_build') {
+        let {buildId, media} = build
+
+        descText = 'Added a New Build'
+        name = build.name
+
+        imageContent = (
+        <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId})}}>
+          <Image style={{flex: 1}} source={{uri: media[0]}}/>
+        </TouchableWithoutFeedback>
+        )
+      }
+      else if (postType === 'build_log') {
+        let {partId, medium} = part
+          , {buildId, media} = build
+
+        descText = 'Installed a New Part'
+        name = part.name
+
+        imageContent = (
+        <View style={{flexDirection: 'row', flex: 1}}>
+        <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId}) }}>
+            <Image style={{flex: 1, margin: 4}} source={{uri: media[0]}}/>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}>
+            <Image style={{flex: 1, margin: 4}} source={{uri: medium[0]}}/>
+        </TouchableWithoutFeedback>
+        </View>
+        )
+      }
+
+    return (
+        <View style={PostStyles.container}>
+          <View style={Header.container}>
+            <Image 
+              style={[PostStyles.userPhotoStyle, {marginRight: 8,}]} 
+              source={{uri: picture}}
+            />
+            <Text style={[PostStyles.tag, {fontWeight: 'bold'}]}>{descText}</Text>
+            <Text style={{fontSize: 8, fontWeight: '600', color: '#2f4f4f', position: 'absolute', top: 2, right: 8}}>{daysAgo}</Text>
+          </View>
+          <TouchableWithoutFeedback>          
+          {imageContent}
+          </TouchableWithoutFeedback>
+          <ScrollView 
+            style={{flex: -1,  marginVertical: 0, marginHorizontal: 8}}
+            horizontal
+            showsHorizontalScrollIndicator
+            showsVerticalScrollIndicator
+            automaticallyAdjustContentInsets={false}
+            contentContainerStyle={{
+                backgroundColor: 'transparent', 
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+            {
+              tags.map ((tag, idx)=> {return (<Text key={idx} style={PostStyles.tag}>{`#${tag}`}</Text> )})
+            }
+          </ScrollView>     
+          <Text style={[PostStyles.primaryTitle, {position: 'absolute', left: 4, bottom: 18}]}>{name}</Text>
+        </View>   
+    )
   }
 }

@@ -24,8 +24,9 @@ import {
 } from '../../middlewares/api'
 
 export function fetchPosts (nextPageUrl, userId) {
-  let endpoint = nextPageUrl? '/post' + nextPageUrl : '/post'
-  endpoint = userId?( endpoint + '&' + 'userId=' + userId):endpoint
+  let endpoint = '/post' + '?' + 'userId=' + userId
+
+  endpoint = nextPageUrl? (endpoint + nextPageUrl) : endpoint
   return {
     key: 'home',
     [CALL_API]: {

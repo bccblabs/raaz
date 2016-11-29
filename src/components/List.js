@@ -75,7 +75,7 @@ export default class List extends Component {
             enableEmptySections={true}
             renderRow={renderRow}
             onEndReached={()=>{
-              if (nextPageUrl) { fetchData (nextPageUrl)}
+              // if (nextPageUrl && nextPageUrl.length) { fetchData (nextPageUrl)}
             }}
           />
         )
