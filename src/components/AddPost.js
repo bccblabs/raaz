@@ -167,7 +167,9 @@ class AddPost extends Component {
 	    	, content
 	    if (isUploading) {
 	    	content = (<Bar style={{marginTop: 8, marginBottom: 24}} height={24} width={300} progress={this.state.progress} color='red' />)
-	    } else {
+	    } 
+	    else if (profileData.user_id === '') return content = (<View/>)
+	    else {
 	    	content = (
 			<View style={{flex :1, margin: 8}}>
 			{this.renderMedia()}

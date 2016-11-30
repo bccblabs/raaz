@@ -64,11 +64,11 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
 
 /* user selectors */
   export const isLikedByUser = (state) => {return true}
-  export const profileSelector = (state) => (state.user.profileData)
-  export const userIdSelector = (state) => (state.user.profileData.user_id)
-  export const accessTokenSelector = (state) => (state.history.access_token)
+  export const profileSelector = (state) => (state.user && state.user.profileData || {})
+  export const userIdSelector = (state) => (state.user && state.user.profileData && state.user.profileData.user_id || null)
+  export const accessTokenSelector = (state) => (state.history && state.history.access_token || null)
   export const myBuildsSelector = (state) => {
-    let userId = state.user.profileData.user_id
+    let userId = (state.user.profileData && state.user.profileData.user_id)?(state.user.profileData.user_id):null
     if (userId) return state.pagination.buildPaginationByUserId && state.pagination.buildPaginationByUserId[userId] || {}
     return {}
   }

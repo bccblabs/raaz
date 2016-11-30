@@ -29,7 +29,7 @@ import {
 export default class ProfileContainer extends Component {
   render () {
     let {profileData, btnContent, userId, initial} = this.props
-      , foregroundContent = profileData?(
+      , foregroundContent = profileData.user_id?(
         <View style={{flex: 1}}>
           <View style={DetailStyles.userInfoContainer}>
             <Image style={PostStyles.largeUserPhoto} source={{uri: profileData.picture}}/>
@@ -53,10 +53,16 @@ export default class ProfileContainer extends Component {
         renderFixedHeader={()=>{return initial?(<View/>):(<BackSquare/>)}}
         >
         <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
-        <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
-        <Heading3 style={Titles.filterSectionTitle}>{"WALL"}</Heading3>
-        <AddPost style={{flex: 1}}/>
-        <PostsByUserId userId={userId}/>
+        {
+          userId?(       
+          <View> 
+            <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
+            <Heading3 style={Titles.filterSectionTitle}>{"WALL"}</Heading3>
+            <AddPost style={{flex: 1}}/>
+            <PostsByUserId userId={userId}/>
+          </View>
+          ):(<View/>)
+        }
         </View>
       </ParallaxScrollView>
     )

@@ -27,20 +27,23 @@ import {userIdSelector, profileSelector} from '../selectors'
 import {setUserData} from '../reducers/user/userActions'
 import {setAccessToken} from '../reducers/history/historyActions'
 
+import SplashScreen from 'react-native-splash-screen'
+
+
 const mapStateToProps = (state, props) => {
   return {
     data: homePostSelector (state),
     pagination: homePostPaginationSelector(state),
-    user: props.user,
-    access_token: props.access_token,
+    // user: props.user,
+    // access_token: props.access_token,
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchData: (pageUrl) => {dispatch (fetchPosts (pageUrl, null))},
-    setUserData: () => { dispatch (setUserData (props.user))},
-    setAccessToken: () => {dispatch (setAccessToken (props.access_token))},
+    // setUserData: () => { dispatch (setUserData (props.user))},
+    // setAccessToken: () => {dispatch (setAccessToken (props.access_token))},
   }
 }
 
@@ -50,9 +53,13 @@ class Tuning extends Component {
     this.state = {showModal: false}
   }
 
+  componentDidMount() {
+      SplashScreen.hide();
+  }
+
   componentWillMount() {
-    this.props.setUserData()
-    this.props.setAccessToken()
+    // this.props.setUserData()
+    // this.props.setAccessToken()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,6 +78,8 @@ class Tuning extends Component {
       data, 
       pagination, 
       fetchData,
+      access_token,
+      user,
     } = this.props
 
     , {showModal} = this.state

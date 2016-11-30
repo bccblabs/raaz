@@ -11,7 +11,6 @@ import { UserPage, Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, 
 import { TabIcon, EditSpecs, PhotoSwiper, SpecsByManufacturer} from '../components'
 export default scenes = Actions.create (
   <Scene key="root">
-    <Scene key="login" component={Login} title="Login" hideNavBar={true} />
     <Scene key="main" tabs={true} hideNavBar tabBarStyle={General.tabBarStyle}>
         <Scene title="Tuning" icon={TabIcon} key="tuning" component={Tuning} hideNavBar/>
         <Scene title="Profile" icon={TabIcon} key="home" component={Home} hideNavBar/>
