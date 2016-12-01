@@ -175,7 +175,23 @@ export const Requests = {
             .then ((resp) => {return resp.json()})
             .catch ((err) => {throw err})
 
-  }
+  },
+  fetchUserProfileApi (access_token) {
+    let url = API_ENDPOINT + '/socialSignIn?access_token=' + access_token
+
+    return fetch ( url, {
+      method: 'GET',
+    })
+    .then ((resp)=>{
+      return resp.json()
+    })
+    .then ((respJson)=>{
+      return respJson
+    })
+    .catch ((err) => {return err})
+
+}
+
 }
 
 

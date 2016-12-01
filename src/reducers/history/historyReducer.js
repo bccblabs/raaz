@@ -5,6 +5,7 @@ const {
   REMOVE_SAVED_SPECS,
   TOGGLE_SAVE_PRODUCT,
   SET_ACCESS_TOKEN,
+  SET_ID_TOKEN,
   LOAD_HISTORY,
 } = require ('../../constants').default
 
@@ -46,12 +47,16 @@ export default function historyReducer (state=initialState, action) {
       return state.setIn (['access_token'], action.payload)
     }
 
+    case SET_ID_TOKEN: {
+      return state.setIn (['id_token'], action.payload)
+    }
+
     case LOAD_HISTORY: {
       let {history} = action.payload
-        , wl = ['parts', 'specs', 'access_token']
+        , wl = ['parts', 'specs', 'access_token', 'id_token']
       if (!history) return initialState
       wl.forEach ((key)=>{
-        if (key === 'access_token') state = state.setIn ([key], history[key], val=> history[key])
+        if (key === 'access_token' || key === 'id_token') state = state.setIn ([key], history[key], val=> history[key])
         else {
           if (!history || !history[key]) state = state.set (key, new (Map))
           else {

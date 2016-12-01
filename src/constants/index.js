@@ -2,8 +2,7 @@ import keyMirror from 'key-mirror'
 
 exports.REQ_TIMEOUT = module.exports.REQ_TIMEOUT = 5000;
 
-exports.AUTH0_FB_SIGNIN = module.exports.AUTH0_FB_SIGNIN = 'https://raaz.auth0.com/authorize?response_type=token&client_id=38IZWX4rxcewydOFTD3fDuGRh7nyzDqi&redirect_uri=raaz://callback&connection=facebook'
-exports.AUTH0_INSTAGRAM_SIGNIN = module.exports.AUTH0_INSTAGRAM_SIGNIN = 'https://raaz.auth0.com/authorize?response_type=token&client_id=38IZWX4rxcewydOFTD3fDuGRh7nyzDqi&redirect_uri=raaz://callback&connection=instagram'
+exports.AUTH0_SIGNIN = module.exports.AUTH0_SIGNIN = 'https://raaz.auth0.com/authorize?response_type=token&client_id=38IZWX4rxcewydOFTD3fDuGRh7nyzDqi&redirect_uri=raaz://callback'
 
 exports.AUTH0_CLIENT_ID = module.exports.AUTH0_CLIENT_ID ='38IZWX4rxcewydOFTD3fDuGRh7nyzDqi'
 exports.AUTH0_CLIENT_SECRET = module.exports.AUTH0_CLIENT_SECRET ='RyE7bMsLckFWNCGSEaX0DkRsTHEryHX_d7yGwzQUXs8mwvvKa2qxIO3S0QNR54Og'
@@ -22,7 +21,7 @@ export default keyMirror ({
   SESSION_TOKEN_SUCCESS: null,
   SET_SESSION_TOKEN: null,
   SET_STORE: null,
-
+  SET_ID_TOKEN: null,
 
 
   /* Posts */

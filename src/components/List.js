@@ -1,10 +1,11 @@
 'use strict'
 
 import React, {Component} from 'react'
-import {ListView, Text, View} from 'react-native'
+import {ListView, RefreshControl, Text, View} from 'react-native'
 import {union, isEqual} from 'lodash'
 import {Actions} from 'react-native-router-flux'
 
+import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 import TagsHeader from './TagsHeader'
 import ErrorView from './ErrorView'
@@ -17,35 +18,44 @@ export default class List extends Component {
   constructor (props) {
     super (props)
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-      , {data, pagination, clear} = props
-      , initialBlob = clear?[]:data
     this.state = {
-      dataSource: ds.cloneWithRows (initialBlob),
-      data: initialBlob,
+      dataSource: ds.cloneWithRows ([]),
+      data: [],
       pagination: props.pagination,
     }
   }
+  componentWillMount() {
+      let {data, pagination, clear} = this.props
+      , initialBlob = clear?[]:data
 
+    this.setState ({
+      dataSource: this.state.dataSource.cloneWithRows (initialBlob),
+      data: initialBlob,
+    })
+    
+  }
   componentDidMount () {
     let {fetchTags, fetchData, pagination} = this.props
     fetchTags && fetchTags ()
-    fetchData && fetchData (pagination.nextPageUrl)
+    fetchData && fetchData ()
   }
 
   componentWillReceiveProps (nextProps) {
-    let {data, tags, pagination} = nextProps
-    if (!isEqual(data, this.state.data)) {
-      let newBlob = union (this.state.data, data)
-      this.setState ({
-        dataSource: this.state.dataSource.cloneWithRows (data),
-        data: data,
-        pagination,
-      })
-    } else {
+    let {data, tags, pagination, clear} = nextProps
+
+    if (clear) {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
       this.setState ({
         dataSource: ds.cloneWithRows (data),
         data: data,
+        pagination,
+      })
+    }
+    else if (!isEqual(data, this.state.data)) {
+      let newBlob = union (this.state.data, data)
+      this.setState ({
+        dataSource: this.state.dataSource.cloneWithRows (newBlob),
+        data: newBlob,
         pagination,
       })
     }
@@ -57,7 +67,6 @@ export default class List extends Component {
       , {nextPageUrl, isFetching, hasError} = pagination
       , header = title?(<F8Header foreground="dark" title={title.toUpperCase()} leftItem={{title:'Back', onPress: Actions.pop}}/>):<View/>
       , content
-
       if (isFetching) content = (<LoadingView/>)
       else if (hasError) {
         content = (<ErrorView
@@ -74,13 +83,13 @@ export default class List extends Component {
             dataSource={dataSource}
             enableEmptySections={true}
             renderRow={renderRow}
-            onEndReached={()=>{
-              // if (nextPageUrl && nextPageUrl.length) { fetchData (nextPageUrl)}
+            renderFooter={()=> {
+              if (nextPageUrl) return (<F8Button onPress={()=>{fetchData(nextPageUrl)}} type="spec" caption="More" style={{flex: -1}}/>)
+              else return (<View/>)
             }}
           />
         )
       }
-
     return (
       <View style={{flex: 1}}>
         {header}

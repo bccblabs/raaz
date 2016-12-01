@@ -3,10 +3,11 @@
 import React, {Component} from 'react'
 import {Image, StyleSheet, TouchableOpacity} from 'react-native'
 import F8Button from '../common/F8Button'
-const { loginWithInstagram } = require('../reducers/user/userActions');
-const {connect} = require('react-redux');
-import {Styles} from '../styles'
-class INSLoginButton extends Component {
+const { loginAuth0 } = require('../reducers/user/userActions');
+const { connect } = require('react-redux');
+import { Styles } from '../styles'
+
+class LoginButton extends Component {
   props: {
     style: any;
     dispatch: (action: any) => Promise;
@@ -31,14 +32,12 @@ class INSLoginButton extends Component {
   }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-        <F8Button type="tuning" style={Styles.loginButton} caption="Loading..." />
-      )
-    }
-
     return (
-      <F8Button icon={require ('../common/img/ins-logo.png')} type="tuning" style={Styles.loginButton} onPress={() => this.logIn()} caption="Instagram"/>
+      <F8Button 
+        type="error" 
+        style={Styles.loginButton} 
+        onPress={() => this.logIn()} 
+        caption="Signup / Login "/>
     )
   }
 
@@ -48,7 +47,7 @@ class INSLoginButton extends Component {
     this.setState({isLoading: true});
     try {
       await Promise.race([
-        dispatch(loginWithInstagram()),
+        loginAuth0(),
         timeout(15000),
       ]);
     } catch (e) {
@@ -72,4 +71,4 @@ async function timeout(ms: number): Promise {
   });
 }
 
-module.exports = connect()(INSLoginButton);
+module.exports = connect()(LoginButton)

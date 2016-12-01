@@ -192,13 +192,7 @@ export const PartStyles = StyleSheet.create ({
 
 export const Styles = StyleSheet.create ({
   loginButton: {
-    borderTopWidth: 1,
-    borderRadius: 20,
-    borderTopColor: 'rgba(0,0,0,0.5)',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    alignSelf: 'center',
-    width: window.width/2,
-    margin: 12,
+    backgroundColor: 'white',
   },
   mapStyle: {
     alignSelf: 'center',

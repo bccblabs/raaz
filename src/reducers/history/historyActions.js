@@ -6,6 +6,7 @@ const {
   REMOVE_SAVED_SPECS,
   TOGGLE_SAVE_PRODUCT,
   SET_ACCESS_TOKEN,
+  SET_ID_TOKEN,
   LOAD_HISTORY
 } = require  ('../../constants').default
 
@@ -53,6 +54,20 @@ export function setAccessToken (access_token) {
 export function loadAccessToken (history) {
   return {
     type: LOAD_ACCESS_TOKEN,
+    payload: history
+  }
+}
+
+export function setIdToken (id_token) {
+  return {
+    type: SET_ID_TOKEN,
+    payload: id_token
+  }
+}
+
+export function loadIdToken (history) {
+  return {
+    type: LOAD_ID_TOKEN,
     payload: history
   }
 }

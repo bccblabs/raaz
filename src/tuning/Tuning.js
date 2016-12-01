@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {
   Image,
   Modal,
+  RefreshControl,
   ScrollView, 
   Text,
   TouchableWithoutFeedback,
@@ -22,51 +23,79 @@ import {PostList} from '../post'
 import {homePostSelector, homePostPaginationSelector} from '../selectors'
 import {fetchPosts} from '../reducers/post/postActions'
 
-import {userIdSelector, profileSelector} from '../selectors'
+import {userIdSelector, profileSelector, accessTokenSelector, idTokenSelector} from '../selectors'
 
 import {setUserData} from '../reducers/user/userActions'
-import {setAccessToken} from '../reducers/history/historyActions'
+import {setAccessToken, setIdToken} from '../reducers/history/historyActions'
 
 import SplashScreen from 'react-native-splash-screen'
 
+import {Login} from '../user'
+
+import {Requests} from '../utils'
 
 const mapStateToProps = (state, props) => {
   return {
     data: homePostSelector (state),
     pagination: homePostPaginationSelector(state),
-    // user: props.user,
-    // access_token: props.access_token,
+
+    user: props.user,
+    access_token: accessTokenSelector (state, props),
+    id_token: idTokenSelector (state, props),
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchData: (pageUrl) => {dispatch (fetchPosts (pageUrl, null))},
-    // setUserData: () => { dispatch (setUserData (props.user))},
-    // setAccessToken: () => {dispatch (setAccessToken (props.access_token))},
+
+    setUserData: (user) => { dispatch (setUserData (user))},
+    setAccessToken: (access_token) => {dispatch (setAccessToken (access_token))},
+    setIdToken: (id_token) => {dispatch (setIdToken (id_token))},
   }
 }
 
 class Tuning extends Component {
   constructor (props) {
     super (props)
-    this.state = {showModal: false}
+    this.fetchUserData = this.fetchUserData.bind (this)
+    if (props.access_token && props.id_token) {this.state = {showModal: false, refreshing: false}}
+    else {this.state = {showModal: true, refreshing: false}}
   }
+
+  async fetchUserData (access_token) {
+    try {
+      let data = await Requests.fetchUserProfileApi (access_token)
+      this.props.setUserData (data)
+    } catch (err) {
+      console.error (err)
+    }
+  }
+
 
   componentDidMount() {
       SplashScreen.hide();
   }
 
   componentWillMount() {
-    // this.props.setUserData()
-    // this.props.setAccessToken()
+    let {access_token, setAccessToken, id_token, setIdToken} = this.props
+      , userData = this.fetchUserData (access_token)
+
+    access_token && setAccessToken(access_token)
+    id_token && setIdToken (id_token)
+  }
+
+  _onRefresh () {
+    this.setState ({refreshing: true})
+    this.props.fetchData()
   }
 
   componentWillReceiveProps(nextProps) {
-    let {myBuilds, onStart} = nextProps
-      , noBuilds = (myBuilds && myBuilds.ids && myBuilds.ids.length == 0)?true:false
-      , showModal = noBuilds && onStart
-    this.setState ({showModal})
+    let {pagination, access_token, id_token} = nextProps
+    this.setState ({
+      refreshing: pagination.isFetching,
+      showModal: (access_token && id_token)?false:true,
+    })
   }
 
   render () {
@@ -78,12 +107,11 @@ class Tuning extends Component {
       data, 
       pagination, 
       fetchData,
-      access_token,
-      user,
     } = this.props
 
     , {showModal} = this.state
 
+    console.log ('render', this.state, this.props)
     return (
       <View style={{flex: 1, backgroundColor:'transparent', marginBottom: 50}}>
         <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
@@ -97,10 +125,32 @@ class Tuning extends Component {
                   caption="Parts By car" type="search"
                   icon={require ('../common/img/search.png')}/>
         </View>
-        <ScrollView>
+        <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind (this)}
+                tintColor="#ff0000"
+                title="Loading..."
+                titleColor="#00ff00"
+                colors={['#ff0000', '#00ff00', '#0000ff']}
+                progressBackgroundColor="#ffff00"
+              />
+          }
+        >
         <AddPost/>
         <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
+        <Modal 
+           animationType={"slide"}
+           transparent={false}
+           visible={showModal} 
+           onRequestClose={()=>{}}>
+           <View style={{flex: 1}}>
+            <Login/>
+           </View>
+         </Modal>
+
       </View>
     )
   }

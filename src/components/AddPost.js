@@ -96,7 +96,6 @@ class AddPost extends Component {
 		  });
 	}
 	renderMedia () {
-		console.log (this.state)
 		let {source, type} = this.state
 			, content
 		if (source && source.length) {

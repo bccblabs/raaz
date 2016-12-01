@@ -44,11 +44,6 @@ identitySchema.define ({identities: arrayOf (identitySchema)})
 export default function userReducer (state=initialState, action) {
   if (!(state instanceof InitialState)) return state.merge (initialState)
   switch (action.type) {
-    case LOGIN: {
-      let {loginType} = action.payload
-      return state.setIn (['loginType'], loginType, (val)=>loginType)
-    }
-
     case LOGGED_IN : {
       if (!action.payload) return state
       let {

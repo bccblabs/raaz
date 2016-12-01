@@ -5,10 +5,9 @@ import CommentBtn from './CommentBtn'
 import EmptyView from './EmptyView'
 import ErrorView from './ErrorView'
 import EditSpecs from './EditSpecs'
-import FBLoginButton from './FBLoginButton'
+import LoginButton from './LoginButton'
 import FollowButton from './FollowButton'
 import ImagesScroll from './ImagesScroll'
-import INSLoginButton from './INSLoginButton'
 import LikeBtn from './LikeBtn'
 import List from './List'
 import LoadingView from './LoadingView'
@@ -47,10 +46,9 @@ module.exports.EditSpecs = EditSpecs
 
 module.exports.EmptyView = EmptyView
 module.exports.ErrorView = ErrorView
-module.exports.FBLoginButton = FBLoginButton
+module.exports.LoginButton = LoginButton
 module.exports.FollowButton = FollowButton
 module.exports.ImagesScroll = ImagesScroll
-module.exports.INSLoginButton = INSLoginButton
 module.exports.LikeBtn = LikeBtn
 module.exports.List = List
 module.exports.LoadingView = LoadingView

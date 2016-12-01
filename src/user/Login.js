@@ -11,8 +11,9 @@ import {
 } from 'react-native'
 
 import F8Colors from '../common/F8Colors'
-import {FBLoginButton, INSLoginButton} from '../components'
+import {LoginButton} from '../components'
 
+import {PostStyles} from '../styles'
 export default class LoginScreen extends Component {
   constructor (props) {
     super (props)
@@ -29,13 +30,10 @@ export default class LoginScreen extends Component {
     return (
       <Image
         style={styles.container}
-        source={require('../common/img/2jz.png')}>
+        source={require('../common/img/login.png')}>
         <Animated.View style={[styles.section, this.fadeIn(700, -20)]}>
-          <Text style={styles.h1}>RAAZ</Text>
-          <View style={{paddingTop: 56}}>
-          <FBLoginButton style={{marginHorizontal: 16}}/>
-          <INSLoginButton style={{marginHorizontal: 16}}/>
-          </View>
+          <Text style={[styles.h1, PostStyles.infoContainer]}>RAAZ</Text>
+          <LoginButton/>
         </Animated.View>
       </Image>
     );

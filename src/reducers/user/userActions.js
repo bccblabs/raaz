@@ -4,8 +4,7 @@ import qs from 'qs'
 import {fetchBuildsByUserId} from '../tuning/filterActions'
 import {Actions} from 'react-native-router-flux'
 import {
-  AUTH0_FB_SIGNIN,
-  AUTH0_INSTAGRAM_SIGNIN,
+  AUTH0_SIGNIN,
   AUTH0_CLIENT_ID,
   AUTH0_CLIENT_SECRET,
   AUTH0_DOMAIN,
@@ -44,12 +43,15 @@ const {
 
 } = require ('../../constants').default
 
-async function handleLinking (event) {
+function handleLinking (event) {
   let {url} = event,
       params = url.replace (AUTH0_CALLBACK_URL,'').split ('#')[1],
-      {access_token} = qs.parse (params),
-      profileData = await fetchUserProfileApi (access_token)
-  Actions.main({user: profileData, access_token})
+      {access_token, id_token} = qs.parse (params)
+      // profileData = await fetchUserProfileApi (access_token)
+
+  console.log (params)
+  console.log (access_token, id_token)
+  Actions.main({access_token: access_token, id_token: id_token})
 }
 
 export function setUserData (profileData) {
@@ -68,21 +70,6 @@ function fetchUserBuilds () {
     }
   }
 }
-function fetchUserProfileApi (access_token) {
-    let url = API_ENDPOINT + '/socialSignIn?access_token=' + access_token
-
-    return fetch ( url, {
-      method: 'GET',
-    })
-    .then ((resp)=>{
-      return resp.json()
-    })
-    .then ((respJson)=>{
-      return respJson
-    })
-    .catch ((err) => {return err})
-
-}
 
 Linking.addEventListener ('url', handleLinking)
 
@@ -90,20 +77,8 @@ async function _loginAuth0 (endpoint) {
   Linking.openURL (endpoint)
 }
 
-function loginWithFacebook() {
-  _loginAuth0(AUTH0_FB_SIGNIN)
-  return {
-    type: LOGIN,
-    payload: { loginType: 'facebook'}
-  }
-}
-
-function loginWithInstagram() {
-  _loginAuth0(AUTH0_INSTAGRAM_SIGNIN)
-  return {
-    type: LOGIN,
-    payload: { loginType: 'instagram'}
-  }
+function loginAuth0() {
+  _loginAuth0(AUTH0_SIGNIN)
 }
 
 function logOut() {
@@ -149,4 +124,4 @@ function toggleOnStart () {
   return { type: TOGGLE_ON_START}
 }
 
-module.exports = {toggleOnStart, fetchUserBuilds , loginWithFacebook, loginWithInstagram, logOut, setUserData};
+module.exports = {toggleOnStart, fetchUserBuilds , loginAuth0, logOut, setUserData};
