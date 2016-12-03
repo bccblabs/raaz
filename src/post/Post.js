@@ -27,6 +27,7 @@ export default class Post extends Component {
       , {user_id, picture} = user
       , daysAgo = moment(created).fromNow()
       , postContent
+      , imageContent
       , descText 
       , name
     //   , likesContent = (<LikeBtn postId={postId} numlikes={likes.length}/>)
@@ -37,7 +38,7 @@ export default class Post extends Component {
         descText = 'Added a New Build'
         name = build.name
 
-        postContent = (
+        imageContent = (
         <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId})}}>
           <Image style={{flex: 1}} source={{uri: media[0]}}/>
         </TouchableWithoutFeedback>
@@ -50,7 +51,7 @@ export default class Post extends Component {
         descText = 'Installed a New Part'
         name = part.name
 
-        postContent = (
+        imageContent = (
         <View style={{flexDirection: 'row', flex: 1}}>
         <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId}) }}>
             <Image style={{flex: 1, margin: 4}} source={{uri: media[0]}}/>
@@ -62,7 +63,7 @@ export default class Post extends Component {
         )
       }
 
-      else if (postType === 'build_comment' || !postType) {
+      else if (postType === 'build_comment') {
         let {text} = post
           , {buildId} = build
           , media
@@ -75,15 +76,30 @@ export default class Post extends Component {
 
         descText = 'Posted a Comment'
         name = build.name
-        postContent = (
+        imageContent = (
         <View style={{flex: 1}}>
-          <Text style={{paddingHorizontal: 8, paddingBottom: 16}}>{`"${text}"`}</Text>
           <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId})}}>
             <Image style={{flex: 1}} source={{uri: media}}/>
           </TouchableWithoutFeedback>
         </View>
         )
+
+        postContent = (
+          <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
+        )
       }
+
+      else if (postType === 'part_comment' || postType === 'part_log') {
+        let {text} = post
+        descText = 'Posted a Comment'
+        postContent = (
+        <View style={{flex: 1}}>
+          <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
+        </View>
+        )
+      }
+
+
     return (
         <View style={PostStyles.container}>
           <TouchableWithoutFeedback onPress={()=>{Actions.UserPage ({userId: user_id}) }}>
@@ -97,6 +113,14 @@ export default class Post extends Component {
             </View>
           </TouchableWithoutFeedback>
           {postContent}
+          {
+            imageContent ? (
+              <View style={PostStyles.imageContainer}>
+              {imageContent}
+              </View>
+            ): (<View/>)
+          }
+          
           {
             tags.length ? (
               <ScrollView 
@@ -116,7 +140,7 @@ export default class Post extends Component {
               </ScrollView>     
             ) : (<View/>)
           }
-          <Text style={[PostStyles.primaryTitle, {position: 'absolute', left: 4, bottom: 18}]}>{name}</Text>
+          {name && name.length ? (<Text style={[PostStyles.primaryTitle, {position: 'absolute', left: 4, bottom: 18}]}>{name}</Text>):(<View/>)}
         </View>   
     )
   }

@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native'
 
+import {connect} from 'react-redux'
+
 import {Actions} from 'react-native-router-flux'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {Requests} from '../utils'
@@ -29,8 +31,16 @@ import {
 
 import {BuildsPagerByPartId} from '../build'
 import {PostsByPartId} from '../post'
+import {fetchPostsByPartId} from '../reducers/post/postActions'
 
-export default class PartDetails extends Component {
+import {userIdSelector} from '../selectors'
+const mapStateToProps = (state) => {
+  return {
+    userId: userIdSelector (state)
+  }
+}
+
+class PartDetails extends Component {
   constructor (props) {
     super (props)
     this.state = {
@@ -134,7 +144,7 @@ export default class PartDetails extends Component {
           {detailsContent}
           </View>
           <Paragraph style={Titles.filterSectionTitle}>{"WALL"}</Paragraph>
-          <AddPost style={{flex: 1}}/>
+          <AddPost style={{flex: 1}} originalUserId={this.props.userId} onCreatePost={fetchPostsByPartId ({partId: partId})} placeholder={"  IS GUD?"} routeType={"part"} parentId={partId} />
           <PostsByPartId style={{flex: 1}} partId={partId}/>
           </View>
         </ParallaxScrollView>
@@ -142,3 +152,5 @@ export default class PartDetails extends Component {
     }
   }
 }
+
+export default connect (mapStateToProps) (PartDetails)
