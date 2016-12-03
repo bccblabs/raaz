@@ -22,25 +22,40 @@ export default class List extends Component {
       dataSource: ds.cloneWithRows ([]),
       data: [],
       pagination: props.pagination,
+      ids : [],
     }
-  }
-  componentWillMount() {
-      let {data, pagination, clear} = this.props
-      , initialBlob = clear?[]:data
 
-    this.setState ({
-      dataSource: this.state.dataSource.cloneWithRows (initialBlob),
-      data: initialBlob,
-    })
-    
+    console.log ('constructor, props.ids', props.pagination.ids)
+    console.log ('constructor, props.data', props.data)
   }
+
   componentDidMount () {
     let {fetchTags, fetchData, pagination} = this.props
     fetchTags && fetchTags ()
     fetchData && fetchData ()
+
+    console.log ('componentDidMount, props.ids=', this.props.pagination.ids)
+    console.log ('componentDidMount, state.ids=', this.state.ids)
+
+    console.log ('componentDidMount, props.data=', this.props.data)
+    console.log ('componentDidMount, state.data=', this.state.data)
+
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return  !(nextProps.pagination.ids === this.props.pagination.ids)
   }
 
   componentWillReceiveProps (nextProps) {
+
+    console.log ('componentWillReceiveProps, this.props.ids', this.props.pagination.ids)
+    console.log ('componentWillReceiveProps, nextProps.ids', nextProps.pagination.ids)
+    console.log ('componentWillReceiveProps, this.state.ids', this.state.ids)
+
+    console.log ('componentWillReceiveProps, this.props.data', this.props.data)
+    console.log ('componentWillReceiveProps, nextProps.data', nextProps.data)
+    console.log ('componentWillReceiveProps, this.state.data', this.state.data)
+
     let {data, tags, pagination, clear} = nextProps
 
     if (clear) {
@@ -53,9 +68,10 @@ export default class List extends Component {
     }
     else if (!isEqual(data, this.state.data)) {
       let newBlob = union (this.state.data, data)
+      console.log ('newblob', newBlob)
       this.setState ({
         dataSource: this.state.dataSource.cloneWithRows (newBlob),
-        data: newBlob,
+        data: data,
         pagination,
       })
     }

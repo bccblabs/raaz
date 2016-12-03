@@ -41,16 +41,15 @@ const {
   TOGGLE_POST_LIKE,
   TOGGLE_ON_START,
 
+  CREATE_POST,
+
 } = require ('../../constants').default
 
 function handleLinking (event) {
   let {url} = event,
       params = url.replace (AUTH0_CALLBACK_URL,'').split ('#')[1],
       {access_token, id_token} = qs.parse (params)
-      // profileData = await fetchUserProfileApi (access_token)
 
-  console.log (params)
-  console.log (access_token, id_token)
   Actions.main({access_token: access_token, id_token: id_token})
 }
 

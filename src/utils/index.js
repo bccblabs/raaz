@@ -189,9 +189,38 @@ export const Requests = {
       return respJson
     })
     .catch ((err) => {return err})
+  },
 
-}
+  createNewPost (postData) {
+    console.log (postData)
+    let {routeType, parentId, media, userId, text, postType} = postData
+      , url = API_ENDPOINT + '/post/' + routeType + '/' + parentId
 
+    console.log (url)
+    return fetchWithTimeout (
+            REQ_TIMEOUT, 
+            url, 
+            {
+              method: 'POST',
+              headers: {'Accept': 'application/json','Content-Type':'application/json'},
+              body: JSON.stringify ({
+                media: media?media:null,
+                text: text,
+                authorId: userId,
+                tags: [],
+                type: postType,
+              })
+            }
+            ).then ((resp) => {
+              return resp.json()
+            })
+            .then ((respJson) => {
+              return respJson
+            })
+            .catch ((err) => {
+              return {err}
+            })
+  }
 }
 
 

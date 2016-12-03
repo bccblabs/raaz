@@ -93,7 +93,7 @@ class Tuning extends Component {
   componentWillReceiveProps(nextProps) {
     let {pagination, access_token, id_token} = nextProps
     this.setState ({
-      refreshing: pagination.isFetching,
+      refreshing: this.state.refreshing && pagination.isFetching,
       showModal: (access_token && id_token)?false:true,
     })
   }
@@ -110,8 +110,6 @@ class Tuning extends Component {
     } = this.props
 
     , {showModal} = this.state
-
-    console.log ('render', this.state, this.props)
     return (
       <View style={{flex: 1, backgroundColor:'transparent', marginBottom: 50}}>
         <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>

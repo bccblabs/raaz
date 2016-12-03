@@ -9,7 +9,7 @@ import { RNS3 } from 'react-native-aws3';
 import {Bar} from 'react-native-progress'
 import md5 from 'md5'
 import {profileSelector} from '../selectors'
-import {createPostAndFetch} from '../reducers/user/userActions'
+import {Requests} from '../utils'
 import F8Button from '../common/F8Button'
 import Video from 'react-native-video'
 let imageOpts = {
@@ -56,44 +56,89 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
 	return {
-		createNewPost: (data) => {dispatch (createPostAndFetch (props.postType, props.parentId, data))}
+		createNewPost: (data) => {dispatch (createPostAndFetch (props.postType, props.parentId, data))},
+		refresh: () => {dispatch (props.onCreatePost)}
 	}
 }
 class AddPost extends Component {
 	constructor (props) {
 	    super (props)
-	    this.state = {
-	      profileData: props.profileData,
-	      type: '',
-	      source: '',
-	      text: '',
-	      fileType: '',
-	      fileName: '',
-	      isUploading: false,
-	      progress: '',
-	      errMsg: '',
-	    }
 	    this.selectMedia = this.selectMedia.bind (this)
 	    this.renderMedia = this.renderMedia.bind (this)
 	    this.upload = this.upload.bind (this)
-	}
-	upload () {
+	    this.createPost = this.createPost.bind (this)
+	    this.initializeState = this.initializeState.bind (this)
 
-		let {fileName, fileType, source,
-			text, profileData} = this.state
+	    this.state = this.initializeState ()
+	}
+
+	initializeState () {
+		return {
+			profileData: this.props.profileData,
+			type: '',
+			source: '',
+			text: '',
+			fileType: '',
+			fileName: '',
+			isUploading: false,
+			hasAttachments: false,
+			progress: '',
+			hasError: false,
+		}
+	}
+
+	async createPost (postData) {
+		let res = await Requests.createNewPost (postData)
+			, state = this.initializeState()
+
+    	if (res.err) {
+			this.setState ({hasError: true})
+    	} else {
+	    	this.setState ({...state})
+	    	this.props.refresh && this.props.refresh ()
+    	}
+
+	}
+
+	upload () {
+		let {fileName, fileType, source, text, profileData, hasAttachments} = this.state
 			, file = {uri: source, name: fileName, type: fileType}
-			, {createNewPost} = this.props
-		RNS3.put(file, uploadOpts)
-		.progress ((e)=>{this.setState ({isUploading: true, progress: e.loaded / e.total})})
-		.then(response => {
-			if (response.status !== 201) {
-				this.setState ({errMsg: 'Upload Error, Try Again!'})
-			}
-			else {
-				createNewPost ({media: response.location, text: text, userId: profileData.user_id})
-				this.setState ({isUploading: false, text: '', fileType: '', fileName: '', progress: '', source: '', type: ''})
-			}
-		  });
+			, postType
+
+		if (this.props.originalUserId === profileData.user_id) {
+			postType = '_log'
+		} else {
+			postType = '_comment'
+		}
+		postType = this.props.routeType + postType
+
+		if (hasAttachments) {
+			RNS3.put(file, uploadOpts)
+			.progress ((e)=>{this.setState ({isUploading: true, progress: e.loaded / e.total})})
+			.then(response => {
+				if (response.status !== 201) {
+					this.setState ({hasError: true})
+				}
+				else {
+					this.createPost ({
+						media: response.location, 
+						text: text, 
+						userId: profileData.user_id, 
+						routeType: this.props.routeType, 
+						parentId: this.props.parentId,
+						postType: postType
+					})
+				}
+			  });
+		} else {
+			this.createPost ({
+				text: text, 
+				userId: profileData.user_id, 
+				routeType: this.props.routeType, 
+				parentId: this.props.parentId,
+				postType: postType
+			})
+		}
 	}
 	renderMedia () {
 		let {source, type} = this.state
@@ -136,10 +181,9 @@ class AddPost extends Component {
 		    console.log('User cancelled image picker');
 		  }
 		  else if (response.error) {
-		    console.log('ImagePicker Error: ', response.error);
+		  	this.setState ({hasError: true})
 		  }
 		  else {
-		  	console.log ('selectmedias')
 		  	let source, fileType, fileName
 		    if (Platform.OS === 'ios') {
 		      source = response.uri.replace('file://', '')
@@ -150,24 +194,24 @@ class AddPost extends Component {
 		      fileType = response.type
 		      fileName = md5(response.fileName)
 		    }
-		    console.log (response)
 		    this.setState({
-		      source: source,
-		      type: opts.mediaType,
-		      fileType: fileType,
-		      fileName: fileName,
+		    	hasAttachments: true,
+				source: source,
+				type: opts.mediaType,
+				fileType: fileType,
+				fileName: fileName,
 		    });
 		  }
 		});		
 	}
 	render () {
 	    let {profileData, placeholder} = this.props
-	    	, {isUploading, progress} = this.state
+	    	, {isUploading, progress, errMsg} = this.state
 	    	, content
 	    if (isUploading) {
 	    	content = (<Bar style={{marginTop: 8, marginBottom: 24}} height={24} width={300} progress={this.state.progress} color='red' />)
 	    } 
-	    else if (profileData.user_id === '') return content = (<View/>)
+	    else if (profileData.user_id === '') content = (<View/>)
 	    else {
 	    	content = (
 			<View style={{flex :1, margin: 8}}>
@@ -201,6 +245,11 @@ class AddPost extends Component {
 						this.setState({text});
 					}}
 					style={NewPostStyles.singleLineBlockInput}/>
+			{ this.state.hasError?(
+				<View style={{flex: 1, backgroundColor: 'red', alignItems: 'center'}}>
+				<Text style={{color: 'white', padding: 8, fontWeight:'bold',fontSize: 12,}}>{'Error Occured...'}</Text>
+				</View>
+				):(<View/>)}					
 			</View>
     		)
 	    }

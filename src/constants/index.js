@@ -41,8 +41,6 @@ export default keyMirror ({
   POSTS_SUCCESS_PART: null,
   POSTS_ERROR_PART: null,
 
-
-
   /* User create post */
   RESET_POSTS_FILTER_STATE: null,
   SET_POSTS_FILTER_HASH: null,
