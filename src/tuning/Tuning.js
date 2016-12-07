@@ -23,10 +23,10 @@ import {PostList} from '../post'
 import {homePostSelector, homePostPaginationSelector} from '../selectors'
 import {fetchPosts} from '../reducers/post/postActions'
 
-import {userIdSelector, profileSelector, accessTokenSelector, idTokenSelector} from '../selectors'
+import {userIdSelector, profileSelector, accessTokenSelector, idTokenSelector, refreshTokenSelector} from '../selectors'
 
 import {setUserData} from '../reducers/user/userActions'
-import {setAccessToken, setIdToken} from '../reducers/history/historyActions'
+import {setAccessToken, setIdToken, setRefreshToken} from '../reducers/history/historyActions'
 
 import SplashScreen from 'react-native-splash-screen'
 
@@ -42,6 +42,7 @@ const mapStateToProps = (state, props) => {
     user: props.user,
     access_token: accessTokenSelector (state, props),
     id_token: idTokenSelector (state, props),
+    refresh_token: refreshTokenSelector (state, props),
   }
 }
 
@@ -52,6 +53,7 @@ const mapDispatchToProps = (dispatch, props) => {
     setUserData: (user) => { dispatch (setUserData (user))},
     setAccessToken: (access_token) => {dispatch (setAccessToken (access_token))},
     setIdToken: (id_token) => {dispatch (setIdToken (id_token))},
+    setRefreshToken : (refresh_token) => {dispatch (setRefreshToken (refresh_token))},
   }
 }
 
@@ -59,13 +61,13 @@ class Tuning extends Component {
   constructor (props) {
     super (props)
     this.fetchUserData = this.fetchUserData.bind (this)
-    if (props.access_token && props.id_token) {this.state = {showModal: false, refreshing: false}}
-    else {this.state = {showModal: true, refreshing: false}}
+    this.state = {showModal: false, refreshing: false}
   }
 
-  async fetchUserData (access_token) {
+  async fetchUserData (refresh_token) {
     try {
-      let data = await Requests.fetchUserProfileApi (access_token)
+      let {id_token} = await Requests.renewIdToken (refresh_token)
+      let data = await Requests.fetchUserProfileApi (id_token)
       this.props.setUserData (data)
     } catch (err) {
       console.error (err)
@@ -75,14 +77,15 @@ class Tuning extends Component {
 
   componentDidMount() {
       SplashScreen.hide();
-  }
 
-  componentWillMount() {
-    let {access_token, setAccessToken, id_token, setIdToken} = this.props
-      , userData = this.fetchUserData (access_token)
+    let {access_token, setAccessToken, id_token, setIdToken, refresh_token, setRefreshToken} = this.props
 
     access_token && setAccessToken(access_token)
     id_token && setIdToken (id_token)
+    refresh_token && setRefreshToken (refresh_token)
+
+
+    refresh_token && this.fetchUserData (refresh_token)
   }
 
   _onRefresh () {
@@ -91,10 +94,10 @@ class Tuning extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let {pagination, access_token, id_token} = nextProps
+    let {pagination, refresh_token} = nextProps
     this.setState ({
       refreshing: this.state.refreshing && pagination.isFetching,
-      showModal: (access_token && id_token)?false:true,
+      showModal: (refresh_token)?false:true,
     })
   }
 
@@ -110,6 +113,7 @@ class Tuning extends Component {
     } = this.props
 
     , {showModal} = this.state
+
     return (
       <View style={{flex: 1, backgroundColor:'transparent', marginBottom: 50}}>
         <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>

@@ -1,5 +1,12 @@
 'use strict'
-import {API_ENDPOINT, REQ_TIMEOUT, GET_OPTS} from '../constants'
+import {
+  API_ENDPOINT, 
+  REQ_TIMEOUT, 
+  GET_OPTS,
+  AUTH0_DELEGATION,
+  AUTH0_CLIENT_ID  
+} from '../constants'
+
 const timeout = (ms) => {
   return new Promise ((resolve, reject) => {
     setTimeout (()=> {
@@ -177,7 +184,7 @@ export const Requests = {
 
   },
   fetchUserProfileApi (access_token) {
-    let url = API_ENDPOINT + '/socialSignIn?access_token=' + access_token
+    let url = API_ENDPOINT + '/socialSignIn?id_token=' + access_token
 
     return fetch ( url, {
       method: 'GET',
@@ -190,7 +197,31 @@ export const Requests = {
     })
     .catch ((err) => {return err})
   },
+  renewIdToken (refresh_token) {
+    return fetchWithTimeout (
+      REQ_TIMEOUT,
+      AUTH0_DELEGATION,
+      {
+        method: 'POST',
+        headers: {'Accept': 'application/json','Content-Type':'application/json'},
+        body: JSON.stringify ({
+          client_id: AUTH0_CLIENT_ID,
+          grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+          refresh_token: refresh_token,
+          api_type: 'app',
+        })
+      }
+      ).then ((resp) => {
+        return resp.json()
+      })
+      .then ((respJson) => {
+        return respJson
+      })
+      .catch ((err) => {
+        return {err}
+      })
 
+  },
   createNewPost (postData) {
     console.log (postData)
     let {routeType, parentId, media, userId, text, postType} = postData

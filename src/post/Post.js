@@ -44,7 +44,7 @@ export default class Post extends Component {
         </TouchableWithoutFeedback>
         )
       }
-      else if (postType === 'build_log') {
+      else if (postType === 'build_log' && part && build) {
         let {partId, medium} = part
           , {buildId, media} = build
 

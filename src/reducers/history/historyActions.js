@@ -7,6 +7,7 @@ const {
   TOGGLE_SAVE_PRODUCT,
   SET_ACCESS_TOKEN,
   SET_ID_TOKEN,
+  SET_REFRESH_TOKEN,
   LOAD_HISTORY
 } = require  ('../../constants').default
 
@@ -62,6 +63,13 @@ export function setIdToken (id_token) {
   return {
     type: SET_ID_TOKEN,
     payload: id_token
+  }
+}
+
+export function setRefreshToken (refresh_token) {
+  return {
+    type: SET_REFRESH_TOKEN,
+    payload: refresh_token
   }
 }
 

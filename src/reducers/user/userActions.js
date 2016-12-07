@@ -48,9 +48,9 @@ const {
 function handleLinking (event) {
   let {url} = event,
       params = url.replace (AUTH0_CALLBACK_URL,'').split ('#')[1],
-      {access_token, id_token} = qs.parse (params)
+      {access_token, id_token, refresh_token} = qs.parse (params)
 
-  Actions.main({access_token: access_token, id_token: id_token})
+  Actions.main({access_token: access_token, id_token: id_token, refresh_token: refresh_token})
 }
 
 export function setUserData (profileData) {
@@ -77,6 +77,7 @@ async function _loginAuth0 (endpoint) {
 }
 
 function loginAuth0() {
+  console.log (AUTH0_SIGNIN)
   _loginAuth0(AUTH0_SIGNIN)
 }
 

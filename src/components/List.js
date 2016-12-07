@@ -25,20 +25,18 @@ export default class List extends Component {
       ids : [],
     }
 
-    console.log ('constructor, props.ids', props.pagination.ids)
-    console.log ('constructor, props.data', props.data)
   }
 
   componentDidMount () {
-    let {fetchTags, fetchData, pagination} = this.props
+    let {fetchTags, fetchData, pagination , data} = this.props
     fetchTags && fetchTags ()
     fetchData && fetchData ()
-
-    console.log ('componentDidMount, props.ids=', this.props.pagination.ids)
-    console.log ('componentDidMount, state.ids=', this.state.ids)
-
-    console.log ('componentDidMount, props.data=', this.props.data)
-    console.log ('componentDidMount, state.data=', this.state.data)
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      this.setState ({
+        dataSource: ds.cloneWithRows (data),
+        data: data,
+        pagination,
+      })
 
   }
 
@@ -47,14 +45,6 @@ export default class List extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-
-    console.log ('componentWillReceiveProps, this.props.ids', this.props.pagination.ids)
-    console.log ('componentWillReceiveProps, nextProps.ids', nextProps.pagination.ids)
-    console.log ('componentWillReceiveProps, this.state.ids', this.state.ids)
-
-    console.log ('componentWillReceiveProps, this.props.data', this.props.data)
-    console.log ('componentWillReceiveProps, nextProps.data', nextProps.data)
-    console.log ('componentWillReceiveProps, this.state.data', this.state.data)
 
     let {data, tags, pagination, clear} = nextProps
 
@@ -66,12 +56,13 @@ export default class List extends Component {
         pagination,
       })
     }
-    else if (!isEqual(data, this.state.data)) {
-      let newBlob = union (this.state.data, data)
-      console.log ('newblob', newBlob)
+    else if (!isEqual(pagination.ids, this.props.pagination.ids)) {
+      console.log (data, this.props.data)
+      let ids = union (this.props.pagination.ids, pagination.ids)
+        , blob = union (this.state.data, data)
       this.setState ({
-        dataSource: this.state.dataSource.cloneWithRows (newBlob),
-        data: data,
+        dataSource: this.state.dataSource.cloneWithRows (blob),
+        data: blob,
         pagination,
       })
     }
@@ -83,8 +74,10 @@ export default class List extends Component {
       , {nextPageUrl, isFetching, hasError} = pagination
       , header = title?(<F8Header foreground="dark" title={title.toUpperCase()} leftItem={{title:'Back', onPress: Actions.pop}}/>):<View/>
       , content
-      if (isFetching) content = (<LoadingView/>)
-      else if (hasError) {
+
+      // if (isFetching) content = (<LoadingView/>)
+      // else 
+      if (hasError) {
         content = (<ErrorView
                     onPress={()=>{
                       fetchTags && fetchTags()

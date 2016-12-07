@@ -68,6 +68,7 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
   export const userIdSelector = (state) => (state.user && state.user.profileData && state.user.profileData.user_id || null)
   export const accessTokenSelector = (state, props) => (state.history && state.history.access_token || props.access_token || null)
   export const idTokenSelector = (state, props) => (state.history && state.history.id_token || props.id_token || null)
+  export const refreshTokenSelector = (state, props) => (state.history && state.history.refresh_token || props.refresh_token || null)
 
 
 

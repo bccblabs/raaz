@@ -17,7 +17,8 @@ const {
   ADD_TO_SAVED_SPECS,
   TOGGLE_SAVE_PRODUCT,
   SET_ACCESS_TOKEN,
-  SET_ID_TOKEN
+  SET_ID_TOKEN,
+  SET_REFRESH_TOKEN,  
 } = require ('../constants').default
 
 // sets up storage engine
@@ -25,11 +26,12 @@ export const asyncStorageEngine = filter (createEngine('viewed_listings'),[
                 ['history', 'specs'],
                 ['history', 'parts'],
                 ['history', 'access_token'],
-                ['history', 'id_token']
+                ['history', 'id_token'],
+                ['history', 'refresh_token']
                  ]),
              storageMiddleware = storage.createMiddleware (
                 asyncStorageEngine, [],
-                [ADD_TO_SAVED_SPECS, TOGGLE_SAVE_PRODUCT, SET_ACCESS_TOKEN, SET_ID_TOKEN])
+                [ADD_TO_SAVED_SPECS, TOGGLE_SAVE_PRODUCT, SET_ACCESS_TOKEN, SET_ID_TOKEN, SET_REFRESH_TOKEN])
 
 /* logger initialization */
 
