@@ -224,10 +224,9 @@ export const Requests = {
   },
   createNewPost (postData) {
     console.log (postData)
-    let {routeType, parentId, media, userId, text, postType} = postData
+    let {routeType, parentId, media, userId, text, postType, specId} = postData
       , url = API_ENDPOINT + '/post/' + routeType + '/' + parentId
 
-    console.log (url)
     return fetchWithTimeout (
             REQ_TIMEOUT, 
             url, 
@@ -240,6 +239,7 @@ export const Requests = {
                 authorId: userId,
                 tags: [],
                 type: postType,
+                specId: specId,
               })
             }
             ).then ((resp) => {

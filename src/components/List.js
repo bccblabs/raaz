@@ -57,7 +57,6 @@ export default class List extends Component {
       })
     }
     else if (!isEqual(pagination.ids, this.props.pagination.ids)) {
-      console.log (data, this.props.data)
       let ids = union (this.props.pagination.ids, pagination.ids)
         , blob = union (this.state.data, data)
       this.setState ({

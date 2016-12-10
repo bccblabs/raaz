@@ -17,6 +17,8 @@ import PartTags from './PartTags'
 import PhotoSwiper from './PhotoSwiper'
 import PostCard from './Manufacturers'
 import SaveProductButton from './SaveProductButton'
+import LinkContent from './LinkContent'
+
 
 import SpecsHistoryHeader from './SpecsHistoryHeader'
 import SpecSelector from './SpecSelector'
@@ -38,7 +40,6 @@ import AddPost from './AddPost'
 import PartsByManufactuer from './PartsByManufactuer'
 
 module.exports.AddPost = AddPost
-
 module.exports.BackSquare = BackSquare
 module.exports.CategoryFilter = CategoryFilter
 module.exports.CommentBtn = CommentBtn
@@ -67,6 +68,7 @@ module.exports.Tag = Tag
 module.exports.TagFilter = TagFilter
 module.exports.TagsHeader = TagsHeader
 module.exports.TabIcon = TabIcon
+module.exports.LinkContent = LinkContent
 
 module.exports.MakesList = MakesList
 module.exports.ModelsList = ModelsList

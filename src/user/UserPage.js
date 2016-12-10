@@ -26,7 +26,6 @@ export default class UserPage extends Component {
 		try {
 			let {userId} = this.props
 				, data = await Requests.fetchUserDetails (userId)
-			console.log ({data})
 			this.setState ({
 				hasError: false,
 				isLoading: false,

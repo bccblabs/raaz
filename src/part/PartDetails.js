@@ -97,7 +97,7 @@ class PartDetails extends Component {
           'tqGain', 'hpGain', 'maxHp', 'maxTq', 'labor', 'weight',
           'rearLowering', 'frontLowering',
           'rearSpringRateStiffness','frontSpringRateStiffness']
-
+        , specId = this.props.data.specId
         , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}})
         , specsContent = (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):undefined
         , foregroundContent = (
@@ -144,7 +144,7 @@ class PartDetails extends Component {
           {detailsContent}
           </View>
           <Paragraph style={Titles.filterSectionTitle}>{"WALL"}</Paragraph>
-          <AddPost style={{flex: 1}} originalUserId={this.props.userId} onCreatePost={fetchPostsByPartId ({partId: partId})} placeholder={"  IS GUD?"} routeType={"part"} parentId={partId} />
+          <AddPost style={{flex: 1}} originalUserId={this.props.userId} onCreatePost={fetchPostsByPartId ({partId: partId})} placeholder={"  IS GUD?"} routeType={"part"} parentId={partId} specId={specId}/>
           <PostsByPartId style={{flex: 1}} partId={partId}/>
           </View>
         </ParallaxScrollView>

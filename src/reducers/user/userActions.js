@@ -77,7 +77,6 @@ async function _loginAuth0 (endpoint) {
 }
 
 function loginAuth0() {
-  console.log (AUTH0_SIGNIN)
   _loginAuth0(AUTH0_SIGNIN)
 }
 

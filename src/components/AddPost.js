@@ -101,6 +101,7 @@ class AddPost extends Component {
 	}
 
 	upload () {
+		console.log ('upload, specId=', this.props)
 		let {fileName, fileType, source, text, profileData, hasAttachments} = this.state
 			, file = {uri: source, name: fileName, type: fileType}
 			, postType
@@ -126,7 +127,8 @@ class AddPost extends Component {
 						userId: profileData.user_id, 
 						routeType: this.props.routeType, 
 						parentId: this.props.parentId,
-						postType: postType
+						postType: postType,
+						specId: this.props.specId
 					})
 				}
 			  });
@@ -136,7 +138,8 @@ class AddPost extends Component {
 				userId: profileData.user_id, 
 				routeType: this.props.routeType, 
 				parentId: this.props.parentId,
-				postType: postType
+				postType: postType,
+				specId: this.props.specId
 			})
 		}
 	}

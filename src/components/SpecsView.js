@@ -23,7 +23,6 @@ export default class SpecsView extends Component {
 		const dataArray = keys(specs).filter(k=>{return !isNaN(parseFloat(specs[k])) && isFinite(specs[k])})
 									.map ((key)=>{return {name: key, value: specs[key]}})
 
-		console.log (dataArray)
 		return (
 			<TouchableWithoutFeedback onPress={this.props.onPress}>
 			<View>

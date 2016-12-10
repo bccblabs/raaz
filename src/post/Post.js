@@ -14,7 +14,7 @@ import moment from 'moment'
 
 import ProfilePicture from '../common/ProfilePicture'
 import {WIDTH, HEIGHT, PostStyles, General, Header} from '../styles'
-import {LikeBtn, CommentBtn} from '../components'
+import {LikeBtn, CommentBtn, LinkContent} from '../components'
 import F8Button from '../common/F8Button'
 export default class Post extends Component {
   constructor (props) {
@@ -28,6 +28,7 @@ export default class Post extends Component {
       , daysAgo = moment(created).fromNow()
       , postContent
       , imageContent
+      , linkContent
       , descText 
       , name
     //   , likesContent = (<LikeBtn postId={postId} numlikes={likes.length}/>)
@@ -36,12 +37,8 @@ export default class Post extends Component {
         let {buildId, media} = build
 
         descText = 'Added a New Build'
-        name = build.name
-
-        imageContent = (
-        <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId})}}>
-          <Image style={{flex: 1}} source={{uri: media[0]}}/>
-        </TouchableWithoutFeedback>
+        linkContent = (
+          <LinkContent name={build.name} image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
         )
       }
       else if (postType === 'build_log' && part && build) {
@@ -51,14 +48,10 @@ export default class Post extends Component {
         descText = 'Installed a New Part'
         name = part.name
 
-        imageContent = (
-        <View style={{flexDirection: 'row', flex: 1}}>
-        <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId}) }}>
-            <Image style={{flex: 1, margin: 4}} source={{uri: media[0]}}/>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}>
-            <Image style={{flex: 1, margin: 4}} source={{uri: medium[0]}}/>
-        </TouchableWithoutFeedback>
+        linkContent = (
+        <View style={{flex: 1}}>
+          <LinkContent name={build.name} image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
+          <LinkContent name={part.name} image={medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
         </View>
         )
       }
@@ -73,15 +66,9 @@ export default class Post extends Component {
         } else {
           media = build.media[0]
         }
-
         descText = 'Posted a Comment'
-        name = build.name
-        imageContent = (
-        <View style={{flex: 1}}>
-          <TouchableWithoutFeedback onPress={()=>{Actions.BuildDetails ({buildId})}}>
-            <Image style={{flex: 1}} source={{uri: media}}/>
-          </TouchableWithoutFeedback>
-        </View>
+        linkContent = (
+          <LinkContent name={build.name} image={media} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
         )
 
         postContent = (
@@ -91,11 +78,16 @@ export default class Post extends Component {
 
       else if (postType === 'part_comment' || postType === 'part_log') {
         let {text} = post
+          , {partId} = part
         descText = 'Posted a Comment'
+        specId = post.specId
         postContent = (
         <View style={{flex: 1}}>
           <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
         </View>
+        )
+        linkContent = (
+          <LinkContent name={part.name} image={part.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
         )
       }
 
@@ -120,6 +112,7 @@ export default class Post extends Component {
               </View>
             ): (<View/>)
           }
+          {linkContent}
           
           {
             tags.length ? (
@@ -140,7 +133,7 @@ export default class Post extends Component {
               </ScrollView>     
             ) : (<View/>)
           }
-          {name && name.length ? (<Text style={[PostStyles.primaryTitle, {position: 'absolute', left: 4, bottom: 18}]}>{name}</Text>):(<View/>)}
+
         </View>   
     )
   }

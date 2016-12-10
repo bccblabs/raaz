@@ -76,7 +76,6 @@ class TuningBySpec extends Component {
     let {specsPagination, specsDetails} = nextProps
       , specsInfo = specsDetails[0]
 
-    console.log({nextProps})
     this.setState ({
       specsDetails,
       specsPagination,
