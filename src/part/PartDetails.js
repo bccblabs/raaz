@@ -125,25 +125,24 @@ class PartDetails extends Component {
           backgroundColor="transparent"
           contentBackgroundColor="white"
           backgroundSpeed={1}
-          parallaxHeaderHeight={300+64}
+          parallaxHeaderHeight={300}
           stickyHeaderHeight={64}
           renderFixedHeader={()=>(<BackSquare/>)}
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={{uri: media[0]}} style={DetailStyles.VRImageHolder}/>}
           >
-          <View style={{flex: 1, flexDirection: 'column',  alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{flex: 1, alignItems: 'center'}}>
           <ImagesScroll media={media}/>
           <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
           <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
           {specsContent}
           <BuildsPagerByPartId style={{flex: 1}} partId={partId}/>
-          <View style={{backgroundColor: 'white'}}>
+          <View style={{backgroundColor: 'white', alignSelf: 'flex-start'}}>
           {description && (<Heading3 style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Heading3>)}
           {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 16}]}>{`${description}`}</Heading3>)}
           {detailsContent && (<Heading3 style={Titles.filterSectionTitle}>{"DETAILS"}</Heading3>)}
           {detailsContent}
           </View>
-          <Paragraph style={Titles.filterSectionTitle}>{"WALL"}</Paragraph>
           <AddPost style={{flex: 1}} originalUserId={this.props.userId} onCreatePost={fetchPostsByPartId ({partId: partId})} placeholder={"  IS GUD?"} routeType={"part"} parentId={partId} specId={specId}/>
           <PostsByPartId style={{flex: 1}} partId={partId}/>
           </View>

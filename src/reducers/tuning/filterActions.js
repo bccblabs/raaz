@@ -33,6 +33,9 @@ const {
     BUILDS_SUCCESS_MANU,
     BUILDS_ERROR_MANU,
 
+    MANUFACTURERS_SPEC_REQUEST,
+    MANUFACTURERS_SPEC_SUCCESS,
+    MANUFACTURERS_SPEC_ERROR,
 
     PARTS_REQUEST,
     PARTS_SUCCESS,
@@ -46,13 +49,17 @@ const {
     PARTS_BUILD_SUCCESS,
     PARTS_BUILD_ERROR,
 
+    PARTS_TAG_REQUEST,
+    PARTS_TAG_SUCCESS,
+    PARTS_TAG_ERROR,
+
     DEALS_REQUEST,
     DEALS_SUCCESS,
     DEALS_ERROR,
 
-    TAGS_REQUEST,
-    TAGS_SUCCESS,
-    TAGS_ERROR,
+    TAGS_SPEC_REQUEST,
+    TAGS_SPEC_SUCCESS,
+    TAGS_SPEC_ERROR,
 
     SPECS_DETAILS_REQUEST,
     SPECS_DETAILS_SUCCESS,
@@ -252,6 +259,7 @@ export function fetchPartsByManufacturer (manufacturerId, nextPageUrl, specId, c
 
 }
 
+
 export function fetchPartsByBuildId (buildId, nextPageUrl, tag) {
   let endpoint = '/build/details/' + buildId + '/part/' + tag
     , url = nextPageUrl ? (endpoint + nextPageUrl) : endpoint
@@ -279,5 +287,46 @@ export function fetchSpecsByManufacturer (manufacturerId, nextPageUrl) {
     }
   }
 }
+
+export function fetchTuningTags (specId, nextPageUrl) {
+  let endpoint = '/tuning/spec/' + specId + '/tags'
+    , url = nextPageUrl ? (endpoint + nextPageUrl) : endpoint
+  return {
+    specId,
+    [CALL_API]: {
+      types: [TAGS_SPEC_REQUEST, TAGS_SPEC_SUCCESS, TAGS_SPEC_ERROR],
+      endpoint: url,
+      schema: Schemas.TAGS_ARRAY,
+    }
+  }
+}
+
+export function fetchPartsByTag (tag, specId, nextPageUrl) {
+  let endpoint = '/tuning/spec/' + specId + '/tags/' + tag
+    , url = nextPageUrl ? (endpoint + nextPageUrl) : endpoint
+
+  return {
+    tag,
+    [CALL_API]: {
+      types: [PARTS_TAG_REQUEST, PARTS_TAG_SUCCESS, PARTS_TAG_ERROR],
+      endpoint: url,
+      schema: Schemas.PARTS_ARRAY,
+    }
+  }
+}
+
+export function fetchManufacturersBySpecId (specId) {
+  let url = '/tuning/spec/' + specId + '/manufacturers'
+  return {
+    specId,
+    [CALL_API]: {
+      types: [MANUFACTURERS_SPEC_REQUEST, MANUFACTURERS_SPEC_SUCCESS,  MANUFACTURERS_SPEC_ERROR],
+      endpoint: url,
+      schema: Schemas.MANUFACTURERS_ARRAY,
+    }
+  }
+
+}
+
 
 

@@ -359,11 +359,10 @@ export const EmptyViewStyles = StyleSheet.create ({
 
 export const PostStyles = StyleSheet.create({
   container: {
-    flex: -1,
     backgroundColor: 'white',
     // height: window.height/2,
     // width: window.width,
-    marginBottom: 32,
+    marginBottom: 8,
     borderBottomColor: 'black', 
   },
   imageContainer: {

@@ -10,58 +10,65 @@ import {
 
 import {Paragraph} from '../common/F8Text'
 import {Actions} from 'react-native-router-flux'
+import {DetailStyles} from '../styles'
+import {connect} from 'react-redux'
+import {fetchManufacturersBySpecId} from '../reducers/tuning/filterActions'
+import {manufacturersBySpecIdSelector, manufacturersPaginationBySpecIdSelector} from '../selectors'
 
-import {PartStyles} from '../styles'
+import {LoadingView, ErrorView} from './'
+const mapStateToProps = (state, props) => {
+  return {
+    manufacturers: manufacturersBySpecIdSelector (state, props),
+    pagination: manufacturersPaginationBySpecIdSelector (state, props)
+  }
+}
 
-export default class Manufacturers extends Component {
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    fetchManufacturers: () => {dispatch (fetchManufacturersBySpecId (props.specId))}
+  }
+}
+
+class Manufacturers extends Component {
   constructor (props) {
     super (props)
   }
 
-  render() {
-    let {data, onPress, specId} = this.props
-    return (
-      <View style={{backgroundColor: 'white'}}>
-        {data.map ((optionRow, idx)=>{
-          return (
-            <View style={{backgroundColor: 'white'}} key={`pg-${idx}`}>
-            <Paragraph style={PartStyles.partSectionTitle}>
-            {optionRow.name.toUpperCase()}
-            </Paragraph>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              style={PartStyles.partsScrollStyle}>
-              {
-                optionRow.data.map ((data, cidx)=> {
-                  let {name, logo, manufacturerId} = data,
-                      passProps = Object.assign ({}, {manufacturerId}, {name}, {specId}, {categoryName: optionRow.name})
+  componentWillMount() {
+    this.props.fetchManufacturers()  
+  }
 
-                  return (
-                    <View key={`pelem-${cidx}`}  style={PartStyles.partContainer}>
-                    <TouchableWithoutFeedback  onPress={()=>{Actions.PartsByManufacturer ({...passProps})}}>
-                      <Image
-                        source={{uri: logo}}
-                        style={PartStyles.partImage}>
-                      </Image>
-                    </TouchableWithoutFeedback>
-                    </View>
-                  )
-                })
-              }
-            </ScrollView>
-            </View>
-          )
-        })}
-      </View>
-    )
+  render() {
+    let {manufacturers, onPress, specId, pagination} = this.props
+    console.log (this.props)
+    if (pagination.isFetching) return (<LoadingView/>)
+    else if (pagination.hasError) return (<ErrorView/>)
+    else if (!manufacturers.length) return (<View/>)
+    return (
+        <ScrollView
+          style={{marginTop: 8, height: 150, flex: -1}}
+          containerStyle={{height: 150}}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}>
+        {
+          manufacturers.map ((data, cidx)=> {
+            let {name, logo, manufacturerId} = data
+              , passProps = Object.assign ({}, {manufacturerId}, {name}, {specId})
+            return (
+                <TouchableWithoutFeedback  onPress={()=>{
+                  Actions.Manufacturer ({manufacturer: data, specId})
+                }}>
+                  <Image
+                    source={{uri: logo}}
+                    style={[DetailStyles.scrollImage, {resizeMode: 'contain'}]}>
+                  </Image>
+                </TouchableWithoutFeedback>
+            )
+          })
+        }
+    </ScrollView>)
   }
 }
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-})
+export default connect (mapStateToProps, mapDispatchToProps) (Manufacturers) 
 

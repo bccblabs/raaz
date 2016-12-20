@@ -43,6 +43,10 @@ export default keyMirror ({
   POSTS_SUCCESS_PART: null,
   POSTS_ERROR_PART: null,
 
+  POSTS_REQUEST_SPEC: null,
+  POSTS_SUCCESS_SPEC: null,
+  POSTS_ERROR_SPEC: null,
+
   /* User create post */
   RESET_POSTS_FILTER_STATE: null,
   SET_POSTS_FILTER_HASH: null,
@@ -169,14 +173,17 @@ export default keyMirror ({
   PARTS_BUILD_SUCCESS: null,
   PARTS_BUILD_ERROR: null,
 
+  PARTS_TAG_REQUEST: null,
+  PARTS_TAG_SUCCESS: null,
+  PARTS_TAG_ERROR: null,
 
   DEALS_REQUEST: null,
   DEALS_SUCCESS: null,
   DEALS_ERROR: null,
 
-  TAGS_REQUEST: null,
-  TAGS_SUCCESS: null,
-  TAGS_ERROR: null,
+  TAGS_SPEC_REQUEST: null,
+  TAGS_SPEC_SUCCESS: null,
+  TAGS_SPEC_ERROR: null,
 
   CAR_REQUEST: null,
   CAR_SUCCESS: null,
@@ -224,7 +231,9 @@ export default keyMirror ({
   SET_ACCESS_TOKEN: null,
   LOAD_HISTORY: null,
 
-
+  MANUFACTURERS_SPEC_REQUEST: null, 
+  MANUFACTURERS_SPEC_SUCCESS: null,  
+  MANUFACTURERS_SPEC_ERROR: null,
 
 
   /* Social Login and Profile */

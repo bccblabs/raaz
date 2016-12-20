@@ -57,8 +57,6 @@ export default class ProfileContainer extends Component {
           userId?(       
           <View> 
             <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
-            <Heading3 style={Titles.filterSectionTitle}>{"WALL"}</Heading3>
-            <AddPost style={{flex: 1}}/>
             <PostsByUserId userId={userId}/>
           </View>
           ):(<View/>)

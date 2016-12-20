@@ -76,15 +76,11 @@ class Tuning extends Component {
 
 
   componentDidMount() {
-      SplashScreen.hide();
-
+    SplashScreen.hide();
     let {access_token, setAccessToken, id_token, setIdToken, refresh_token, setRefreshToken} = this.props
-
     access_token && setAccessToken(access_token)
     id_token && setIdToken (id_token)
     refresh_token && setRefreshToken (refresh_token)
-
-
     refresh_token && this.fetchUserData (refresh_token)
   }
 
@@ -103,9 +99,13 @@ class Tuning extends Component {
 
   render () {
     let rightItem = {
-        icon: require ('../common/img/tuning.png'), 
+        icon: require ('../common/img/heart.png'), 
         onPress:Actions.Saved
       }
+    , leftItem = {
+      icon: require ('../common/img/helmet.png'),
+      onPress: ()=>{}
+    }
     , {
       data, 
       pagination, 
@@ -115,17 +115,17 @@ class Tuning extends Component {
     , {showModal} = this.state
 
     return (
-      <View style={{flex: 1, backgroundColor:'transparent', marginBottom: 50}}>
-        <F8Header title="Tuning" foreground='dark' rightItem={rightItem}/>
+      <View style={{flex: 1, backgroundColor:'transparent'}}>
+        <F8Header title="Raaz" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
         <F8Button style={{flex: 1}}
-                  onPress={Actions.QRScan}
+                  onPress={Actions.NewPost}
                   type="search"
-                  icon={require ('../common/img/qr.png')}
-                  caption={"Raaz qr"}/>
+                  icon={require ('../common/img/camera.png')}
+                  caption={"New Post"}/>
         <F8Button style={{flex: 1}}  onPress={Actions.Makes}
                   caption="Parts By car" type="search"
-                  icon={require ('../common/img/search.png')}/>
+                  icon={require ('../common/img/tuning.png')}/>
         </View>
         <ScrollView
             refreshControl={
@@ -140,7 +140,6 @@ class Tuning extends Component {
               />
           }
         >
-        <AddPost/>
         <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
         <Modal 

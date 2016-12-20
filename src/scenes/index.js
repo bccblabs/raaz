@@ -3,7 +3,7 @@ import {Scene, Actions, ActionConst} from 'react-native-router-flux'
 
 import { General } from '../styles'
 import { BuildDetails, BuildsListByPartId, BuildsListBySpecId, BuildsListByUserId } from '../build'
-import { Parts, PartDetails, PartsByBuild, PartFilter, PartsByManufacturer } from '../part'
+import { Parts, PartDetails, PartsByBuild, PartFilter, PartsByManufacturer, PartsByTag} from '../part'
 import { PostsByBuildId, PostsByUserId } from '../post' 
 import { Makes, Models, Submodels, Specs } from '../picker'
 import { Tuning, TuningBySpec, QRScreen, Manufacturer } from '../tuning'
@@ -11,10 +11,7 @@ import { UserPage, Comments, Login, Home, MyBuilds, MyPosts, NewBuild, NewPost, 
 import { TabIcon, EditSpecs, PhotoSwiper, SpecsByManufacturer} from '../components'
 export default scenes = Actions.create (
   <Scene key="root">
-    <Scene key="main" tabs={true} hideNavBar tabBarStyle={General.tabBarStyle}>
-        <Scene title="Tuning" icon={TabIcon} key="tuning" component={Tuning} hideNavBar/>
-        <Scene title="Profile" icon={TabIcon} key="home" component={Home} hideNavBar/>
-    </Scene>
+    <Scene key="main" hideNavBar component={Tuning}/>
     <Scene key="QRScan" component={QRScreen} hideNavBar/>
     <Scene key="Saved" component={Saved} hideNavBar/>
     <Scene key="BuildDetails" component={BuildDetails} hideNavBar/>
@@ -25,7 +22,7 @@ export default scenes = Actions.create (
     <Scene key="PartFilter" component={PartFilter} hideNavBar/>
     <Scene key="PartsByManufacturer" component={PartsByManufacturer} hideNavBar/>
     <Scene key="PartsByBuild" component={PartsByBuild} hideNavBar/>
-    
+    <Scene key="PartsByTag" component={PartsByTag} hideNavBar/>
     <Scene key="Makes" component={Makes} title="Makes" hideNavBar/>
     <Scene key="Models" type={ActionConst.REPLACE} component={Models} title="Models" hideNavBar/>
     <Scene key="Submodels" type={ActionConst.REPLACE} component={Submodels} title="Trims" hideNavBar/>

@@ -35,10 +35,15 @@ export default class Post extends Component {
     //   , commentsContent = (<CommentBtn postId={postId} commentsCnt={comments}/>)
       if (postType === 'new_build') {
         let {buildId, media} = build
-
+        name = build.name
         descText = 'Added a New Build'
-        linkContent = (
-          <LinkContent name={build.name} image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
+        imageContent = (
+          <TouchableWithoutFeedback onPress={()=>Actions.BuildDetails ({buildId})}>
+          <View style={{flex: 1}}>
+          <Image style={[PostStyles.primaryImage]} source={{uri: media[0]}}/>
+          <Text style={[PostStyles.primaryTitle, {position: 'absolute', bottom: 8, left: 8}]}>{name}</Text>
+          </View>
+          </TouchableWithoutFeedback>
         )
       }
       else if (postType === 'build_log' && part && build) {

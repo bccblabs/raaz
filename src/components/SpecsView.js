@@ -25,14 +25,11 @@ export default class SpecsView extends Component {
 
 		return (
 			<TouchableWithoutFeedback onPress={this.props.onPress}>
-			<View>
-				<Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
-				<View style={{alignItems: 'center'}}>
+				<View style={{alignItems: 'center', marginVertical: 8}}>
 					<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>
 					<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>
 					<MetricsGraph data={[{entries:dataArray}]}/>
 				</View>
-	        </View>
 	        </TouchableWithoutFeedback>
 		)
 	}

@@ -52,6 +52,14 @@ export const specDetailsSelector = createSelector (
     }
   )
   
+  export const postPaginationBySpecIdSelector = (state, props) => (state.pagination.postPaginationBySpecId && state.pagination.postPaginationBySpecId[props.specId] || {})
+  export const postBySpecIdSelector = createSelector (
+    [postEntitiesSelector, postPaginationBySpecIdSelector],
+    (postEntities, postPagination) => {
+      let ids = postPagination.ids?postPagination.ids:[]
+      return ids.map (id=>postEntities[id]).filter (elem=>elem)
+    }
+  )
 
 /* car selector entities */
 
@@ -215,6 +223,16 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
     }
   )
 
+  export const partsByTagPaginationSelector = (state, props) => (state.pagination.partsPaginationByTag && state.pagination.partsPaginationByTag[props.tag] || {})
+  export const partsByTagSelector = createSelector (
+    [partsEntitiesSelector, partsByTagPaginationSelector],
+    (partsEntities, partsPagination) => {
+      let ids = partsPagination.ids?partsPagination.ids:[]
+      return ids.map (id=>partsEntities[id]).filter (elem=>elem)
+    }
+  )
+
+
   export const specsByManufacturerEntities = (state, props) => (state.entities.specOptions)
   export const specsPaginationByManufacturerIdSelector = (state, props) => (state.pagination.specsPaginationByManufacturerId && state.pagination.specsPaginationByManufacturerId[props.manufacturerId] || {})
   export const specsByManufacturerIdSelector = createSelector (
@@ -229,3 +247,29 @@ export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toA
   export const isFollowing = (state, props) => {
     return false
   }
+
+  export const tagsEntitiesSelector = (state, props) => (state, props) => (state.entities.tags || {})
+  export const tagsPaginationBySpecIdSelector = (state, props) => (state.pagination.tagsPaginationBySpecId && state.pagination.tagsPaginationBySpecId[props.specId] || {})
+  export const tagsBySpecIdSelector = createSelector (
+      [tagsEntitiesSelector, tagsPaginationBySpecIdSelector],
+      (tagsEntities, tagsPagination) => {
+        return tagsPagination.ids?tagsPagination.ids:[]
+      }
+    )
+
+
+  export const manufacturersEntitiesSelector = (state, props) => (state.entities.manufacturers || {})
+  export const manufacturersPaginationBySpecIdSelector = (state, props) => (state.pagination.manufacturerPaginationBySpecId && state.pagination.manufacturerPaginationBySpecId[props.specId] || {})
+  export const manufacturersBySpecIdSelector = createSelector (
+    [manufacturersEntitiesSelector, manufacturersPaginationBySpecIdSelector],
+
+    (manufacturersEntities, manufacturersPagination) => {
+
+      let ids = manufacturersPagination.ids?manufacturersPagination.ids:[]
+
+      console.log (ids, manufacturersEntities)
+
+      return ids.map (id=>manufacturersEntities[id]).filter (elem=>elem)
+    }
+  )
+

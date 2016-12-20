@@ -54,6 +54,10 @@ const dealSchema = new Schema ('deals', {
   idAttribute: 'dealId'
 })
 
+const manufacturerSchema = new Schema ('manufacturers', {
+  idAttribute: 'manufacturerId'
+})
+
 categorySchema.define ({
   categories: arrayOf (categorySchema)
 })
@@ -78,6 +82,10 @@ partSchema.define ({
   parts: arrayOf (partSchema)
 })
 
+manufacturerSchema.define ({
+  manufacturers: arrayOf (manufacturerSchema)
+})
+
 export const Schemas = {
   MAKE_ARRAY: arrayOf (makeSchema),
   MODEL_ARRAY: arrayOf (modelSchema),
@@ -91,7 +99,8 @@ export const Schemas = {
 
   TAGS_ARRAY: arrayOf (tagSchema),
   DEALS_ARRAY: arrayOf (dealSchema),
-  CAT_ARRAY: arrayOf (categorySchema)
+  CAT_ARRAY: arrayOf (categorySchema),
+  MANUFACTURERS_ARRAY: arrayOf (manufacturerSchema),
 }
 
 function getNextPageUrl (response) {

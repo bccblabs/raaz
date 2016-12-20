@@ -50,6 +50,10 @@ const {
   PARTS_BUILD_SUCCESS,
   PARTS_BUILD_ERROR,
 
+  PARTS_TAG_REQUEST,
+  PARTS_TAG_SUCCESS,
+  PARTS_TAG_ERROR,
+
   POSTS_REQUEST,
   POSTS_SUCCESS,
   POSTS_ERROR,
@@ -65,6 +69,10 @@ const {
   POSTS_REQUEST_PART,
   POSTS_SUCCESS_PART,
   POSTS_ERROR_PART,
+
+  POSTS_REQUEST_SPEC,
+  POSTS_SUCCESS_SPEC,
+  POSTS_ERROR_SPEC,
 
   MAKE_REQUEST,
   MAKE_SUCCESS,
@@ -98,6 +106,14 @@ const {
   CAT_SUCCESS,
   CAT_ERROR,
 
+  TAGS_SPEC_REQUEST,
+  TAGS_SPEC_SUCCESS,
+  TAGS_SPEC_ERROR,
+
+  MANUFACTURERS_SPEC_REQUEST,
+  MANUFACTURERS_SPEC_SUCCESS,
+  MANUFACTURERS_SPEC_ERROR,
+
 } = require ('../constants').default
 
 let initState = {
@@ -114,6 +130,8 @@ let initState = {
   newbuild: {},
   newpart: {},
   specsOptions: {},
+  tags: {},
+  manufacturers: {},
 }
 
 function entities(state=initState, action) {
@@ -201,6 +219,15 @@ const pagination = combineReducers ({
     ]
   }),
 
+  postPaginationBySpecId: paginate ({
+    mapActionToKey: action =>action.specId,
+    types: [
+      POSTS_REQUEST_SPEC,
+      POSTS_SUCCESS_SPEC,
+      POSTS_ERROR_SPEC,
+    ]
+  }),
+
   categoriesPagination: paginate ({
     mapActionToKey: action=>action.key,
     types: [
@@ -252,6 +279,34 @@ const pagination = combineReducers ({
       PARTS_BUILD_REQUEST,
       PARTS_BUILD_SUCCESS,
       PARTS_BUILD_ERROR,
+    ]
+  }),
+
+  partsPaginationByTag: paginate ({
+    mapActionToKey: action => action.tag,
+    types: [
+      PARTS_TAG_REQUEST,
+      PARTS_TAG_SUCCESS,
+      PARTS_TAG_ERROR,
+    ]
+
+  }),
+
+  tagsPaginationBySpecId: paginate ({
+    mapActionToKey: action => action.specId,
+    types: [
+      TAGS_SPEC_REQUEST,
+      TAGS_SPEC_SUCCESS,
+      TAGS_SPEC_ERROR
+    ]
+  }),
+
+  manufacturerPaginationBySpecId: paginate ({
+    mapActionToKey: action => action.specId,
+    types: [
+      MANUFACTURERS_SPEC_REQUEST,
+      MANUFACTURERS_SPEC_SUCCESS,
+      MANUFACTURERS_SPEC_ERROR
     ]
   })
 })

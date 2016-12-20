@@ -38,6 +38,8 @@ import SpecsList from './Specs'
 import AddPost from './AddPost'
 
 import PartsByManufactuer from './PartsByManufactuer'
+import TuningTags from './TuningTags'
+
 
 module.exports.AddPost = AddPost
 module.exports.BackSquare = BackSquare
@@ -79,3 +81,4 @@ module.exports.InfoContainer = InfoContainer
 module.exports.PartsByManufactuer = PartsByManufactuer
 
 module.exports.SpecsByManufacturer = SpecsByManufacturer
+module.exports.TuningTags = TuningTags

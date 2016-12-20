@@ -87,7 +87,7 @@ export default class List extends Component {
       else {
         content = (
           <ListView
-            style={{flex: 1, backgroundColor: 'white'}}
+            style={{flex: 1, backgroundColor: 'transparent'}}
             dataSource={dataSource}
             enableEmptySections={true}
             renderRow={renderRow}
