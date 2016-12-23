@@ -22,6 +22,8 @@ import {PostsBySpecId} from '../post'
 import {specDetailsPaginationSelector, specDetailsSelector} from '../selectors'
 import {DetailStyles, General, Specs} from '../styles'
 
+import {BuildsPagerBySpecId} from '../build'
+
 import {
   BackSquare,
   LoadingView, 
@@ -102,15 +104,19 @@ class TuningBySpec extends Component {
           parallaxHeaderHeight={300+64}
           stickyHeaderHeight={64}
           renderFixedHeader={()=><BackSquare/>}
-          fixedHeaderHeight={64}
           renderForeground={()=>{
-            let string = (make + ' ' + model + ' ' + submodel).toUpperCase()
-            return (<Text style={[DetailStyles.primaryTitle, DetailStyles.infoContainer]}>{string}</Text>)
-          }}
-          renderBackground={() => <Image source={require ('../common/img/r34.png')} style={DetailStyles.VRImageHolder}/>}
+            return (<F8Button 
+                      icon={require ('../common/img/car.png')}
+                      onPress={()=>Actions.BuildsBySpecId({specId})}
+                      style={{flex: -1,right: 8, position: 'absolute', bottom: 0}}            
+                      type="search" caption="See All Builds"/>
+          )}}
+          renderBackground={() => <BuildsPagerBySpecId specId={specId}/>}
           >
           <View style={{flex: 1, backgroundColor: 'transparent'}}>
+          <Text style={{fontSize: 15, marginLeft: 12, marginTop: 16, fontWeight: '700', color: 'black', width: 150, flex: -1}}>{"#MANUFACTURERS"}</Text>
           <Manufacturers specId={specId}/>
+          <Text style={{fontSize: 15, marginLeft: 12, marginTop: 16, fontWeight: '700', color: 'black', width: 150, flex: -1}}>{"#PARTS"}</Text>
           <TuningTags specId={specId}/>
           <PostsBySpecId specId={specId}/>
           </View>

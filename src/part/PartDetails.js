@@ -99,13 +99,14 @@ class PartDetails extends Component {
           'rearSpringRateStiffness','frontSpringRateStiffness']
         , specId = this.props.data.specId
         , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}})
-        , specsContent = (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):undefined
         , foregroundContent = (
           <View style={DetailStyles.infoContainer}>
+            <TouchableWithoutFeedback onPress={()=>Actions.Manufacturer({manufacturer, specId})}>
             <Image 
-              style={[DetailStyles.userPhotoStyle, {resizeMode: 'contain', backgroundColor: 'white'}]} 
+              style={[PostStyles.manufacturerPhoto]} 
               source={{uri: manufacturer.logo}}
             />
+            </TouchableWithoutFeedback>
             <Text style={DetailStyles.partTitle}>{name}</Text>
           </View>
         )
@@ -125,26 +126,32 @@ class PartDetails extends Component {
           backgroundColor="transparent"
           contentBackgroundColor="white"
           backgroundSpeed={1}
-          parallaxHeaderHeight={300}
+          parallaxHeaderHeight={300+64}
           stickyHeaderHeight={64}
-          renderFixedHeader={()=>(<BackSquare/>)}
+          renderFixedHeader={()=>(
+            <View style={{flex: 1, flexDirection: 'row'}}>
+            <BackSquare/>
+            <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
+            </View>
+          )}
           renderForeground={()=>{return foregroundContent}}
           renderBackground={() => <Image source={{uri: media[0]}} style={DetailStyles.VRImageHolder}/>}
           >
-          <View style={{flex: 1, alignItems: 'center'}}>
+          <View style={{flex: 1}}>
           <ImagesScroll media={media}/>
-          <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
           <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
-          {specsContent}
-          <BuildsPagerByPartId style={{flex: 1}} partId={partId}/>
+          <View alignSelf="center">
+          {
+            (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):(<View/>)
+          }
+          </View>
           <View style={{backgroundColor: 'white', alignSelf: 'flex-start'}}>
           {description && (<Heading3 style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Heading3>)}
           {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 16}]}>{`${description}`}</Heading3>)}
           {detailsContent && (<Heading3 style={Titles.filterSectionTitle}>{"DETAILS"}</Heading3>)}
           {detailsContent}
           </View>
-          <AddPost style={{flex: 1}} originalUserId={this.props.userId} onCreatePost={fetchPostsByPartId ({partId: partId})} placeholder={"  IS GUD?"} routeType={"part"} parentId={partId} specId={specId}/>
-          <PostsByPartId style={{flex: 1}} partId={partId}/>
+          <PostsByPartId style={{paddingTop: 16}} partId={partId}/>
           </View>
         </ParallaxScrollView>
       )

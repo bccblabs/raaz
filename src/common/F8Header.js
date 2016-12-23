@@ -188,7 +188,7 @@ class ItemWrapperIOS extends React.Component {
 
 
 var STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
-export const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
+export const HEADER_HEIGHT = Platform.OS === 'ios' ? 56 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
 
 var styles = StyleSheet.create({
   toolbarContainer: {
@@ -198,7 +198,7 @@ var styles = StyleSheet.create({
     height: HEADER_HEIGHT - STATUS_BAR_HEIGHT,
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     paddingTop: STATUS_BAR_HEIGHT,
     height: HEADER_HEIGHT,
     flexDirection: 'row',

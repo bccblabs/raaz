@@ -10,7 +10,7 @@ import {
 
 import {Paragraph} from '../common/F8Text'
 import {Actions} from 'react-native-router-flux'
-import {DetailStyles} from '../styles'
+import {DetailStyles, WIDTH} from '../styles'
 import {connect} from 'react-redux'
 import {fetchManufacturersBySpecId} from '../reducers/tuning/filterActions'
 import {manufacturersBySpecIdSelector, manufacturersPaginationBySpecIdSelector} from '../selectors'
@@ -45,9 +45,8 @@ class Manufacturers extends Component {
     else if (pagination.hasError) return (<ErrorView/>)
     else if (!manufacturers.length) return (<View/>)
     return (
-        <ScrollView
-          style={{marginTop: 8, height: 150, flex: -1}}
-          containerStyle={{height: 150}}
+        <View
+          style={{marginTop: 8, flex: -1, flexWrap: 'wrap', flexDirection: 'row'}}
           showsHorizontalScrollIndicator={false}
           horizontal={true}>
         {
@@ -55,18 +54,18 @@ class Manufacturers extends Component {
             let {name, logo, manufacturerId} = data
               , passProps = Object.assign ({}, {manufacturerId}, {name}, {specId})
             return (
-                <TouchableWithoutFeedback  onPress={()=>{
+                <TouchableWithoutFeedback key={`manu-${cidx}`} onPress={()=>{
                   Actions.Manufacturer ({manufacturer: data, specId})
                 }}>
                   <Image
                     source={{uri: logo}}
-                    style={[DetailStyles.scrollImage, {resizeMode: 'contain'}]}>
+                    style={[DetailStyles.scrollImage, {marginHorizontal: 0, width: WIDTH/2, resizeMode: 'contain'}]}>
                   </Image>
                 </TouchableWithoutFeedback>
             )
           })
         }
-    </ScrollView>)
+    </View>)
   }
 }
 

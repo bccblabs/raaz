@@ -15,7 +15,7 @@ import numeral from 'numeral'
 import {Actions} from 'react-native-router-flux'
 
 import {Utils} from '../utils'
-import {Specs, PostStyles} from '../styles'
+import {Specs, PostStyles, DetailStyles} from '../styles'
 import intersection from 'lodash/intersection'
 
 export default class Part extends Component {
@@ -34,7 +34,7 @@ export default class Part extends Component {
         , specsArray = intersection (keysArray, Object.keys(data)).map ((key)=>{return {name: Utils.parseLabelName(key), value: data[key]}})
         , imageContent = (
           <Image source={{uri: media}} resizeMode="contain" style={PostStyles.primaryImage}>
-          <Text style={PostStyles.primaryTitle}>{name}</Text>
+          <Text style={[DetailStyles.primaryTitle, DetailStyles.infoContainer]}>{name}</Text>
           </Image>
         )
         , partContent = (

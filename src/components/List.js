@@ -7,10 +7,8 @@ import {Actions} from 'react-native-router-flux'
 
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
-import TagsHeader from './TagsHeader'
-import ErrorView from './ErrorView'
-import LoadingView from './LoadingView'
-import EmptyView from './EmptyView'
+
+import {TagsHeader, ErrorView, LoadingView, EmptyView, BackSquare} from './'
 import {General, btnColor} from '../styles'
 
 export default class List extends Component {
@@ -69,9 +67,8 @@ export default class List extends Component {
 
   render () {
     let {dataSource, pagination} = this.state
-      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg, wall} = this.props
+      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg, wall, showHeader} = this.props
       , {nextPageUrl, isFetching, hasError} = pagination
-      , header = title?(<F8Header foreground="dark" title={title.toUpperCase()} leftItem={{title:'Back', onPress: Actions.pop}}/>):<View/>
       , content
 
       // if (isFetching) content = (<LoadingView/>)
@@ -98,10 +95,11 @@ export default class List extends Component {
           />
         )
       }
+    console.log (showHeader)
     return (
       <View style={{flex: 1}}>
-        {header}
         {content}
+        {showHeader ? <BackSquare/> : <View/>}
       </View>
     )
   }

@@ -47,14 +47,14 @@ class Manufacturer extends Component {
 	      , foregroundContent = manufacturer?(
 	        <View style={{flex: 1}}>
 	          <View style={DetailStyles.userInfoContainer}>
-	            <Image style={PostStyles.largeUserPhoto} source={{uri: manufacturer.logo}}/>
-	            <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.6)'}]}>{manufacturer.name}</Text>
+	            <Image style={[PostStyles.manufacturerPhoto]} source={{uri: manufacturer.logo}}/>
 	          </View>
 	          <View style={{right: 8, position: 'absolute', bottom: 0}}>
 				<F8Button 
-					icon={require ('../common/img/comment.png')}
-					style={{flex: -1}}            
-					type="search" caption="Follow"/>
+    	          icon={require ('../common/img/car.png')}
+                  onPress={()=>Actions.BuildsByManufacturerId({manufacturerId: manufacturer.manufacturerId})}
+                  style={{flex: -1}}            
+                  type="search" caption="See All Builds"/>
 	          </View>
 	        </View>
 	      ):(<View/>)
@@ -64,15 +64,14 @@ class Manufacturer extends Component {
 	        backgroundColor="transparent"
 	        contentBackgroundColor="white"
 	        backgroundSpeed={1}
-	        parallaxHeaderHeight={300}
+	        parallaxHeaderHeight={300+64}
 	        stickyHeaderHeight={64}
 	        renderForeground={()=>{return foregroundContent}}
-	        renderBackground={() => <Image source={require ('../common/img/r34.png')} style={DetailStyles.VRImageHolder}/>}
+	        renderBackground={() => <BuildsPagerByManufacturerId manufacturerId={manufacturer.manufacturerId}/>}
 	        renderFixedHeader={()=>(<BackSquare/>)}
 	        >
 	        <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
 	        <SpecSelector style={{marginTop: 16, flex: 1}} manufacturerId={manufacturer.manufacturerId}/>
-	        <BuildsPagerByManufacturerId style={{flex: 1}} specId={specId} manufacturerId={manufacturer.manufacturerId}/>
 	        <PartsByManufactuer specId={specId} manufacturerId={manufacturer.manufacturerId}/>
 	        </View>
 	      </ParallaxScrollView>

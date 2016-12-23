@@ -117,16 +117,6 @@ class Tuning extends Component {
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
         <F8Header title="Raaz" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', flex: -1}}>
-        <F8Button style={{flex: 1}}
-                  onPress={Actions.NewPost}
-                  type="search"
-                  icon={require ('../common/img/camera.png')}
-                  caption={"New Post"}/>
-        <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                  caption="Parts By car" type="search"
-                  icon={require ('../common/img/tuning.png')}/>
-        </View>
         <ScrollView
             refreshControl={
               <RefreshControl
@@ -142,6 +132,16 @@ class Tuning extends Component {
         >
         <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
+        <View style={{backgroundColor: 'rgba(0,0,0,0.1)',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-between', flex: -1}}>
+        <F8Button style={{flex: 1}}
+                  onPress={Actions.NewPost}
+                  type="search"
+                  icon={require ('../common/img/camera.png')}
+                  caption={"New Post"}/>
+        <F8Button style={{flex: 1}}  onPress={Actions.Makes}
+                  caption="Parts By car" type="search"
+                  icon={require ('../common/img/tuning.png')}/>
+        </View>
         <Modal 
            animationType={"slide"}
            transparent={false}

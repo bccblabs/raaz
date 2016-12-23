@@ -5,10 +5,10 @@ export default class BackSquare extends Component {
 	render () {
 		return (
             <TouchableWithoutFeedback onPress={Actions.pop}>
-            <View style={{backgroundColor: 'rgba(0,0,0,0.2)', position: 'absolute', top: 24, left: 8, width: 40, height: 40, alignItems: 'center', justifyContent: 'center', flex: 1}}>
-              <Image source={require ('../common/img/back_white.ios.png')} style={{flex: -1}}/>
-            </View>
-          </TouchableWithoutFeedback>
+	            <View style={{backgroundColor: 'rgba(0,0,0,0.2)', position: 'absolute', top: 24, left: 8, width: 40, height: 40, alignItems: 'center', justifyContent: 'center', flex: 1}}>
+	              <Image source={require ('../common/img/back_white.ios.png')} style={{flex: -1}}/>
+	            </View>
+			</TouchableWithoutFeedback>
 		)
 	}
 }

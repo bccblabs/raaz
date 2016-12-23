@@ -2,7 +2,7 @@ import React from 'react'
 import {Scene, Actions, ActionConst} from 'react-native-router-flux'
 
 import { General } from '../styles'
-import { BuildDetails, BuildsListByPartId, BuildsListBySpecId, BuildsListByUserId } from '../build'
+import { BuildDetails, BuildsListByPartId, BuildsListBySpecId, BuildsListByUserId, BuildsListByManufacturerId} from '../build'
 import { Parts, PartDetails, PartsByBuild, PartFilter, PartsByManufacturer, PartsByTag} from '../part'
 import { PostsByBuildId, PostsByUserId } from '../post' 
 import { Makes, Models, Submodels, Specs } from '../picker'
@@ -36,6 +36,7 @@ export default scenes = Actions.create (
     <Scene key="EditSpecs" component={EditSpecs} hideNavBar/>
 
     <Scene key="BuildsByUserId" component={BuildsListByUserId} hideNavBar/>
+    <Scene key="BuildsByManufacturerId" component={BuildsListByManufacturerId} hideNavBar/>
     <Scene key="BuildsByPartId" component={BuildsListByPartId} hideNavBar/>
     <Scene key="BuildsBySpecId" component={BuildsListBySpecId} hideNavBar/>
 

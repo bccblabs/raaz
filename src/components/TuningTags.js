@@ -37,7 +37,7 @@ class TuningTags extends Component {
 		else if (pagination.hasError) return (<ErrorView/>)
 		else {			
 		   return (tags && tags.length) ? (
-		    <View style={{margin: 16,justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
+		    <View style={{flex: -1, marginTop: 8 ,justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
 		      {tags.map((partTag, idx)=>{
 		        return (
 		        <TouchableWithoutFeedback 
@@ -49,8 +49,10 @@ class TuningTags extends Component {
 			            justifyContent: 'center',
 			            alignItems: 'center',
 			            flex: -1,
+			            borderRadius: 2,
+			            backgroundColor: 'whitesmoke',
 			            margin: 4,}}>
-			          <Text style={{fontSize: 12, color: 'black', fontWeight: 'bold'}}>{`#${partTag}`}</Text>
+			          <Text style={{fontSize: 14, color: 'black', margin: 2, fontWeight: '600'}}>{`#${partTag}`}</Text>
 			          </View>
 		        </TouchableWithoutFeedback>
 		        )})

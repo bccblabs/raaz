@@ -56,10 +56,10 @@ export default class UserPage extends Component {
 		    )
 			, btnContent = (
 				<F8Button 
-					icon={require ('../common/img/helmet.png')}
-					onPress={Actions.NewBuild}
-					style={{flex: -1}}            
-					type="search" caption="Follow"/>
+    	          icon={require ('../common/img/car.png')}
+                  onPress={()=>Actions.BuildsByUserId({userId})}
+                  style={{flex: -1}}            
+                  type="search" caption="See All Builds"/>
 			)
 
 	    if (isLoading) {

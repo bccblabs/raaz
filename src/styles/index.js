@@ -24,8 +24,7 @@ export const General = StyleSheet.create ({
   bottomButtonStyle: {
     backgroundColor: btnColor,
     alignSelf: 'center',
-    flex: 0,
-    height: 60,
+    flex: -1,
     borderWidth: 4,
     borderColor: 'white',
     width: window.width,
@@ -413,10 +412,15 @@ export const PostStyles = StyleSheet.create({
     width: 45,
     resizeMode: 'cover'
   },
-
+  manufacturerPhoto: {
+    height: 76,
+    width: 76,
+    resizeMode: 'contain' 
+  },
   largeUserPhoto: {
-    height: 60,
-    width: 60,
+    height: 76,
+    width: 76,
+    borderRadius: 38,
     resizeMode: 'cover',
   },
 
@@ -507,8 +511,9 @@ export const DetailStyles = StyleSheet.create ({
     infoContainer: {
       flex: -1,
       position: 'absolute',
-      bottom: 8,
-      left: 8,
+      bottom: 16,
+      left: 2,
+      marginRight: 16,
       flexDirection: 'column',
       alignItems: 'flex-start',
     },
@@ -533,22 +538,12 @@ export const DetailStyles = StyleSheet.create ({
     VRImageHolder : {
       width: window.width,
       height: 300+64,
-      alignSelf: 'center'
-    },
-    foregroundContainer: {
-      marginTop: 68,
-      position: 'absolute',
-      top: 8,
-      left: 8,
-      width: window.width/3,
+      resizeMode: 'cover'
     },
     userInfoContainer: {
-      left: 8,
-      position: 'absolute',
-      bottom: 8,
-      flex: -1,
+      flex: 1,
       justifyContent: 'center',
-      alignItems: 'flex-start'
+      alignItems: 'center'
     },
     userActionButton: {
       margin: 4, 
@@ -565,18 +560,16 @@ export const DetailStyles = StyleSheet.create ({
       fontSize: 16,
       fontWeight: '700',
       color: 'white',
-      backgroundColor: 'black',
+      backgroundColor: 'rgba(0,0,0,0.6)',
       padding: 8,
-      paddingHorizontal: 12,
     },
     lightTitle: {
       fontSize: 16,
       fontWeight: '700',
       color: 'white',
       backgroundColor: 'transparent',
-      padding: 8,
-      paddingHorizontal: 12,
-
+      padding: 4,
+      borderRadius: 4
     },
     manufacturer: {
       position: 'absolute',
@@ -587,9 +580,7 @@ export const DetailStyles = StyleSheet.create ({
       width: 150,
       height: 150,
       resizeMode: 'cover',
-      borderLeftWidth: 0.5,
       marginHorizontal: 2,
-      borderColor: 'black'
     },
     descriptionContainer: {
       flex: -1,

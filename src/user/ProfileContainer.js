@@ -33,7 +33,7 @@ export default class ProfileContainer extends Component {
         <View style={{flex: 1}}>
           <View style={DetailStyles.userInfoContainer}>
             <Image style={PostStyles.largeUserPhoto} source={{uri: profileData.picture}}/>
-            <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.6)'}]}>{profileData.name}</Text>
+            <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.2)'}]}>{profileData.name}</Text>
           </View>
           <View style={{right: 8, position: 'absolute', bottom: 0}}>
           {btnContent}
@@ -46,17 +46,16 @@ export default class ProfileContainer extends Component {
         backgroundColor="transparent"
         contentBackgroundColor="white"
         backgroundSpeed={1}
-        parallaxHeaderHeight={300}
+        parallaxHeaderHeight={300+64}
         stickyHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
-        renderBackground={() => <Image source={require ('../common/img/r34.png')} style={DetailStyles.VRImageHolder}/>}
+        renderBackground={() => <BuildsPagerByUserId userId={userId}/>}
         renderFixedHeader={()=>{return initial?(<View/>):(<BackSquare/>)}}
         >
         <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
         {
           userId?(       
           <View> 
-            <BuildsPagerByUserId style={{flex: 1}} userId={userId}/>
             <PostsByUserId userId={userId}/>
           </View>
           ):(<View/>)

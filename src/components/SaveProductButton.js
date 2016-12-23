@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
-import F8Button from '../common/F8Button'
-
+import {View, TouchableWithoutFeedback, Image} from 'react-native'
+import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 import {isPartSavedSelector} from '../selectors'
 import {toggleSaveProduct} from '../reducers/history/historyActions'
@@ -22,21 +22,14 @@ const mapDispatchToProps = (dispatch) => {
 class SaveProductButton extends Component {
   render () {
     let {isSaved, part, toggleSaveProduct} = this.props
-    if (isSaved) {
+      , iconSrc = isSaved? require ('../common/img/heart.png'):require ('../common/img/heart_blank.png')
       return (
-        <F8Button
-          style={[General.bottomButtonStyle, {backgroundColor: 'blue'}]}
-          type="saved" caption="Saved!"
-          onPress={()=>toggleSaveProduct (part)}
-        />)
-    } else {
-      return (
-        <F8Button
-          style={[General.bottomButtonStyle, {backgroundColor: 'red'}]}
-          type="unsaved" caption="Save"
-          onPress={()=>toggleSaveProduct (part)}
-        />)
-    }
+      <TouchableWithoutFeedback onPress={()=>toggleSaveProduct (part)}>
+        <View style={{backgroundColor: 'transparent', position: 'absolute', top: 24, right: 8, width: 40, height: 40, alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Image source={iconSrc} style={{flex: -1}}/>
+        </View>
+      </TouchableWithoutFeedback>
+      )
   }
 }
 
