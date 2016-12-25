@@ -198,7 +198,7 @@ var styles = StyleSheet.create({
     height: HEADER_HEIGHT - STATUS_BAR_HEIGHT,
   },
   header: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'transparent',
     paddingTop: STATUS_BAR_HEIGHT,
     height: HEADER_HEIGHT,
     flexDirection: 'row',

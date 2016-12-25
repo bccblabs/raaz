@@ -14,7 +14,7 @@ import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 import {DetailStyles, General} from '../styles'
 
-import {AddPost} from '../components'
+import {AddPost, NewPostButton, LoadingView} from '../components'
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 
@@ -61,7 +61,7 @@ class Tuning extends Component {
   constructor (props) {
     super (props)
     this.fetchUserData = this.fetchUserData.bind (this)
-    this.state = {showModal: false, refreshing: false}
+    this.state = {showModal: false, refreshing: false, userId: null}
   }
 
   async fetchUserData (refresh_token) {
@@ -69,6 +69,8 @@ class Tuning extends Component {
       let {id_token} = await Requests.renewIdToken (refresh_token)
       let data = await Requests.fetchUserProfileApi (id_token)
       this.props.setUserData (data)
+      console.log ('user',data)
+      data && data.user_id && this.setState ({userId: data.user_id})
     } catch (err) {
       console.error (err)
     }
@@ -100,11 +102,11 @@ class Tuning extends Component {
   render () {
     let rightItem = {
         icon: require ('../common/img/heart.png'), 
-        onPress:Actions.Saved
+        onPress:() => Actions.Saved()
       }
     , leftItem = {
       icon: require ('../common/img/helmet.png'),
-      onPress: ()=>{}
+      onPress: () => Actions.Home()
     }
     , {
       data, 
@@ -113,34 +115,34 @@ class Tuning extends Component {
     } = this.props
 
     , {showModal} = this.state
-
+    if (!this.state.userId) return (<LoadingView/>)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
-        <F8Header title="Raaz" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>
+        <F8Header title="TUNESQUAD" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>
         <ScrollView
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
                 onRefresh={this._onRefresh.bind (this)}
-                tintColor="#ff0000"
+                tintColor="black"
                 title="Loading..."
-                titleColor="#00ff00"
+                titleColor="black"
                 colors={['#ff0000', '#00ff00', '#0000ff']}
-                progressBackgroundColor="#ffff00"
+                progressBackgroundColor="black"
               />
           }
         >
         <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
-        <View style={{backgroundColor: 'rgba(0,0,0,0.1)',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-between', flex: -1}}>
-        <F8Button style={{flex: 1}}
-                  onPress={Actions.NewPost}
-                  type="search"
-                  icon={require ('../common/img/camera.png')}
-                  caption={"New Post"}/>
-        <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                  caption="Parts By car" type="search"
-                  icon={require ('../common/img/tuning.png')}/>
+        <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-between', flex: -1}}>
+          <F8Button style={{flex: 1}}
+                    onPress={()=>Actions.NewPost()}
+                    type="search"
+                    icon={require ('../common/img/camera.png')}
+                    caption={"New Post"}/>
+          <F8Button style={{flex: 1}}  onPress={Actions.Makes}
+                    caption="Parts By car" type="search"
+                    icon={require ('../common/img/search.png')}/>
         </View>
         <Modal 
            animationType={"slide"}

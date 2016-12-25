@@ -31,7 +31,7 @@ let videoOpts = {
 	takePhotoButtonTitle: 'Video Shoot',
 	chooseFromLibraryButtonTitle: 'Video from Library',
 	videoQuality: 'high',
-	durationLimit: '300',
+	durationLimit: '30',
 	storageOptions: {
 		skipBackup: true,
 		path: 'images'

@@ -18,6 +18,7 @@ import {
 	userIdSelector,
 } from '../selectors'
 
+import {NewPostButton} from '../components'
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -32,18 +33,24 @@ class Home extends Component {
 			, btnContent = (
 	          <F8Button 
 	            icon={require ('../common/img/car.png')} 
-	            onPress={Actions.NewBuild}
+	            onPress={()=>Actions.BuildsByUserId ({userId})}
 	            style={{flex: -1}}            
-	            type="search" caption="New Build"/>
+	            type="search" caption="My Builds"/>
 			)
 
 		return (
-			<View style={{flex: 1,marginBottom: 50}}>
+			<View style={{flex: 1}}>
 				<ProfileContainer
-					initial={true}
 					userId={userId}
 					profileData={profileData}
 					btnContent={btnContent}/>
+		        <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-between', flex: -1}}>
+					<F8Button style={{flex: 1}}
+						onPress={()=>Actions.NewPost()}
+						type="search"
+						icon={require ('../common/img/camera.png')}
+						caption={"New Post"}/>
+		        </View>
 			</View>
 		)
 	}

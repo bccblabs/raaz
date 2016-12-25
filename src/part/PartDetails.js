@@ -122,6 +122,7 @@ class PartDetails extends Component {
           </View>
         ):undefined
       return (
+      <View style={{flex: 1, backgroundColor:'transparent'}}>
         <ParallaxScrollView
           backgroundColor="transparent"
           contentBackgroundColor="white"
@@ -145,15 +146,21 @@ class PartDetails extends Component {
             (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):(<View/>)
           }
           </View>
-          <View style={{backgroundColor: 'white', alignSelf: 'flex-start'}}>
+          <View style={{backgroundColor: 'white', alignSelf: 'flex-start', marginVertical: 32}}>
           {description && (<Heading3 style={Titles.filterSectionTitle}>{"DESCRIPTION"}</Heading3>)}
           {description && (<Heading3 style={[Specs.subtitle, {alignSelf: 'flex-start', margin: 16}]}>{`${description}`}</Heading3>)}
           {detailsContent && (<Heading3 style={Titles.filterSectionTitle}>{"DETAILS"}</Heading3>)}
           {detailsContent}
           </View>
-          <PostsByPartId style={{paddingTop: 16}} partId={partId}/>
+          <PostsByPartId partId={partId}/>
           </View>
         </ParallaxScrollView>
+        <F8Button style={{flex: -1}}
+                  onPress={()=>Actions.NewPost()}
+                  type="search"
+                  icon={require ('../common/img/comment.png')}
+                  caption={"New Post"}/>
+      </View>
       )
     }
   }

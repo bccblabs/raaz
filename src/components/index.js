@@ -18,7 +18,7 @@ import PhotoSwiper from './PhotoSwiper'
 import PostCard from './Manufacturers'
 import SaveProductButton from './SaveProductButton'
 import LinkContent from './LinkContent'
-
+import NewPostButton from './NewPostButton'
 
 import SpecsHistoryHeader from './SpecsHistoryHeader'
 import SpecSelector from './SpecSelector'
@@ -57,6 +57,9 @@ module.exports.List = List
 module.exports.LoadingView = LoadingView
 module.exports.Manufacturers = Manufacturers
 module.exports.MetricsGraph = MetricsGraph
+
+module.exports.NewPostButton = NewPostButton
+
 module.exports.PartTags = PartTags
 module.exports.PhotoSwiper = PhotoSwiper
 module.exports.PostCard = PostCard

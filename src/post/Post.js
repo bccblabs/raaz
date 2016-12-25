@@ -36,7 +36,7 @@ export default class Post extends Component {
       if (postType === 'new_build') {
         let {buildId, media} = build
         name = build.name
-        descText = 'Added a New Build'
+        descText = '#Build'
         imageContent = (
           <TouchableWithoutFeedback onPress={()=>Actions.BuildDetails ({buildId})}>
           <View style={{flex: 1}}>
@@ -50,7 +50,7 @@ export default class Post extends Component {
         let {partId, medium} = part
           , {buildId, media} = build
 
-        descText = 'Installed a New Part'
+        descText = '#Part'
         name = part.name
 
         linkContent = (
@@ -71,7 +71,7 @@ export default class Post extends Component {
         } else {
           media = build.media[0]
         }
-        descText = 'Posted a Comment'
+        descText = '#Comment'
         linkContent = (
           <LinkContent name={build.name} image={media} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
         )
@@ -84,7 +84,7 @@ export default class Post extends Component {
       else if (postType === 'part_comment' || postType === 'part_log') {
         let {text} = post
           , {partId} = part
-        descText = 'Posted a Comment'
+        descText = '#Comment'
         specId = post.specId
         postContent = (
         <View style={{flex: 1}}>

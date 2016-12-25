@@ -230,8 +230,7 @@ export const FilterStyles = StyleSheet.create({
   },
   multipleChoiceText: {
     padding: 14,
-    fontWeight:'bold',
-    color: 'gray',
+    color: 'black',
     alignSelf: 'flex-start',
     fontSize: 14,
     letterSpacing: 0.7,
@@ -267,22 +266,16 @@ export const FilterCardStyles = StyleSheet.create ({
 })
 
 export const NewPostStyles = StyleSheet.create ({
-
-
-  taggedCarsScroll: {
-    width: window.width,
-    backgroundColor: 'transparent'
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   largeBlockInput: {
-    margin: 8,
-    width: window.width,
-    height: window.height/8,
-    fontSize: 32,
+    flex: 1,
+    fontSize: 20,
+    marginTop:16,
+    height: HEIGHT/2
   },
   singleLineBlockInput: {
     flex: -1,

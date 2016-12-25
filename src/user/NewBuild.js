@@ -22,7 +22,7 @@ import Part from '../part/Part'
 import {Heading3, Paragraph} from '../common/F8Text'
 
 import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, Specs} from '../styles'
-import {LoadingView, ErrorView, MetricsGraph} from '../components'
+import {LoadingView, ErrorView, MetricsGraph,BackSquare} from '../components'
 
 import {
 	newBuildSelector,
@@ -181,83 +181,29 @@ class NewBuild extends Component {
 			icon: require ('../common/img/back.ios.png'),
 			onPress: Actions.pop
 		}			
-		,	rightItem = {
-			icon: require ('../common/img/publish.png'),
-			onPress: ()=>Actions.BuildsByUserId({userId})
-		}
-		,	header = (<F8Header foreground="dark" leftItem={leftItem} rightItem={rightItem} title="New Build"/>)
-
-		,	mainImage = (buildMedia && buildMedia[0])?{uri: buildMedia[0]}:require ('../common/img/2jz.png')
-		,	foregroundContent
 		,	specsContent = this.renderSpecs()
-		,	partsContent
-		,	images = this.renderImages ()
-		console.log (buildSpecs)
 
 		return (
-		<View style={{flex: 1}}>
-        <ParallaxScrollView
-          backgroundColor="transparent"
-          contentBackgroundColor="white"
-          backgroundSpeed={1}
-          parallaxHeaderHeight={300+64}
-          fixedHeaderHeight={64}
-          renderFixedHeader={()=>header}
-          renderForeground={()=>{return foregroundContent}}
-          renderBackground={() => <Image source={mainImage} style={DetailStyles.VRImageHolder}/>}
-          >
 	        <View style={{margin:8, alignItems: 'center', flex: 1}}>
-	        	{images}
-			    <View style={{flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
-				    <F8Button 
-				    	icon={require ('../common/img/photo.png')} 
-		    			type="tertiary" 
-		    			onPress={this.pickMedia} 
-		    			caption="Library"/>
-				    <F8Button 
-				    	icon={require ('../common/img/camera.png')} 
-		    			type="tertiary" 
-		    			onPress={this.takePhoto} 
-		    			caption="Camera"/>
-		    		</View>
-				<TextInput
-			        placeholder="OMG IT'S FAST"
-			        multiline={true}
-			        maxLength={140}
-			        style={NewPostStyles.largeBlockInput}/>
-				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
-				{specsContent}
-			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
+			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info"/>
+				<Paragraph style={Titles.filterSectionTitle}>{"CAR"}</Paragraph>          
 				    <F8Button 
 				    	icon={require ('../common/img/car.png')} 
 				    	onPress={()=>Actions.Makes({build: true})}
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			caption="Pick Car"/>
+				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
+			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
+					{specsContent}
+	    		</View>
 				    <F8Button 
 				    	icon={require ('../common/img/specs.png')} 
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			onPress={()=>Actions.EditSpecs ({onDoneEdit: this.props.addBuildSpecEntry, newEntry: true})} 
 		    			caption="Add Specs Entry"/>
-	    		</View>
-				<Paragraph style={Titles.filterSectionTitle}>{"PARTS"}</Paragraph>          
-				{partsContent}
-			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
-				    <F8Button 
-				    	icon={require ('../common/img/tuning.png')} 
-		    			type="tertiary" 
-		    			style={{flex: -1}} 
-		    			caption="Custom Parts"/>
-				    <F8Button 
-				    	icon={require ('../common/img/search.png')} 
-		    			type="tertiary" 
-		    			style={{flex: -1}} 
-		    			caption="Search"/>
-	    		</View>
 			</View>
-		</ParallaxScrollView>
-		</View>
 		)
 
 	}
