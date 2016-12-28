@@ -47,13 +47,12 @@ class Settings extends Component {
 
 
   render () {
-    const leftItem = { title: "Back", onPress:()=>{Actions.pop()}}
     return (
       <View>
         <F8Header
           foreground='dark'
           title="Settings"
-          leftItem={leftItem}
+          leftItem={{ title: "Back", onPress:()=>{Actions.pop()}}}
           style={FilterStyles.headerStyle}/>
         <ScrollView>
         <View>

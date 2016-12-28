@@ -21,7 +21,7 @@ import F8Button from '../common/F8Button'
 import Part from '../part/Part'
 import {Heading3, Paragraph} from '../common/F8Text'
 
-import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, Specs} from '../styles'
+import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, Specs, WIDTH} from '../styles'
 import {LoadingView, ErrorView, MetricsGraph,BackSquare} from '../components'
 
 import {
@@ -143,7 +143,7 @@ class NewBuild extends Component {
 			, dataArray = keys (buildSpecs).filter((key)=>Number.isInteger (buildSpecs[key]))
 											.map ((key)=>{return {name: key, value: buildSpecs[key]}})
 	        return (
-		          <View style={DetailStyles.descriptionContainer}>
+		          <View style={[DetailStyles.descriptionContainer, {alignItems: 'flex-start'}]}>
 		        	  {size && cylinders && compressor?(<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>):(<View/>)}
 			          {drivenWheels?(<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>):(<View/>)}
 		        	  <MetricsGraph onDoneEdit={this.props.editBuildSpecEntry} editable={true} data={[{entries:dataArray}]}/>
@@ -178,31 +178,47 @@ class NewBuild extends Component {
 		} = this.state.build
 
 		, leftItem = {
-			icon: require ('../common/img/back.ios.png'),
+			title: 'Back',
 			onPress: Actions.pop
 		}			
+		, rightItem = {
+			title: 'Preview',
+			onPress: Actions.PreviewPost
+		}
 		,	specsContent = this.renderSpecs()
 
 		return (
 	        <View style={{margin:8, alignItems: 'center', flex: 1}}>
-			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info"/>
+			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info" rightItem={rightItem}/>
 				<Paragraph style={Titles.filterSectionTitle}>{"CAR"}</Paragraph>          
+				    <F8Button 
+				    	icon={require ('../common/img/car.png')} 
+				    	onPress={()=>Actions.BuildsByUserId({userId, selector: true})}
+		    			type="tertiary" 
+		    			style={{flex: -1}} 
+		    			caption="Choose From My Builds"/>
+				<TextInput
+					placeholder="Give your ride a name"
+					multiline={true}
+					style={NewPostStyles.singleLineBlockInput}/>
+				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
+			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'column'}}>
+					{specsContent}
+					<View style={{flexDirection: 'row', marginVertical: 4, alignItems: 'stretch'}}>
 				    <F8Button 
 				    	icon={require ('../common/img/car.png')} 
 				    	onPress={()=>Actions.Makes({build: true})}
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			caption="Pick Car"/>
-				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
-			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'row', justifyContent: "space-around"}}>
-					{specsContent}
-	    		</View>
 				    <F8Button 
 				    	icon={require ('../common/img/specs.png')} 
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			onPress={()=>Actions.EditSpecs ({onDoneEdit: this.props.addBuildSpecEntry, newEntry: true})} 
 		    			caption="Add Specs Entry"/>
+	    		</View>
+	    		</View>
 			</View>
 		)
 

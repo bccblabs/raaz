@@ -93,9 +93,10 @@ class Tuning extends Component {
 
   componentWillReceiveProps(nextProps) {
     let {pagination, refresh_token} = nextProps
+    console.log ({refresh_token})
     this.setState ({
       refreshing: this.state.refreshing && pagination.isFetching,
-      showModal: (refresh_token)?false:true,
+      showModal: (refresh_token === null || refresh_token === undefined)?true:false,
     })
   }
 
@@ -112,10 +113,12 @@ class Tuning extends Component {
       data, 
       pagination, 
       fetchData,
+      refresh_token
     } = this.props
 
     , {showModal} = this.state
-    if (!this.state.userId) return (<LoadingView/>)
+
+    console.log ('showModal', showModal, this.props.refresh_token)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
         <F8Header title="TUNESQUAD" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>

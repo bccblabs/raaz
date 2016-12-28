@@ -34,18 +34,21 @@ import md5 from 'md5'
 
 import ActionSheet from '@yfuks/react-native-action-sheet';
 const TagOptsIOS = [
-        '#Build',
-        '#Part',
-        '#CarSpotting',
+        '#build',
+        '#carspotting',
+        '#vr',
+        '#forsale',
         'Cancel',
       ],
       TagOptsAndroid = [
-        '#Build',
-        '#Part',
-        '#CarSpotting',
+        '#build',
+        '#part',
+        '#carspotting',
+        '#vr',
+        '#forsale',
       ],
       CANCEL_INDEX = -1,
-      DESTRUCTIVE_INDEX = 3
+      DESTRUCTIVE_INDEX = 5
 
 
 let imageOpts = {
@@ -112,10 +115,14 @@ class NewPost extends Component {
       type: '',
       fileType: '',
       fileName: '',
+      text: '',
+      vrMode: false,
     }
   }
 
   selectPostType () {
+    let {text, fileName, fileType} = this.state
+
     ActionSheet.showActionSheetWithOptions({
       options: (Platform.OS == 'ios') ? TagOptsIOS : TagOptsAndroid,
       cancelButtonIndex: CANCEL_INDEX,
@@ -125,11 +132,19 @@ class NewPost extends Component {
     (buttonIndex) => {
       switch (buttonIndex) {
       case 0: 
-        Actions.NewBuild()
+        Actions.NewBuild({text, fileName, fileType})
         break;
       case 1: 
-        Actions.NewPart()
+        Actions.PreviewPost({text, fileName, fileType})
         break;
+      case 2: 
+        Actions.VRPost({text, fileName, fileType, vr: true})
+        break;
+      case 3: 
+        Actions.NewListing({text, fileName, fileType})
+        break;
+      case 4:
+        Actions.NewListing ({text, fileName, fileType})
       default:
         break;
       }

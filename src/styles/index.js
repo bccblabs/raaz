@@ -279,7 +279,8 @@ export const NewPostStyles = StyleSheet.create ({
   },
   singleLineBlockInput: {
     flex: -1,
-    height: 60,
+    height: 30,
+    marginHorizontal: 16,
     backgroundColor: '#f8f8f8',
     fontSize: 14,
   },
@@ -352,8 +353,6 @@ export const EmptyViewStyles = StyleSheet.create ({
 export const PostStyles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    // height: window.height/2,
-    // width: window.width,
     marginBottom: 8,
     borderBottomColor: 'black', 
   },

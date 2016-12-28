@@ -17,7 +17,7 @@ export default class LinkContent extends Component {
 
 		return (
           <TouchableWithoutFeedback onPress={linkAction}>
-            <View style={{flex: 1,  marginLeft: 20, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <View style={{flex: -1,  marginLeft: 20, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
               <Image style={{width: 100, height: 100}} source={{uri: image}}/>
               <Text style={[PostStyles.primaryTitle]}>{name}</Text>
             </View>

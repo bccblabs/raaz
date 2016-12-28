@@ -55,7 +55,7 @@ export default class Post extends Component {
 
         linkContent = (
         <View style={{flex: 1}}>
-          <LinkContent name={build.name} image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
+          <LinkContent name={build.name} large image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
           <LinkContent name={part.name} image={medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
         </View>
         )
