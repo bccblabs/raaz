@@ -1,10 +1,14 @@
 'use strict'
 
 const {
-  ADD_TO_TAGGED_CARS,
-  REMOVE_FROM_TAGGED_CARS,
   ADD_MEDIA,
   REMOVE_MEDIA,
+
+  LINK_BUILD,
+  UNLINK_BUILD,
+
+  SET_POST_TEXT,
+
 } = require ('../../constants').default
 
 const InitialState = require ('./newpostInitialState').default
@@ -18,35 +22,35 @@ export default function NewPostReducer (state=initialState, action) {
 
   switch (action.type) {
 
-    case ADD_TO_TAGGED_CARS: {
+    case LINK_BUILD: {
       let {payload} = action
-        , taggedCars = state.get ('taggedCars').set (payload.specId, payload)
-      return state.setIn (['taggedCars'], taggedCars, val=> taggedCars)
+        , linkedBuilds = state.get (['linkedBuilds']).set (payload.buildId, payload)
+      return state.setIn (['linkedBuilds'], linkedBuilds, val=>linkedBuilds)
     }
 
-    case REMOVE_FROM_TAGGED_CARS: {
+    case UNLINK_BUILD: {
       let {payload} = action
-        , taggedCars = state.get ('taggedCars').delete (payload)
-      return state.setIn (['taggedCars'], taggedCars, val=> taggedCars)
+        , linkedBuilds = state.get ('linkedBuilds').delete (payload)
+      return state.setIn (['linkedBuilds'], linkedBuilds, val=> linkedBuilds)
     }
 
     case ADD_MEDIA: {
       let {payload} = action
-        , selectedMedia = state.getIn (['selectedMedia'])
+        , selectedMedia = state.getIn (['media'])
         , newList = selectedMedia.push (...payload)
 
-      nextState = state.setIn (['selectedMedia'], newList, val=>newList)
+      nextState = state.setIn (['media'], newList, val=>newList)
       return nextState
     }
 
     case REMOVE_MEDIA: {
       let {payload} = action
-        , selectedMedia = state.getIn (['selectedMedia'])
+        , selectedMedia = state.getIn (['media'])
         , newList
       if (selectedMedia.indexOf (payload) > -1)
         newList = selectedMedia.delete (selectedMedia.indexOf (payload))
 
-      nextState = state.setIn (['selectedMedia'], newList, val=>newList)
+      nextState = state.setIn (['media'], newList, val=>newList)
       return nextState
     }
 

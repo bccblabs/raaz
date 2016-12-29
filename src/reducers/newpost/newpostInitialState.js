@@ -3,8 +3,13 @@
 const {Map, Record, List} = require ('immutable')
 
 const newpostInitialState = Record ({
-  taggedCars: new (Map),
-  selectedMedia: new (List),
+  linkedBuilds: new (Map),
+  linkedParts: new (Map),
+  location: '',
+
+  media: new (List),
+  text: '',
+
 })
 
 export default newpostInitialState

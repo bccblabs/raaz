@@ -69,7 +69,7 @@ export default keyMirror ({
   CREATE_POST_SUCCESS: null,
   CREATE_POST_ERROR: null,
 
-
+  SET_POST_TEXT: null,
 
 
   /* user new build */
@@ -91,7 +91,8 @@ export default keyMirror ({
   CREATE_BUILD_SUCCESS: null,
   CREATE_BUILD_ERROR: null,
 
-
+  LINK_BUILD: null,
+  UNLINK_BUILD: null,
 
 
   /* user custom part */

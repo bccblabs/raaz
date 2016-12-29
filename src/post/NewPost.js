@@ -28,7 +28,7 @@ import {FilterCard} from '../components'
 import {NewPostStyles, General, PostStyles, Titles} from '../styles'
 import {ImageOptions, VideoOptions} from '../constants'
 
-import {taggedCars, profileSelector, selectedMediaSelector} from '../selectors'
+import {profileSelector, selectedMediaSelector} from '../selectors'
 import {removeFromTaggedCars, addMedia, removeMedia} from '../reducers/newpost/newpostActions'
 import md5 from 'md5'
 
@@ -121,7 +121,7 @@ class NewPost extends Component {
   }
 
   selectPostType () {
-    let {text, fileName, fileType} = this.state
+    let {text, source, fileType} = this.state
 
     ActionSheet.showActionSheetWithOptions({
       options: (Platform.OS == 'ios') ? TagOptsIOS : TagOptsAndroid,
@@ -132,19 +132,17 @@ class NewPost extends Component {
     (buttonIndex) => {
       switch (buttonIndex) {
       case 0: 
-        Actions.NewBuild({text, fileName, fileType})
+        Actions.NewBuild({text, source, fileType})
         break;
       case 1: 
-        Actions.PreviewPost({text, fileName, fileType})
+        Actions.PreviewPost({text, source, fileType})
         break;
       case 2: 
-        Actions.VRPost({text, fileName, fileType, vr: true})
+        Actions.VRPost({text, source, fileType, vr: true})
         break;
       case 3: 
-        Actions.NewListing({text, fileName, fileType})
+        Actions.NewListing({text, source, fileType})
         break;
-      case 4:
-        Actions.NewListing ({text, fileName, fileType})
       default:
         break;
       }
@@ -180,7 +178,7 @@ class NewPost extends Component {
           source: source,
           type: opts.mediaType,
           fileType: fileType,
-          fileName: fileName,
+          // fileName: fileName,
         });
       }
     });   

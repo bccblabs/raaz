@@ -4,6 +4,7 @@ import {
   Image,
   ScrollView,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -16,7 +17,7 @@ import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 
 import {Cell, Section, TableView} from 'react-native-tableview-simple'
-import {FilterStyles} from '../styles'
+import {FilterStyles, NewPostStyles} from '../styles'
 
 class NewListing extends Component {
 	render () {
@@ -24,7 +25,7 @@ class NewListing extends Component {
 		<View>
 	        <F8Header
 	          foreground='dark'
-	          title="Edit Listing Info"
+	          title="Listing"
 	          leftItem={{ title: "Back", onPress:()=>{Actions.pop()}}}
 	          style={FilterStyles.headerStyle}/>
 				<TableView style={{alignSelf: 'stretch', backgroundColor: 'white'}}>
@@ -38,6 +39,10 @@ class NewListing extends Component {
 						<Cell cellStyle="leftDetail" accessory="DisclosureIndicator" title="Email" />
 						<Cell cellStyle="leftDetail" accessory="DisclosureIndicator" title="Contact Phone" />
 					</Section>
+	              <TextInput
+	                placeholder="OMG IT'S FAST"
+	                multiline={true}
+	                style={NewPostStyles.largeBlockInput}/>
 				</TableView>
 		</View>
 		)

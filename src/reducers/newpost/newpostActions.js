@@ -1,11 +1,13 @@
 'use strict'
 
 const {
-  ADD_TO_TAGGED_CARS,
-  REMOVE_FROM_TAGGED_CARS,
-
   ADD_MEDIA,
-  REMOVE_MEDIA
+  REMOVE_MEDIA,
+
+  LINK_BUILD,
+  UNLINK_BUILD,
+
+  SET_POST_TEXT,
 } = require ('../../constants').default
 
 export function addMedia (medialist) {
@@ -33,5 +35,27 @@ export function removeFromTaggedCars (specId) {
   return {
     type: REMOVE_FROM_TAGGED_CARS,
     payload: specId
+  }
+}
+
+export function setPostText (text) {
+  return {
+    type: SET_POST_TEXT,
+    payload: text
+  }
+}
+
+export function linkBuild (build) {
+  return {
+    type: LINK_BUILD,
+    payload: build
+  }
+}
+
+
+export function unlinkBuild (buildId) {
+  return {
+    type: UNLINK_BUILD,
+    payload: buildId
   }
 }

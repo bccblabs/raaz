@@ -21,9 +21,11 @@ import F8Button from '../common/F8Button'
 import Part from '../part/Part'
 import {Heading3, Paragraph} from '../common/F8Text'
 
-import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, Specs, WIDTH} from '../styles'
-import {LoadingView, ErrorView, MetricsGraph,BackSquare} from '../components'
-
+import {linkedBuilds} from '../selectors'
+import {Requests} from '../utils'
+import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, PostStyles, Specs, WIDTH} from '../styles'
+import {LinkContent, LoadingView, ErrorView, MetricsGraph, BackSquare} from '../components'
+import {unlinkBuild} from '../reducers/newpost/newpostActions'
 import {
 	newBuildSelector,
 	userIdSelector,
@@ -39,12 +41,15 @@ import {
 	removeBuildSpecEntry,
 	removePart,
 	createBuild, 
+	setBuildSpecs,
 } from '../reducers/build/buildActions'
 
 const mapStateToProps = (state) => {
 	return {
 		build: newBuildSelector (state),
 		userId: userIdSelector (state),
+		linkedBuilds: linkedBuilds (state),
+		specs: {},
 	}
 }
 
@@ -58,9 +63,11 @@ const mapDispatchToProps = (dispatch) => {
 		addBuildSpecEntry: (name, value) => dispatch (addBuildSpecEntry (name, value)),
 		editBuildSpecEntry: (name, value) => dispatch (editBuildSpecEntry (name, value)),
 		removeBuildSpecEntry: (name) => dispatch (removeBuildSpecEntry (name)),
-
+		setBuildSpecs: (specs) => dispatch (setBuildSpecs (specs)),
 		removePart: (partId) => dispatch (removePart (partId)),
-		createBuild: () => dispatch (createBuild())
+		createBuild: () => dispatch (createBuild()),
+
+		unlinkBuild: (buildId) => dispatch (unlinkBuild (buildId))
 	}
 }
 
@@ -68,72 +75,57 @@ class NewBuild extends Component {
 
 	constructor (props) {
 		super (props)
-		this.state = {build: props.build}
-		this.pickMedia = this.pickMedia.bind (this)
-		this.takePhoto = this.takePhoto.bind (this)
-		this.renderImages = this.renderImages.bind (this)
+		this.state = {buildId: '', build: props.build, buildSpecs: {}, linkedBuilds: props.linkedBuilds, newBuild: {media: {source: props.source, type: props.type}}}
 		this.renderSpecs = this.renderSpecs.bind (this)
+		this.renderLinkedBuilds = this.renderLinkedBuilds.bind (this)
+		this.renderNewBuild = this.renderNewBuild.bind (this)
+	    this.fetchBuildDetails = this.fetchBuildDetails.bind (this)
+		console.log ('state:', this.state)
 	}
 
+	renderNewBuild () {
+		return (
+            <View style={{flex: -1,  marginLeft: 20, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+				<Image style={{width: 100, height: 100}} source={{uri: this.state.newBuild.media.source}}/>
+				<TextInput
+					placeholder="Give your ride a name"
+					multiline={false}
+					style={{flex: 1, marginHorizontal: 16}}/>
+            </View>
+
+		)
+	}
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual (nextProps.build, this.props.build))
-			this.setState ({build: nextProps.build})
+		console.log ({nextProps, props: this.props})
+		let {linkedBuilds, buildSpecs} = nextProps
+			, buildId = ''
+			, specs = nextProps.build && nextProps.build.buildSpecs || {}
+
+		if (linkedBuilds.length && linkedBuilds[0] && linkedBuilds[0].buildId !== this.state.buildId) {
+			this.fetchBuildDetails (linkedBuilds[0].buildId)
+			buildId = linkedBuilds[0].buildId
+			this.setState ({buildId, build: nextProps.build, linkedBuilds: nextProps.linkedBuilds, buildSpecs: specs})
+		} else {
+			this.setState ({build: nextProps.build, linkedBuilds: nextProps.linkedBuilds, buildSpecs: specs})
+		}
 	}
 
-	pickMedia () {
-		ImagePicker.openPicker({
-		  width: 300,
-		  height: 400,
-		  cropping: true,
-		  multiple: true
-		}).then(images => {
-		  let photos = images.map ((image)=>image['path'])
-		  this.props.addBuildMedia (photos)
-		});
-	}
+	  async fetchBuildDetails (buildId) {
+	    try {
+	        let data = await Requests.fetchBuildDetails (buildId)
+			this.setState ({
+				hasError: false,
+				isLoading: false,
+			})
 
-	takePhoto () {
-		ImagePicker.openCamera({
-		  width: 300,
-		  height: 400,
-		  cropping: true
-		}).then(image => {
-		  let path = image['path'];
-		  this.props.addBuildMedia ([path])
-		});    
-	}
-
-	renderImages () {
-		let {buildMedia} = this.state.build
-		return buildMedia.length>0?
-		  ( 
-			<ScrollView
-				horizontal={true}
-				showsVerticalScrollIndicator={false}
-				style={{margin: 8, flex: 1}}
-				showsHorizontalScrollIndicator={false}>
-				{
-				  buildMedia.map ((img, idx)=>{
-				    return (
-				    <View key={idx} style={{marginLeft: 4}}>
-				    <TouchableWithoutFeedback
-				      onPress={()=>{this.props.removeBuildMedia (img)}}>
-				      <Image 
-				      	source={require ('../common/img/x.png')} 
-				      	style={{height:16, width: 16,alignSelf: 'flex-end'}}/>
-				    </TouchableWithoutFeedback>
-				    <Image style={{width: 100, height: 100}} source={{uri: img}}/>
-				    </View>
-				    )
-				})
-			}
-			</ScrollView>
-		  )
-		  :(<View/>)
-	}
+			data && data.specs && this.props.setBuildSpecs (data.specs)
+		    } catch (err) {
+		      this.setState ({hasError: true, isLoading: false})
+		    }
+	  }
 
 	renderSpecs () {
-		let {buildSpecs} = this.state.build
+		let {buildSpecs} = this.state
 
 		if (keys(buildSpecs).length) {
 	        let {
@@ -143,7 +135,7 @@ class NewBuild extends Component {
 			, dataArray = keys (buildSpecs).filter((key)=>Number.isInteger (buildSpecs[key]))
 											.map ((key)=>{return {name: key, value: buildSpecs[key]}})
 	        return (
-		          <View style={[DetailStyles.descriptionContainer, {alignItems: 'flex-start'}]}>
+		          <View style={[DetailStyles.descriptionContainer, {alignItems: 'flex-start', margin: 16}]}>
 		        	  {size && cylinders && compressor?(<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>):(<View/>)}
 			          {drivenWheels?(<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>):(<View/>)}
 		        	  <MetricsGraph onDoneEdit={this.props.editBuildSpecEntry} editable={true} data={[{entries:dataArray}]}/>
@@ -152,7 +144,16 @@ class NewBuild extends Component {
 		}
 		else return (<View/>)
 	}
-
+	
+	renderLinkedBuilds () {
+		let {linkedBuilds} = this.state
+		console.log (linkedBuilds)
+		return (
+			<View>
+			{linkedBuilds.map ((build, idx)=>(<LinkContent removeAction={()=>this.props.unlinkBuild (build.buildId)} key={idx} name={build.name} image={build.image} />))}
+			</View>
+		)
+	}
 	render() {
 		let {
 			addBuildMedia,
@@ -182,35 +183,41 @@ class NewBuild extends Component {
 			onPress: Actions.pop
 		}			
 		, rightItem = {
-			title: 'Preview',
+			title: 'Tag Part',
 			onPress: Actions.PreviewPost
 		}
-		,	specsContent = this.renderSpecs()
-
-		return (
-	        <View style={{margin:8, alignItems: 'center', flex: 1}}>
-			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info" rightItem={rightItem}/>
-				<Paragraph style={Titles.filterSectionTitle}>{"CAR"}</Paragraph>          
+		, specsContent = this.renderSpecs()
+		, buildLink = this.state.linkedBuilds.length ? (this.renderLinkedBuilds()) : (this.renderNewBuild())
+		, linkActionButton = this.state.linkedBuilds.length? null : (
 				    <F8Button 
 				    	icon={require ('../common/img/car.png')} 
 				    	onPress={()=>Actions.BuildsByUserId({userId, selector: true})}
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
-		    			caption="Choose From My Builds"/>
-				<TextInput
-					placeholder="Give your ride a name"
-					multiline={true}
-					style={NewPostStyles.singleLineBlockInput}/>
+		    			caption="... Or Choose From My Builds"/>
+		)
+
+		console.log('state', this.state)
+		return (
+	        <View style={{flex: 1}}>
+			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info" rightItem={rightItem}/>
+				<Paragraph style={Titles.filterSectionTitle}>{"CAR"}</Paragraph>          
+					{buildLink}
+					{linkActionButton}
 				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
 			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'column'}}>
 					{specsContent}
-					<View style={{flexDirection: 'row', marginVertical: 4, alignItems: 'stretch'}}>
+					<View style={{flexDirection: 'row', marginVertical: 4, alignItems: 'stretch', alignSelf: 'center'}}>
+					{
+					this.state.linkedBuilds.length ? null : (
 				    <F8Button 
 				    	icon={require ('../common/img/car.png')} 
 				    	onPress={()=>Actions.Makes({build: true})}
 		    			type="tertiary" 
 		    			style={{flex: -1}} 
 		    			caption="Pick Car"/>
+					)						
+					}
 				    <F8Button 
 				    	icon={require ('../common/img/specs.png')} 
 		    			type="tertiary" 

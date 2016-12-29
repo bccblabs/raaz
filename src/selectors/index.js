@@ -67,8 +67,8 @@ export const makesSelector = (state) => (keys (state.entities.makes).sort())
 
 /* cars by specs selector */
 
-export const taggedCars = (state) => (state.newpost.taggedCars.toIndexedSeq().toArray())
-export const selectedMediaSelector = (state) => (state.newpost.selectedMedia.toArray())
+export const linkedBuilds = (state) => (state.newpost.linkedBuilds.toIndexedSeq().toArray())
+export const selectedMediaSelector = (state) => (state.newpost.media.toArray())
 
 /* user selectors */
   export const isLikedByUser = (state) => {return true}
