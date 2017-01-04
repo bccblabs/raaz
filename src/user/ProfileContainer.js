@@ -15,7 +15,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 import {Heading3} from '../common/F8Text'
-import {DetailStyles, PostStyles, General, Titles} from '../styles'
+import {DetailStyles, PostStyles, General, Titles, HEIGHT} from '../styles'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import {BuildsPagerByUserId} from '../build'
@@ -32,7 +32,7 @@ export default class ProfileContainer extends Component {
       , foregroundContent = profileData.user_id?(
         <View style={{flex: 1}}>
           <View style={DetailStyles.userInfoContainer}>
-            <Image style={PostStyles.largeUserPhoto} source={{uri: profileData.picture}}/>
+            <Image style={PostStyles.manufacturerPhoto} source={{uri: profileData.picture}}/>
             <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.2)'}]}>{profileData.name}</Text>
           </View>
           <View style={{right: 8, position: 'absolute', bottom: 0}}>
@@ -46,7 +46,7 @@ export default class ProfileContainer extends Component {
         backgroundColor="transparent"
         contentBackgroundColor="white"
         backgroundSpeed={1}
-        parallaxHeaderHeight={300+64}
+        parallaxHeaderHeight={HEIGHT}
         stickyHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
         renderBackground={() => <BuildsPagerByUserId userId={userId}/>}

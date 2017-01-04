@@ -36,7 +36,7 @@ class Manufacturers extends Component {
 						Actions.pop (2)}
 					}>
 	            <View style={{flex: 1,marginHorizontal: 16, marginBottom: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
-						<Image style={{width: 100, height: 100}} source={{uri: rowData.media}}/>
+						<Image style={{width: 150, height: 150}} source={{uri: rowData.media}}/>
 					<Text style={[PostStyles.primaryTitle]}>{rowData.name}</Text>
 	            </View>
 					</TouchableWithoutFeedback>

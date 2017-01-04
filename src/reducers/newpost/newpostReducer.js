@@ -73,6 +73,12 @@ export default function NewPostReducer (state=initialState, action) {
                   .setIn (['isUploading'], false, val=>false)
                   .setIn (['uploadProgress'], 1, val=>1)
     }
+    case `${CREATE_POST}_REJECTED`: {
+      return state.setIn (['hasError'], true, val=>true)
+                  .setIn (['isUploading'], true, val=>true)
+                  .setIn (['uploadProgress'], 1, val=>1)
+    }
+
     default: {
       return state
     }

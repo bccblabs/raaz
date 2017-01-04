@@ -108,15 +108,7 @@ class Tuning extends Component {
   }
 
   render () {
-    let rightItem = {
-        icon: require ('../common/img/heart.png'), 
-        onPress:() => Actions.Saved()
-      }
-    , leftItem = {
-      icon: require ('../common/img/helmet.png'),
-      onPress: () => Actions.Home()
-    }
-    , {
+    let {
       data, 
       pagination, 
       fetchData,
@@ -127,13 +119,14 @@ class Tuning extends Component {
     , uploadIndicator = (uploadProgress.isUploading)?(
       <View style={{top: 76, width: WIDTH, alignItems: 'center', justifyContent: 'center', position:'absolute', flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
       <Text style={{margin: 8, color: 'white', fontWeight: 'bold'}}>{"Uploading..."}</Text>
-      <Bar style={{margin: 8}} height={8} width={300} progress={uploadProgress.uploadProgress} color='red' />
+      {
+        uploadProgress.hasError?(<View><Text>{"Error occured..."}</Text></View>):(<Bar style={{margin: 8}} height={8} width={300} progress={uploadProgress.uploadProgress} color='green' />)
+      }
       </View>
       ):(<View/>)
-    console.log ('showModal', showModal, this.props.refresh_token)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
-        <F8Header title="TUNESQUAD" foreground='dark' leftItem={leftItem} rightItem={rightItem}/>
+        <F8Header title="TUNESQUAD" foreground={"dark"}/>
         <ScrollView
             refreshControl={
               <RefreshControl
@@ -149,16 +142,42 @@ class Tuning extends Component {
         >
         <PostList key="posts-home" data={data} pagination={pagination} fetchData={fetchData}/>
         </ScrollView>
-        <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-between', flex: -1}}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex: -1}}>
+        <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-around', flex: -1}}>
           <F8Button style={{flex: 1}}
-                    onPress={()=>Actions.NewPost()}
-                    type="search"
+                    onPress={Actions.NewPost}
+                    type="icon"
                     icon={require ('../common/img/camera.png')}
                     caption={"New Post"}/>
-          <F8Button style={{flex: 1}}  onPress={Actions.Makes}
-                    caption="Parts By car" type="search"
+          <F8Button 
+                    icon={require ('../common/img/video.png')} 
+                    onPress={Actions.NewPost} 
+                    type="icon" 
+                    caption="Video" 
+                    style={{flex: 1}}/>
+          <F8Button 
+                    icon={require ('../common/img/vr.png')} 
+                    onPress={Actions.NewPost} 
+                    type="icon" 
+                    caption="VR" 
+                    style={{flex: 1}}/>
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Makes}
+                    caption="Parts By car" 
+                    type="icon"
                     icon={require ('../common/img/search.png')}/>
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Saved}
+                    caption="Saved" 
+                    type="icon"
+                    icon={require ('../common/img/heart.png')}/>
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Home}
+                    caption="Parts By car" 
+                    type="icon"
+                    icon={require ('../common/img/helmet.png')}/>
         </View>
+        </ScrollView>
         <Modal 
            animationType={"slide"}
            transparent={false}

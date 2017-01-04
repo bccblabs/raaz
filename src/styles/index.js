@@ -273,7 +273,11 @@ export const NewPostStyles = StyleSheet.create ({
     flex: 1,
     fontSize: 20,
     marginTop:16,
-    height: HEIGHT/2
+    height: 100,
+    // backgroundColor: 'yellow',
+    borderColor: 'black',
+    borderWidth: 2,
+    padding: 8
   },
   singleLineBlockInput: {
     flex: -1,
@@ -403,9 +407,11 @@ export const PostStyles = StyleSheet.create({
     resizeMode: 'cover'
   },
   manufacturerPhoto: {
-    height: 76,
-    width: 76,
-    resizeMode: 'contain' 
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+    backgroundColor: 'white',
+    resizeMode: 'cover' 
   },
   largeUserPhoto: {
     height: 76,
@@ -416,7 +422,7 @@ export const PostStyles = StyleSheet.create({
 
   primaryImage: {
     width: window.width,
-    height: window.height/2,
+    height: window.width,
     resizeMode: 'cover',
     alignSelf: 'center'
   },
@@ -465,7 +471,7 @@ export const PostStyles = StyleSheet.create({
 
   primaryTitle: {
     flex: -1,
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: '700',
     backgroundColor: 'white',
     padding: 8,
@@ -501,7 +507,7 @@ export const DetailStyles = StyleSheet.create ({
     infoContainer: {
       flex: -1,
       position: 'absolute',
-      bottom: 16,
+      bottom: 50,
       left: 2,
       marginRight: 16,
       flexDirection: 'column',
@@ -515,7 +521,7 @@ export const DetailStyles = StyleSheet.create ({
     },
     primaryTitle: {
       flex: -1,
-      fontSize: 20,
+      fontSize: 24,
       fontWeight: '700',
       padding: 8,
       backgroundColor: 'white',
@@ -527,7 +533,7 @@ export const DetailStyles = StyleSheet.create ({
     },
     VRImageHolder : {
       width: window.width,
-      height: 300+64,
+      height: HEIGHT,
       resizeMode: 'cover'
     },
     userInfoContainer: {
@@ -547,9 +553,9 @@ export const DetailStyles = StyleSheet.create ({
       width: window.width/3
     },
     partTitle: {
-      fontSize: 16,
+      fontSize: 24,
       fontWeight: '700',
-      color: 'white',
+      color: 'black',
       backgroundColor: 'rgba(0,0,0,0.6)',
       padding: 8,
     },

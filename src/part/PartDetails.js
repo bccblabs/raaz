@@ -18,7 +18,7 @@ import {Requests} from '../utils'
 import F8Button from '../common/F8Button'
 import F8Header from '../common/F8Header'
 import {Heading3, Paragraph} from '../common/F8Text'
-import {General, Titles, DetailStyles, PostStyles, Specs} from '../styles'
+import {General, Titles, DetailStyles, PostStyles, Specs, HEIGHT} from '../styles'
 import {
   AddPost,
   BackSquare,
@@ -100,14 +100,16 @@ class PartDetails extends Component {
         , specId = this.props.data.specId
         , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}})
         , foregroundContent = (
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableWithoutFeedback onPress={()=>Actions.Manufacturer({manufacturer, specId})}>
+          <Image 
+            style={[PostStyles.manufacturerPhoto]} 
+            source={{uri: manufacturer.logo}}
+          />
+          </TouchableWithoutFeedback>
           <View style={DetailStyles.infoContainer}>
-            <TouchableWithoutFeedback onPress={()=>Actions.Manufacturer({manufacturer, specId})}>
-            <Image 
-              style={[PostStyles.manufacturerPhoto]} 
-              source={{uri: manufacturer.logo}}
-            />
-            </TouchableWithoutFeedback>
-            <Text style={DetailStyles.partTitle}>{name}</Text>
+            <Text style={DetailStyles.primaryTitle}>{name}</Text>
+          </View>
           </View>
         )
         , detailsContent = (details && details.length)?(
@@ -127,7 +129,7 @@ class PartDetails extends Component {
           backgroundColor="transparent"
           contentBackgroundColor="white"
           backgroundSpeed={1}
-          parallaxHeaderHeight={300+64}
+          parallaxHeaderHeight={HEIGHT}
           stickyHeaderHeight={64}
           renderFixedHeader={()=>(
             <View style={{flex: 1, flexDirection: 'row'}}>

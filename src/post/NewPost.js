@@ -236,7 +236,7 @@ class NewPost extends Component {
         <ScrollView style={{marginBottom: 50}}>
         <View>
         {this.renderMedia()}
-          <View style={{margin: 16, flexDirection: 'column', flex: 1}}>
+          <View style={{margin: 16, flexDirection: 'column', flex: 1, justifyContent: 'center'}}>
               <Image source={{uri: this.props.profileData.picture}} style={PostStyles.userPhotoStyle}/>
               <TextInput
                 multiline={true}
@@ -245,23 +245,23 @@ class NewPost extends Component {
                 }}
                 placeholder="OMG IT'S FAST"
                 style={NewPostStyles.largeBlockInput}/>
+              <View style={{flexDirection: 'row'}}>
+              <F8Button 
+                icon={require ('../common/img/camera.png')} 
+                onPress={()=>this.selectMedia (imageOpts)} 
+                type="tertiary" 
+                caption="Photo" 
+                style={{flex: 1}}/>
+              <F8Button 
+                icon={require ('../common/img/video.png')} 
+                onPress={()=>this.selectMedia (videoOpts)} 
+                type="tertiary" 
+                caption="Video" 
+                style={{flex: 1}}/>
+              </View>
           </View>
         </View>
         </ScrollView>
-        <View style={{flexDirection: 'row'}}>
-        <F8Button 
-          icon={require ('../common/img/camera.png')} 
-          onPress={()=>this.selectMedia (imageOpts)} 
-          type="tertiary" 
-          caption="Photo" 
-          style={{flex: 1}}/>
-        <F8Button 
-          icon={require ('../common/img/video.png')} 
-          onPress={()=>this.selectMedia (videoOpts)} 
-          type="tertiary" 
-          caption="Video" 
-          style={{flex: 1}}/>
-        </View>
       </View>
       </TouchableWithoutFeedback>
     )

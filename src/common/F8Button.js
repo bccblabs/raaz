@@ -134,7 +134,13 @@ class F8Button extends Component {
           </Text>
         </View>
       );
-
+    } else if (this.props.type === 'icon') {
+      var border = this.props.type === 'bordered' && styles.border;
+      content = (
+        <View style={[styles.button, border]}>
+          <Image source={this.props.icon} style={{flex: 1}} />
+        </View>
+      );
     } else {
       var border = this.props.type === 'bordered' && styles.border;
       content = (
@@ -198,8 +204,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   carTagCaption: {
-    color: 'black',
-    textDecorationLine: 'underline', textDecorationStyle: 'solid', textDecorationColor: 'blue',
+    color: 'black',textDecorationStyle: 'solid', textDecorationColor: 'blue',
     fontWeight: '600',
     fontSize: 8,
     padding: 3,
