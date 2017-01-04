@@ -7,6 +7,20 @@ import {
   AUTH0_CLIENT_ID  
 } from '../constants'
 
+const request = (url, options) => {
+  return new Promise ((resolve, reject) => {
+    if (!url) reject (new Error ('url not provided'))
+    if (!options) reject (new Error ('options not provided'))
+    fetch (url, options)
+      .then (resp => resp.json())
+      .then (resp => {
+        if (resp.errors) reject (resp.errors)
+        else resolve (resp)
+      })
+      .catch (reject)
+  })
+}
+
 const timeout = (ms) => {
   return new Promise ((resolve, reject) => {
     setTimeout (()=> {
@@ -14,6 +28,12 @@ const timeout = (ms) => {
     }, ms)
   })
 }
+
+
+export const requestWithTimeout = (ms, ...args) => {
+  return Promise.race ([request (...args), timeout (ms)])
+}
+
 
 const fetchWithTimeout = (ms, ...args) => {
   return Promise.race ([fetch (...args), timeout (ms)])

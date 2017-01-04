@@ -10,8 +10,10 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import {Actions} from 'react-native-router-flux'
+import {Bar} from 'react-native-progress'
 
 import ImagePicker from 'react-native-image-crop-picker'
+import Video from 'react-native-video'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {keys, isEqual} from 'lodash'
 
@@ -21,14 +23,18 @@ import F8Button from '../common/F8Button'
 import Part from '../part/Part'
 import {Heading3, Paragraph} from '../common/F8Text'
 
-import {linkedBuilds} from '../selectors'
 import {Requests} from '../utils'
 import {Titles, General, PartStyles, DetailStyles, NewPostStyles, Styles, PostStyles, Specs, WIDTH} from '../styles'
 import {LinkContent, LoadingView, ErrorView, MetricsGraph, BackSquare} from '../components'
-import {unlinkBuild} from '../reducers/newpost/newpostActions'
+import {unlinkBuild, removeBuild, uploadToS3} from '../reducers/newpost/newpostActions'
+
 import {
 	newBuildSelector,
+	profileSelector,
+	linkedBuilds, 
+	linkedParts, 
 	userIdSelector,
+	buildSpecs
 } from '../selectors'
 
 import {
@@ -46,10 +52,12 @@ import {
 
 const mapStateToProps = (state) => {
 	return {
-		build: newBuildSelector (state),
+		// build: newBuildSelector (state),
 		userId: userIdSelector (state),
 		linkedBuilds: linkedBuilds (state),
-		specs: {},
+		linkedParts: linkedParts (state),
+	    profileData: profileSelector (state),
+	    buildSpecs: buildSpecs (state),
 	}
 }
 
@@ -57,17 +65,21 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		addBuildMedia: (mediaList) => dispatch (addBuildMedia (mediaList)),
 		removeBuildMedia: (path) => dispatch (removeBuildMedia (path)),
+	
 		setBuildImage: (path) => dispatch (setBuildImage (path)),
 		setBuildName: (name) => dispatch (setBuildName(name)),
-
+	
 		addBuildSpecEntry: (name, value) => dispatch (addBuildSpecEntry (name, value)),
 		editBuildSpecEntry: (name, value) => dispatch (editBuildSpecEntry (name, value)),
 		removeBuildSpecEntry: (name) => dispatch (removeBuildSpecEntry (name)),
+
 		setBuildSpecs: (specs) => dispatch (setBuildSpecs (specs)),
-		removePart: (partId) => dispatch (removePart (partId)),
 		createBuild: () => dispatch (createBuild()),
 
-		unlinkBuild: (buildId) => dispatch (unlinkBuild (buildId))
+		unlinkBuild: (buildId) => dispatch (removeBuild (buildId)),
+		unlinkPart: (partId) => dispatch (removePart (partId)),
+
+		uploadToS3: (file, postData) => dispatch (uploadToS3 (file, postData))
 	}
 }
 
@@ -75,54 +87,128 @@ class NewBuild extends Component {
 
 	constructor (props) {
 		super (props)
-		this.state = {buildId: '', build: props.build, buildSpecs: {}, linkedBuilds: props.linkedBuilds, newBuild: {media: {source: props.source, type: props.type}}}
+		console.log (props)
+		this.state = {
+			buildId: '', 
+			// build: props.build, 
+			buildSpecs: props.buildSpecs, 
+			linkedParts: props.linkedParts, 
+			linkedBuilds: props.linkedBuilds, 
+			newBuild: {
+				media: {
+					source: props.source, 
+					type: props.fileType
+				},
+				name: '',
+			},
+			filePath: props.source,
+			fileType: props.fileType,
+			fileName: props.fileName,
+			text: props.text,
+			isUploading: false,
+			progress: 0,
+		}
 		this.renderSpecs = this.renderSpecs.bind (this)
 		this.renderLinkedBuilds = this.renderLinkedBuilds.bind (this)
+		this.renderLinkedParts = this.renderLinkedParts.bind (this)
 		this.renderNewBuild = this.renderNewBuild.bind (this)
 	    this.fetchBuildDetails = this.fetchBuildDetails.bind (this)
-		console.log ('state:', this.state)
+	    this.renderPostContent = this.renderPostContent.bind (this)
+	    this.uploadPost = this.uploadPost.bind (this)
+	}
+
+	renderPostContent () {
+	let {filePath, fileType, text} = this.state
+	  , content
+
+	if (filePath && filePath.length) {
+	  if (fileType === 'photo') {
+	    content = (
+	      <Image source={{uri: filePath}} style={PostStyles.primaryImage}/>
+	    )
+	  }
+	  else if (fileType === 'video') {
+	    content = (
+	      <Video
+	        repeat
+	        resizeMode='cover'
+	        source={{uri: filePath}}
+	        style={PostStyles.primaryImage}
+	      />
+	    )
+	  }
+	}
+	return (
+          <View style={{flexDirection: 'column', flex: -1}}>
+			<Image source={{uri: this.props.profileData.picture}} style={{height: 56, width: 56, margin: 8}}/>
+          	{content}
+			<Paragraph style={{margin: 8}}>{text}</Paragraph>
+		</View>
+	)
 	}
 
 	renderNewBuild () {
+		let {userId} = this.props
 		return (
             <View style={{flex: -1,  marginLeft: 20, marginBottom: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
 				<Image style={{width: 100, height: 100}} source={{uri: this.state.newBuild.media.source}}/>
+				<View style={{flexDirection: 'column', flex: 1, marginHorizontal: 8}}>
 				<TextInput
+	                onChangeText={(text) => {
+	                	let newBuild = Object.assign (this.state.newBuild, {name: text})
+						this.setState({newBuild})
+	                }}
 					placeholder="Give your ride a name"
 					multiline={false}
-					style={{flex: 1, marginHorizontal: 16}}/>
+					style={{flex: 1}}/>
+				<View style={{flexDirection: 'row', flex: 1, alignSelf: 'flex-start' ,justifyContent: 'space-around'}}>	
+			    <F8Button 
+			    	icon={require ('../common/img/tuning.png')} 
+			    	onPress={()=>Actions.Makes({build: true})}
+	    			type="carTag" 
+	    			style={{flex: -1}} 
+	    			caption="Create New Build"/>
+			    <F8Button 
+			    	icon={require ('../common/img/car.png')} 
+			    	onPress={()=>Actions.BuildsByUserId({userId, selector: true})}
+	    			type="carTag" 
+	    			style={{flex: -1}} 
+	    			caption="Choose From My Builds"/>
+	    		</View>
+				</View>
             </View>
 
 		)
 	}
+
 	componentWillReceiveProps(nextProps) {
 		console.log ({nextProps, props: this.props})
-		let {linkedBuilds, buildSpecs} = nextProps
+		let {linkedBuilds, buildSpecs, linkedParts} = nextProps
 			, buildId = ''
-			, specs = nextProps.build && nextProps.build.buildSpecs || {}
 
 		if (linkedBuilds.length && linkedBuilds[0] && linkedBuilds[0].buildId !== this.state.buildId) {
 			this.fetchBuildDetails (linkedBuilds[0].buildId)
 			buildId = linkedBuilds[0].buildId
-			this.setState ({buildId, build: nextProps.build, linkedBuilds: nextProps.linkedBuilds, buildSpecs: specs})
+			this.setState ({buildId, build: nextProps.build, linkedParts, linkedBuilds: nextProps.linkedBuilds, buildSpecs: buildSpecs || {}})
+
 		} else {
-			this.setState ({build: nextProps.build, linkedBuilds: nextProps.linkedBuilds, buildSpecs: specs})
+			this.setState ({buildId: '', build: nextProps.build, linkedParts, linkedBuilds: nextProps.linkedBuilds, buildSpecs: buildSpecs || {}})
 		}
 	}
 
-	  async fetchBuildDetails (buildId) {
-	    try {
-	        let data = await Requests.fetchBuildDetails (buildId)
+	async fetchBuildDetails (buildId) {
+		try {
+		    let data = await Requests.fetchBuildDetails (buildId)
 			this.setState ({
 				hasError: false,
 				isLoading: false,
 			})
+			data && data.specs && this.props.setBuildSpecs (data.specs) && data.specs.specId && this.setState ({specId: data.specs.specId})
 
-			data && data.specs && this.props.setBuildSpecs (data.specs)
-		    } catch (err) {
-		      this.setState ({hasError: true, isLoading: false})
-		    }
-	  }
+	    } catch (err) {
+	      this.setState ({hasError: true, isLoading: false})
+	    }
+	}
 
 	renderSpecs () {
 		let {buildSpecs} = this.state
@@ -135,11 +221,14 @@ class NewBuild extends Component {
 			, dataArray = keys (buildSpecs).filter((key)=>Number.isInteger (buildSpecs[key]))
 											.map ((key)=>{return {name: key, value: buildSpecs[key]}})
 	        return (
-		          <View style={[DetailStyles.descriptionContainer, {alignItems: 'flex-start', margin: 16}]}>
-		        	  {size && cylinders && compressor?(<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>):(<View/>)}
-			          {drivenWheels?(<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>):(<View/>)}
-		        	  <MetricsGraph onDoneEdit={this.props.editBuildSpecEntry} editable={true} data={[{entries:dataArray}]}/>
-		          </View>
+	        	<View style={{alignItems: 'center', justifyContent: 'center'}}>
+					<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
+					<View style={{marginHorizontal: 16}}>
+						{size && cylinders && compressor?(<Heading3 style={Specs.subtitle}>{size.toFixed(1) + ` L ${configuration}-${cylinders} ${compressor}`.toUpperCase()}</Heading3>):(<View/>)}
+						{drivenWheels?(<Heading3 style={Specs.subtitle}>{`${drivenWheels}`.toUpperCase()}</Heading3>):(<View/>)}
+						<MetricsGraph onDoneEdit={this.props.editBuildSpecEntry} editable={true} data={[{entries:dataArray}]}/>
+					</View>
+				</View>
 	          )
 		}
 		else return (<View/>)
@@ -154,82 +243,95 @@ class NewBuild extends Component {
 			</View>
 		)
 	}
+
+
+	renderLinkedParts () {
+		let {linkedParts} = this.state
+		console.log (linkedParts)
+		return (linkedParts && linkedParts.length > 0)?(
+			<View>
+			<Paragraph style={Titles.filterSectionTitle}>{"PART"}</Paragraph>          
+			{linkedParts.map ((part, idx)=>(<LinkContent removeAction={()=>this.props.unlinkPart (part.partId)} key={idx} name={part.name} image={part.media} />))}
+			</View>
+		):(<View/>)
+	}
+
 	render() {
+		console.log (this.state)
 		let {
 			addBuildMedia,
 			removeBuildMedia,
 			setBuildImage,
 			setBuildName,
-
 			addBuildSpecEntry,
 			editBuildSpecEntry,
 			removeBuildSpecEntry,
-
 			removePart,
 			createBuild,
-
 			userId,
 		} = this.props
 
 		, {
-			buildName,
-			buildMedia,
-			buildParts,
 			buildSpecs,
-		} = this.state.build
-
+		} = this.state
+		, { specId } = this.state
 		, leftItem = {
 			title: 'Back',
-			onPress: Actions.pop
+			onPress: ()=>Actions.pop()
 		}			
-		, rightItem = {
-			title: 'Tag Part',
-			onPress: Actions.PreviewPost
-		}
+		, rightItem = (buildSpecs.specId)?{title: 'Tag Part',onPress: ()=>{Actions.Manufacturers ({specId: buildSpecs.specId})}}:{}
 		, specsContent = this.renderSpecs()
+		, partLink = this.renderLinkedParts()
 		, buildLink = this.state.linkedBuilds.length ? (this.renderLinkedBuilds()) : (this.renderNewBuild())
-		, linkActionButton = this.state.linkedBuilds.length? null : (
-				    <F8Button 
-				    	icon={require ('../common/img/car.png')} 
-				    	onPress={()=>Actions.BuildsByUserId({userId, selector: true})}
-		    			type="tertiary" 
-		    			style={{flex: -1}} 
-		    			caption="... Or Choose From My Builds"/>
-		)
 
-		console.log('state', this.state)
+		console.log (this.state)
 		return (
 	        <View style={{flex: 1}}>
 			<F8Header style={General.Header} foreground="dark" leftItem={leftItem} title="Build Info" rightItem={rightItem}/>
+			<ScrollView style={{marginBottom: 50}}>
+		        {this.renderPostContent()}
 				<Paragraph style={Titles.filterSectionTitle}>{"CAR"}</Paragraph>          
-					{buildLink}
-					{linkActionButton}
-				<Paragraph style={Titles.filterSectionTitle}>{"SPECS"}</Paragraph>          
-			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'column'}}>
-					{specsContent}
-					<View style={{flexDirection: 'row', marginVertical: 4, alignItems: 'stretch', alignSelf: 'center'}}>
-					{
-					this.state.linkedBuilds.length ? null : (
-				    <F8Button 
-				    	icon={require ('../common/img/car.png')} 
-				    	onPress={()=>Actions.Makes({build: true})}
-		    			type="tertiary" 
-		    			style={{flex: -1}} 
-		    			caption="Pick Car"/>
-					)						
-					}
-				    <F8Button 
-				    	icon={require ('../common/img/specs.png')} 
-		    			type="tertiary" 
-		    			style={{flex: -1}} 
-		    			onPress={()=>Actions.EditSpecs ({onDoneEdit: this.props.addBuildSpecEntry, newEntry: true})} 
-		    			caption="Add Specs Entry"/>
+				{buildLink}
+			    <View style={{alignItems: 'flex-start', flex: 1, flexDirection: 'column', marginVertical: 16}}>
+				{specsContent}
+	    		{partLink}
 	    		</View>
-	    		</View>
-			</View>
+			</ScrollView>
+	        <F8Button
+	          style={[General.bottomButtonStyle, {position: 'absolute', bottom: 0}]}
+	          type="saved" caption="POST!"
+	          onPress={()=>{
+	          	this.uploadPost ()
+	          	Actions.popTo("main")
+	          }}
+	        />
+		</View>
 		)
-
 	}
+
+	uploadPost () {
+		let {linkedBuilds, linkedParts, newBuild, text, fileName, filePath, fileType, buildSpecs} = this.state
+			, partIds = linkedParts.map ((part)=>part.partId)
+			, buildId = linkedBuilds[0] && linkedBuilds[0].buildId || ''
+		try {
+			let data = {
+				buildSpecs,
+				buildId,
+				partIds,
+				text,
+			}, file = {
+				uri: filePath,
+				name: fileName,
+				type: fileType,
+			}
+
+			data = (buildId === '') ? Object.assign (data, {newBuild}) : data
+			this.props.uploadToS3 (file, data)
+		} catch (err) {
+
+		}
+	}
+
 }
 
 export default connect (mapStateToProps, mapDispatchToProps) (NewBuild)

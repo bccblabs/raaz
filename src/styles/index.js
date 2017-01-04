@@ -25,8 +25,6 @@ export const General = StyleSheet.create ({
     backgroundColor: btnColor,
     alignSelf: 'center',
     flex: -1,
-    borderWidth: 4,
-    borderColor: 'white',
     width: window.width,
   },
   tabBarStyle: {

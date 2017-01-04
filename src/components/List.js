@@ -67,7 +67,7 @@ export default class List extends Component {
 
   render () {
     let {dataSource, pagination} = this.state
-      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg, wall, showHeader} = this.props
+      , { title, fetchData, fetchTags, tags, renderRow, emptyMsg, wall, showHeader, contentMarginTop} = this.props
       , {nextPageUrl, isFetching, hasError} = pagination
       , content
 
@@ -84,7 +84,7 @@ export default class List extends Component {
       else {
         content = (
           <ListView
-            style={{flex: 1, backgroundColor: 'transparent'}}
+            style={{flex: 1, backgroundColor: 'transparent', marginTop: contentMarginTop?contentMarginTop:0}}
             dataSource={dataSource}
             enableEmptySections={true}
             renderRow={renderRow}
@@ -95,7 +95,6 @@ export default class List extends Component {
           />
         )
       }
-    console.log (showHeader)
     return (
       <View style={{flex: 1}}>
         {content}

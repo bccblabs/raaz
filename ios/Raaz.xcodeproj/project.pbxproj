@@ -37,6 +37,7 @@
 		6FF02E2F1DDF7CF1004A4FA0 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF02E2D1DDF7CF1004A4FA0 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6FF02E321DDF7CF5004A4FA0 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF02E311DDF7CF5004A4FA0 /* QBImagePicker.framework */; };
 		6FF02E331DDF7CF5004A4FA0 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF02E311DDF7CF5004A4FA0 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6FF944121E19C5BA001441B0 /* libRNGeocoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF9440E1E19C5AF001441B0 /* libRNGeocoder.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,13 @@
 			remoteGlobalIDString = 3D7682761D8E76B80014119E;
 			remoteInfo = SplashScreen;
 		};
+		6FF9440D1E19C5AF001441B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6FF943F91E19C5AF001441B0 /* RNGeocoder.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BF8FCF941BFFB184000FCD37;
+			remoteInfo = RNGeocoder;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -231,6 +239,7 @@
 		6FDD19D21DEE3CCD003D5457 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		6FF02E2D1DDF7CF1004A4FA0 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RSKImageCropper.framework; path = "/Users/bski/Library/Developer/Xcode/DerivedData/Raaz-abtdrzvccidzjyazybomtxpmatef/Build/Products/Debug-iphoneos/RSKImageCropper.framework"; sourceTree = "<absolute>"; };
 		6FF02E311DDF7CF5004A4FA0 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = QBImagePicker.framework; path = "/Users/bski/Library/Developer/Xcode/DerivedData/Raaz-abtdrzvccidzjyazybomtxpmatef/Build/Products/Debug-iphoneos/QBImagePicker.framework"; sourceTree = "<absolute>"; };
+		6FF943F91E19C5AF001441B0 /* RNGeocoder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGeocoder.xcodeproj; path = "../node_modules/react-native-geocoder/ios/RNGeocoder.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -248,6 +257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FF944121E19C5BA001441B0 /* libRNGeocoder.a in Frameworks */,
 				6F97694A1DF8B81C00CCB075 /* libRNDeviceInfo.a in Frameworks */,
 				6FDD19E91DEE3CE4003D5457 /* libSplashScreen.a in Frameworks */,
 				6FB636661DE79D7700220867 /* libART.a in Frameworks */,
@@ -444,6 +454,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6FF943FA1E19C5AF001441B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6FF9440E1E19C5AF001441B0 /* libRNGeocoder.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +473,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6FF943F91E19C5AF001441B0 /* RNGeocoder.xcodeproj */,
 				6F9769441DF8B81100CCB075 /* RNDeviceInfo.xcodeproj */,
 				6FDD19D21DEE3CCD003D5457 /* SplashScreen.xcodeproj */,
 				6FB636501DE79D6800220867 /* ART.xcodeproj */,
@@ -645,6 +664,10 @@
 					ProjectRef = 6F9769441DF8B81100CCB075 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
+					ProductGroup = 6FF943FA1E19C5AF001441B0 /* Products */;
+					ProjectRef = 6FF943F91E19C5AF001441B0 /* RNGeocoder.xcodeproj */;
+				},
+				{
 					ProductGroup = 6F14E7651DE77CFA0063E1F6 /* Products */;
 					ProjectRef = 6F14E7641DE77CFA0063E1F6 /* RNImagePicker.xcodeproj */;
 				},
@@ -783,6 +806,13 @@
 			fileType = archive.ar;
 			path = libSplashScreen.a;
 			remoteRef = 6FDD19E71DEE3CCD003D5457 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6FF9440E1E19C5AF001441B0 /* libRNGeocoder.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGeocoder.a;
+			remoteRef = 6FF9440D1E19C5AF001441B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {

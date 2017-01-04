@@ -8,6 +8,10 @@ const {
   UNLINK_BUILD,
 
   SET_POST_TEXT,
+  SET_UPLOAD_PROG,
+
+  UPLOAD_S3,
+  CREATE_POST,
 
 } = require ('../../constants').default
 
@@ -54,6 +58,21 @@ export default function NewPostReducer (state=initialState, action) {
       return nextState
     }
 
+    case SET_UPLOAD_PROG: {
+      let {payload} = action
+      return state.setIn (['uploadProgress'], payload * 0.95, val => payload * 0.95)
+                  .setIn (['isUploading'], true, val=>true)
+    }
+
+    case `${UPLOAD_S3}_REJECTED`: {
+      return state.setIn (['hasError'], true, val=>true)
+    }
+
+    case `${CREATE_POST}_FULFILLED`: {
+      return state.setIn (['hasError'], false, val=>false)
+                  .setIn (['isUploading'], false, val=>false)
+                  .setIn (['uploadProgress'], 1, val=>1)
+    }
     default: {
       return state
     }

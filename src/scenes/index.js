@@ -15,7 +15,7 @@ import {
     PreviewPost, 
     VRPost,
 } from '../post' 
-import { Makes, Models, Submodels, Specs } from '../picker'
+import { Makes, Models, Submodels, Specs, Manufacturers, PartSelector } from '../picker'
 import { Tuning, TuningBySpec, QRScreen, Manufacturer } from '../tuning'
 import { 
     UserPage, 
@@ -58,19 +58,22 @@ export default scenes = Actions.create (
     <Scene key="PostsByUserId" component={PostsByUserId} hideNavBar/>
 
     <Scene key="UserPage" component={UserPage} hideNavBar/>
-    <Scene key="Manufacturer" component={Manufacturer} hideNavBar/>
+    <Scene key="Manufacturer"  component={Manufacturer} hideNavBar/>
     <Scene key="PhotoSwiper" component={PhotoSwiper} hideNavBar/>
 
     <Scene key="SpecsByManufacturer" component={SpecsByManufacturer} hideNavBar/>
+    <Scene key="PartSelector" type={ActionConst.REPLACE} component={PartSelector} hideNavBar/>
 
-    <Scene key="NewBuild" component={NewBuild} hideNavBar/>
+    <Scene key="NewBuild" type={ActionConst.REPLACE} component={NewBuild} hideNavBar/>
     <Scene key="NewListing" component={NewListing} hideNavBar/>
     <Scene key="NewPart" component={NewPart} hideNavBar/>
     <Scene key="NewPost" component={NewPost} hideNavBar/>
+
     <Scene key="EditSpecs" component={EditSpecs} hideNavBar/>
     <Scene key="PreviewBuild" component={PreviewBuild} hideNavBar/>
     <Scene key="PreviewPost" component={PreviewPost} hideNavBar/>
 
+    <Scene key="Manufacturers" component={Manufacturers} hideNavBar/>
   </Scene>
 )
 

@@ -17,19 +17,21 @@ export default class LinkContent extends Component {
 		let {linkAction, name, image, removeAction} = this.props
 		return (
             <View style={{flex: 1,marginHorizontal: 16, marginBottom: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            	<View>
 				<TouchableWithoutFeedback onPress={linkAction}>
-					<Image style={{width: 100, height: 100}} source={{uri: image}}/>
+					<Image style={{width: 96, height: 96, margin: 16}} source={{uri: image}}/>
 				</TouchableWithoutFeedback>
-				<Text style={[PostStyles.primaryTitle]}>{name}</Text>
 				{
 				removeAction ? (
 	            <TouchableOpacity
-	            	style={{alignSelf: 'center', position: 'absolute', right: 8, top: 35}}
+	            	style={{alignSelf: 'center', position: 'absolute', left: 0, top: 0}}
 					onPress={removeAction}>
-					<Image source={require ('../common/img/x.png')} style={{height:32, width: 32}}/>
+					<Image source={require ('../common/img/x.png')} style={{height:20, width: 20}}/>
 	            </TouchableOpacity>
 				) : null					
 				}
+				</View>
+				<Text style={[PostStyles.primaryTitle]}>{name}</Text>
             </View>
 		)		
 	}

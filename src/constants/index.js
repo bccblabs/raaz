@@ -14,6 +14,16 @@ exports.AUTH0_CALLBACK_URL = '//raaz://callback'
 exports.API_ENDPOINT = module.exports.API_ENDPOINT = "http://localhost:8080"
 
 exports.GET_OPTS = module.exports.GET_OPTS = { method: 'GET', headers: {'Accept': 'application/json','Content-Type':'application/json'}}
+exports.REQ_OPTS = module.exports.REQ_OPTS = { headers: {'Accept': 'application/json','Content-Type':'application/json'}}
+exports.S3_OPTS = module.exports.S3_OPTS = {
+  keyPrefix: "user-uploads/",
+  bucket: "raaz-user-images",
+  region: 'us-east-1',
+  accessKey: "AKIAJC4RSF66ZHF6VKYQ",
+  secretKey: "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",
+  successActionStatus: 201
+}
+
 
 export default keyMirror ({
 
@@ -82,6 +92,7 @@ export default keyMirror ({
   EDIT_BUILD_SPEC: null,
   REMOVE_BUILD_SPEC: null,
   SET_BUILD_SPEC: null,
+  RESET_BUILD_SPEC: null,
 
   ADD_PART: null, 
   EDIT_PART: null,
@@ -236,6 +247,10 @@ export default keyMirror ({
   MANUFACTURERS_SPEC_SUCCESS: null,  
   MANUFACTURERS_SPEC_ERROR: null,
 
+  MANUFACTURERS_REQUEST: null, 
+  MANUFACTURERS_SUCCESS: null,  
+  MANUFACTURERS_ERROR: null,
+
 
   /* Social Login and Profile */
   LOGIN: null,
@@ -256,4 +271,7 @@ export default keyMirror ({
   REPLY_COMMENT_SUCCESS: null,
   REPLY_COMMENT_ERR: null,
 
+  SET_UPLOAD_PROG: null,
+  UPLOAD_S3: null,
+  CREATE_POST: null,
 })

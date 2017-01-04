@@ -114,6 +114,10 @@ const {
   MANUFACTURERS_SPEC_SUCCESS,
   MANUFACTURERS_SPEC_ERROR,
 
+  MANUFACTURERS_REQUEST,
+  MANUFACTURERS_SUCCESS,
+  MANUFACTURERS_ERROR
+
 } = require ('../constants').default
 
 let initState = {
@@ -308,7 +312,15 @@ const pagination = combineReducers ({
       MANUFACTURERS_SPEC_SUCCESS,
       MANUFACTURERS_SPEC_ERROR
     ]
-  })
+  }),
+  manufacturerPagination: paginate ({
+    mapActionToKey: action => action.specId,
+    types: [
+      MANUFACTURERS_REQUEST,
+      MANUFACTURERS_SUCCESS,
+      MANUFACTURERS_ERROR
+    ]
+  }),
 })
 
 

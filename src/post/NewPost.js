@@ -112,8 +112,8 @@ class NewPost extends Component {
     this.state = {
       hasAttachments: true,
       source: '',
-      type: '',
       fileType: '',
+      ext: '',
       fileName: '',
       text: '',
       vrMode: false,
@@ -121,7 +121,7 @@ class NewPost extends Component {
   }
 
   selectPostType () {
-    let {text, source, fileType} = this.state
+    let {text, source, ext, fileType, fileName} = this.state
 
     ActionSheet.showActionSheetWithOptions({
       options: (Platform.OS == 'ios') ? TagOptsIOS : TagOptsAndroid,
@@ -132,16 +132,16 @@ class NewPost extends Component {
     (buttonIndex) => {
       switch (buttonIndex) {
       case 0: 
-        Actions.NewBuild({text, source, fileType})
+        Actions.NewBuild({text, source, ext, fileType, fileName})
         break;
       case 1: 
-        Actions.PreviewPost({text, source, fileType})
+        Actions.PreviewPost({text, source, ext, fileType, fileName})
         break;
       case 2: 
-        Actions.VRPost({text, source, fileType, vr: true})
+        Actions.VRPost({text, source, ext, vr: true, fileType, fileName})
         break;
       case 3: 
-        Actions.NewListing({text, source, fileType})
+        Actions.NewListing({text, source, ext, fileType, fileName})
         break;
       default:
         break;
@@ -163,37 +163,37 @@ class NewPost extends Component {
         this.setState ({hasError: true})
       }
       else {
-        let source, fileType, fileName
+        let source, ext, fileName
         if (Platform.OS === 'ios') {
           source = response.uri.replace('file://', '')
-          fileType = response.uri.split ('.').slice (-1)[0]
-          fileName = md5(response.uri.split ('/').slice (-1)[0] + this.props.profileData.user_id) + '.' + fileType
+          ext = response.uri.split ('.').slice (-1)[0]
+          fileName = md5(response.uri.split ('/').slice (-1)[0] + this.props.profileData.user_id) + '.' + ext
         } else {
           source = response.uri
-          fileType = response.type
+          ext = response.type
           fileName = md5(response.fileName)
         }
         this.setState({
           hasAttachments: true,
           source: source,
-          type: opts.mediaType,
-          fileType: fileType,
-          // fileName: fileName,
+          fileType: opts.mediaType,
+          ext: ext,
+          fileName: fileName,
         });
       }
     });   
   }
 
   renderMedia () {
-    let {source, type} = this.state
+    let {source, fileType} = this.state
       , content
     if (source && source.length) {
-      if (type === 'photo') {
+      if (fileType === 'photo') {
         content = (
           <Image source={{uri: source}} style={PostStyles.primaryImage}/>
         )
       }
-      else if (type === 'video') {
+      else if (fileType === 'video') {
         content = (
           <Video
             repeat
@@ -207,7 +207,7 @@ class NewPost extends Component {
       <View style={{marginBottom: 8}}>
       {content}
             <TouchableWithoutFeedback
-              onPress={()=>{this.setState ({type: '', source: ''})}}>
+              onPress={()=>{this.setState ({fileType: '', source: ''})}}>
               <View style={{position: 'absolute', right: 8, top: 16}}>
               <Image source={require ('../common/img/x.png')} style={{height:32, width: 32}}/>
               </View>
@@ -239,13 +239,16 @@ class NewPost extends Component {
           <View style={{margin: 16, flexDirection: 'column', flex: 1}}>
               <Image source={{uri: this.props.profileData.picture}} style={PostStyles.userPhotoStyle}/>
               <TextInput
-                placeholder="OMG IT'S FAST"
                 multiline={true}
+                onChangeText={(text) => {
+                  this.setState({text});
+                }}
+                placeholder="OMG IT'S FAST"
                 style={NewPostStyles.largeBlockInput}/>
           </View>
         </View>
         </ScrollView>
-        <View style={{position: 'absolute', bottom: 0, flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}}>
         <F8Button 
           icon={require ('../common/img/camera.png')} 
           onPress={()=>this.selectMedia (imageOpts)} 

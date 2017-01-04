@@ -10,6 +10,11 @@ const newpostInitialState = Record ({
   media: new (List),
   text: '',
 
+  isUploading: false,
+  hasError: false,
+  
+  uploadProgress: 0,
+  
 })
 
 export default newpostInitialState

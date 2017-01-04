@@ -78,7 +78,6 @@ class F8Button extends Component {
     } else if (this.props.type === 'carTag') {
       content = (
         <View style={styles.carTag}>
-          <Image source={this.props.icon} style={styles.tagIcon} />
           <Text style={[styles.caption, styles.carTagCaption]}>
             {caption}
           </Text>
@@ -191,16 +190,16 @@ var styles = StyleSheet.create({
     margin: 4
   },
   carTag: {
-    flex: -1,
-    flexDirection: 'row',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
-    padding: 3,
-    backgroundColor: '#6A6AD5',
+    padding: 4,
+    margin: 4,
+    backgroundColor: 'white',
   },
   carTagCaption: {
     color: 'black',
+    textDecorationLine: 'underline', textDecorationStyle: 'solid', textDecorationColor: 'blue',
     fontWeight: '600',
     fontSize: 8,
     padding: 3,
@@ -216,7 +215,7 @@ var styles = StyleSheet.create({
   subTuningCaption: {
     color: 'black',
     fontWeight: '600',
-    fontSize: 8,
+    fontSize: 8 ,
     alignSelf: 'center'
   },
   border: {

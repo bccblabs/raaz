@@ -40,7 +40,7 @@ class PickSpecs extends Component {
       onSelectSpec = (option, specId) => {
         Actions.pop ()
         let car = Object.assign (option, {make: selectedMake, model: selectedModel, submodel: selectedSubmodel, specId: specId})
-        this.props.dispatch (setBuildSpecs (option))
+        this.props.dispatch (setBuildSpecs (Object.assign (car, option)))
       }
     } else {
       onSelectSpec = (option, specId) => {

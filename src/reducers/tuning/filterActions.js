@@ -74,6 +74,10 @@ const {
     CAT_SUCCESS,
     CAT_ERROR,
 
+    MANUFACTURERS_REQUEST, 
+    MANUFACTURERS_SUCCESS,  
+    MANUFACTURERS_ERROR,
+
 } = require ('../../constants').default
 
 export function fetchBuilds (paging, category, tag, specId, userId) {
@@ -244,8 +248,10 @@ export function setSelectedTags (tags) {
 }
 
 export function fetchPartsByManufacturer (manufacturerId, nextPageUrl, specId, category) {
-  let endpoint = '/tuning/manufacturer/' + manufacturerId + '/spec/' + specId + '?category=' + category
-    , url = nextPageUrl?(endpoint + nextPageUrl):endpoint
+  let endpoint = '/tuning/manufacturer/' + manufacturerId + '/spec/' + specId
+    , url 
+  url = category?(endpoint + '?category=' + category):endpoint
+  url = nextPageUrl?(url + nextPageUrl):url
 
   return {
     manufacturerId,
@@ -325,8 +331,17 @@ export function fetchManufacturersBySpecId (specId) {
       schema: Schemas.MANUFACTURERS_ARRAY,
     }
   }
-
 }
 
+export function fetchManufacturers () {
+  return {
+    specId: 'all',
+    [CALL_API]: {
+      types: [MANUFACTURERS_REQUEST, MANUFACTURERS_SUCCESS, MANUFACTURERS_ERROR],
+      endpoint: '/manufacturer',
+      schema: Schemas.MANUFACTURERS_ARRAY,
+    }
+  }
+}
 
 

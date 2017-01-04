@@ -68,11 +68,13 @@ export const makesSelector = (state) => (keys (state.entities.makes).sort())
 /* cars by specs selector */
 
 export const linkedBuilds = (state) => (state.newpost.linkedBuilds.toIndexedSeq().toArray())
+export const linkedParts = (state) => (state.newbuild.buildParts.toIndexedSeq().toArray())
+export const buildSpecs = (state) => (state.newbuild.buildSpecs.toJSON())
 export const selectedMediaSelector = (state) => (state.newpost.media.toArray())
 
 /* user selectors */
   export const isLikedByUser = (state) => {return true}
-  export const profileSelector = (state) => (state.user && state.user.profileData || {})
+  export const profileSelector = (state) => (state.user && state.user.profileData.toJSON() || {})
   export const userIdSelector = (state) => (state.user && state.user.profileData && state.user.profileData.user_id || null)
   export const accessTokenSelector = (state, props) => (state.history && state.history.access_token || props.access_token || null)
   export const idTokenSelector = (state, props) => (state.history && state.history.id_token || props.id_token || null)
@@ -182,7 +184,6 @@ export const selectedMediaSelector = (state) => (state.newpost.media.toArray())
 
   export const newBuildSelector = (state) => (state.newbuild.toJS())
 
-
 /* history selector */
   export const savedSpecsSelector = (state) => (state.history.specs.toIndexedSeq().toArray())
   export const savedPartsSelector = (state) => (state.history.parts.toIndexedSeq().toArray())
@@ -273,3 +274,25 @@ export const selectedMediaSelector = (state) => (state.newpost.media.toArray())
     }
   )
 
+
+  export const manufacturerPaginationSelector = (state, props) => (state.pagination.manufacturerPagination && state.pagination.manufacturerPagination['all'] || {})
+  export const manufacturerSelector = createSelector (
+    [manufacturersEntitiesSelector, manufacturerPaginationSelector],
+
+    (manufacturersEntities, manufacturersPagination) => {
+
+      let ids = manufacturersPagination.ids?manufacturersPagination.ids:[]
+
+      console.log (ids, manufacturersEntities)
+
+      return ids.map (id=>manufacturersEntities[id]).filter (elem=>elem)
+    }
+  )
+
+  export const uploadProgressSelector = (state) => {
+    return {
+      isUploading: state.newpost.isUploading,
+      uploadProgress: state.newpost.uploadProgress,
+      hasError: state.newpost.hasError
+    }
+  }

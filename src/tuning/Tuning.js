@@ -12,15 +12,20 @@ import {
 
 import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
-import {DetailStyles, General} from '../styles'
+import {DetailStyles, General, WIDTH,} from '../styles'
 
 import {AddPost, NewPostButton, LoadingView} from '../components'
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
+import {Bar} from 'react-native-progress'
 
 
 import {PostList} from '../post'
-import {homePostSelector, homePostPaginationSelector} from '../selectors'
+import {
+  homePostSelector, 
+  homePostPaginationSelector,
+  uploadProgressSelector
+} from '../selectors'
 import {fetchPosts} from '../reducers/post/postActions'
 
 import {userIdSelector, profileSelector, accessTokenSelector, idTokenSelector, refreshTokenSelector} from '../selectors'
@@ -43,6 +48,8 @@ const mapStateToProps = (state, props) => {
     access_token: accessTokenSelector (state, props),
     id_token: idTokenSelector (state, props),
     refresh_token: refreshTokenSelector (state, props),
+
+    uploadProgress: uploadProgressSelector (state)
   }
 }
 
@@ -61,7 +68,7 @@ class Tuning extends Component {
   constructor (props) {
     super (props)
     this.fetchUserData = this.fetchUserData.bind (this)
-    this.state = {showModal: false, refreshing: false, userId: null}
+    this.state = {uploadProgress: props.uploadProgress, showModal: false, refreshing: false, userId: null}
   }
 
   async fetchUserData (refresh_token) {
@@ -92,11 +99,11 @@ class Tuning extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let {pagination, refresh_token} = nextProps
-    console.log ({refresh_token})
+    let {pagination, refresh_token, uploadProgress} = nextProps
     this.setState ({
       refreshing: this.state.refreshing && pagination.isFetching,
       showModal: (refresh_token === null || refresh_token === undefined)?true:false,
+      uploadProgress
     })
   }
 
@@ -116,8 +123,13 @@ class Tuning extends Component {
       refresh_token
     } = this.props
 
-    , {showModal} = this.state
-
+    , {showModal, uploadProgress} = this.state
+    , uploadIndicator = (uploadProgress.isUploading)?(
+      <View style={{top: 76, width: WIDTH, alignItems: 'center', justifyContent: 'center', position:'absolute', flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}>
+      <Text style={{margin: 8, color: 'white', fontWeight: 'bold'}}>{"Uploading..."}</Text>
+      <Bar style={{margin: 8}} height={8} width={300} progress={uploadProgress.uploadProgress} color='red' />
+      </View>
+      ):(<View/>)
     console.log ('showModal', showModal, this.props.refresh_token)
     return (
       <View style={{flex: 1, backgroundColor:'transparent'}}>
@@ -155,8 +167,8 @@ class Tuning extends Component {
            <View style={{flex: 1}}>
             <Login/>
            </View>
-         </Modal>
-
+        </Modal>
+        {uploadIndicator}
       </View>
     )
   }

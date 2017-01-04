@@ -2,13 +2,16 @@
 
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import api from '../middlewares/api'
-import reducer from '../reducers';
+import promiseMiddleware from 'redux-promise-middleware'
+
 import createLogger from 'redux-logger'
 import {createMiddleware} from 'redux-storage'
 import * as storage from 'redux-storage'
 import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
 import filter from 'redux-storage-decorator-filter'
+
+import api from '../middlewares/api'
+import reducer from '../reducers';
 
 var promise = require ('./promise'),
     array = require ('./array')
@@ -48,7 +51,8 @@ const createStoreWithMiddleware = applyMiddleware(
   api,
   storageMiddleware,
   logger,
-  promise,
+  promiseMiddleware (),
+  // promise,
   array
 )(createStore);
 
