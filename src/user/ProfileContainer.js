@@ -35,22 +35,31 @@ export default class ProfileContainer extends Component {
             <Image style={PostStyles.manufacturerPhoto} source={{uri: profileData.picture}}/>
             <Text style={[DetailStyles.lightTitle, {backgroundColor: 'rgba(0,0,0,0.2)'}]}>{profileData.name}</Text>
           </View>
-          <View style={{right: 8, position: 'absolute', bottom: 0}}>
-          {btnContent}
-          </View>
         </View>
       ):(<View/>)
 
     return (
       <ParallaxScrollView
         backgroundColor="transparent"
-        contentBackgroundColor="white"
+        contentBackgroundColor="transparent"
         backgroundSpeed={1}
         parallaxHeaderHeight={HEIGHT}
         stickyHeaderHeight={64}
         renderForeground={()=>{return foregroundContent}}
         renderBackground={() => <BuildsPagerByUserId userId={userId}/>}
-        renderFixedHeader={()=>{return initial?(<View/>):(<BackSquare/>)}}
+        renderFixedHeader={()=>{return (
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <BackSquare/>
+              {this.props.currUser?(
+                <TouchableWithoutFeedback onPress={Actions.Settings}>
+                  <View style={{backgroundColor: 'transparent', position: 'absolute', top: 24, right: 8, width: 40, height: 40, alignItems: 'center', justifyContent: 'center', flex: 1}}>
+                    <Image source={require ('../common/img/settings.png')} style={{flex: -1}}/>
+                  </View>
+                </TouchableWithoutFeedback>
+              ):(<View/>)}
+            </View>
+          )
+        }}
         >
         <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
         {

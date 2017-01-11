@@ -40,6 +40,13 @@ import AddPost from './AddPost'
 import PartsByManufactuer from './PartsByManufactuer'
 import TuningTags from './TuningTags'
 
+import SelectMediaButton from './SelectMediaButton'
+// import VideoButton from './VideoButton'
+// import VRButton from './VRButton'
+
+module.exports.SelectMediaButton = SelectMediaButton
+// module.exports.VideoButton = VideoButton
+// module.exports.VRButton = VRButton
 
 module.exports.AddPost = AddPost
 module.exports.BackSquare = BackSquare

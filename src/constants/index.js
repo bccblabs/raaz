@@ -2,10 +2,35 @@ import keyMirror from 'key-mirror'
 var DeviceInfo = require('react-native-device-info');
 
 var deviceName = DeviceInfo.getDeviceId() || 'test-device'
+exports.IMG_OPTS = module.exports.IMG_OPTS = {
+  title: 'Choose Photo',
+  mediaType: 'photo',
+  quality: '1',
+  maxHeight: 640,
+  maxWidth: 640,
+  noData: true,
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+};
+
+exports.VIDEO_OPTS = module.exports.VIDEO_OPTS = {
+  title: 'Choose Video',
+  mediaType: 'video',
+  takePhotoButtonTitle: 'Video Shoot',
+  chooseFromLibraryButtonTitle: 'Video from Library',
+  videoQuality: 'high',
+  durationLimit: '30',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+}
+
+
 exports.REQ_TIMEOUT = module.exports.REQ_TIMEOUT = 5000;
-
 exports.AUTH0_SIGNIN = module.exports.AUTH0_SIGNIN = 'https://raaz.auth0.com/authorize?response_type=token&client_id=38IZWX4rxcewydOFTD3fDuGRh7nyzDqi&scope=openid%20offline_access&device=' + deviceName +  '&redirect_uri=raaz://callback'
-
 exports.AUTH0_CLIENT_ID = module.exports.AUTH0_CLIENT_ID ='38IZWX4rxcewydOFTD3fDuGRh7nyzDqi'
 exports.AUTH0_CLIENT_SECRET = module.exports.AUTH0_CLIENT_SECRET ='RyE7bMsLckFWNCGSEaX0DkRsTHEryHX_d7yGwzQUXs8mwvvKa2qxIO3S0QNR54Og'
 exports.AUTH0_DOMAIN = module.exports.AUTH0_DOMAIN ='https://raaz.auth0.com'

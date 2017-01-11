@@ -16,10 +16,10 @@ export default class LinkContent extends Component {
 	render () {
 		let {linkAction, name, image, removeAction} = this.props
 		return (
-            <View style={{flex: 1,marginHorizontal: 16, marginBottom: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <View style={{flex: 1,marginHorizontal: 8, marginVertical: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
             	<View>
 				<TouchableWithoutFeedback onPress={linkAction}>
-					<Image style={{width: 96, height: 96, margin: 16}} source={{uri: image}}/>
+					<Image style={{width: 96, height: 96, margin: 8}} source={{uri: image}}/>
 				</TouchableWithoutFeedback>
 				{
 				removeAction ? (

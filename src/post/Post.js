@@ -13,7 +13,7 @@ import {Actions} from 'react-native-router-flux'
 import moment from 'moment'
 
 import ProfilePicture from '../common/ProfilePicture'
-import {WIDTH, HEIGHT, PostStyles, General, Header} from '../styles'
+import {WIDTH, HEIGHT, PostStyles, General, Header, NewPostStyles} from '../styles'
 import {LikeBtn, CommentBtn, LinkContent} from '../components'
 import F8Button from '../common/F8Button'
 export default class Post extends Component {
@@ -23,78 +23,85 @@ export default class Post extends Component {
 
   render () {
     let {post, tags, user, likes, postId, comments, postType, build, part, specId} = this.props.data
-      , {media, created, mediaType} = post
+      , {media, created, mediaType, text} = post
       , {user_id, picture} = user
       , daysAgo = moment(created).fromNow()
       , postContent
-      , imageContent
+      , mediaContent
+
+      , buildLink
+      , partLink
       , linkContent
-      , descText 
-      , name
+
+      , descText
     //   , likesContent = (<LikeBtn postId={postId} numlikes={likes.length}/>)
     //   , commentsContent = (<CommentBtn postId={postId} commentsCnt={comments}/>)
-      if (postType === 'new_build') {
-        let {buildId, media} = build
-        name = build.name
-        descText = '#Build'
-        imageContent = (
-          <TouchableWithoutFeedback onPress={()=>Actions.BuildDetails ({buildId})}>
-          <View style={{flex: 1}}>
-          <Image style={[PostStyles.primaryImage]} source={{uri: media[0]}}/>
-          <Text style={[PostStyles.primaryTitle, {position: 'absolute', bottom: 8, left: 8}]}>{name}</Text>
-          </View>
+    if (build) descText = ' [build]'
+    if (part && part.length) descText += ' [part]'
+
+    mediaContent = media && media[0] && mediaType === 'photo' ? (
+          <TouchableWithoutFeedback onPress={()=>{}}>
+          <Image style={[PostStyles.primaryImage]} source={{uri: media}}/>
           </TouchableWithoutFeedback>
-        )
-      }
-      else if (postType === 'build_log' && part && build) {
-        let {partId, medium} = part
-          , {buildId, media} = build
+    ):(<View/>)
 
-        descText = '#Part'
-        name = part.name
+    buildLink = build && build.name ?(<LinkContent name={build.name} large image={build.media[0]} linkAction={()=>{Actions.BuildDetails ({buildId: build.buildId})}}/>):(<View/>)
+    partLink = part && part.length ? part.map ((partLink)=>(<LinkContent name={partLink.name} image={partLink.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partLink.partId, specId: build.specId}})}}/>)) : (<View/>)
 
-        linkContent = (
+    linkContent = (
         <View style={{flex: 1}}>
-          <LinkContent name={build.name} large image={media[0]} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
-          <LinkContent name={part.name} image={medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
+        {buildLink}
+        {partLink}
         </View>
-        )
-      }
+    )
+      // else if (postType === 'build_log' && part && build) {
+      //   let {partId, medium} = part
+      //     , {buildId, media} = build
 
-      else if (postType === 'build_comment') {
-        let {text} = post
-          , {buildId} = build
-          , media
+      //   descText = '[Part]'
+      //   name = part.name
 
-        if (post.media) {
-          media = post.media
-        } else {
-          media = build.media[0]
-        }
-        descText = '#Comment'
-        linkContent = (
-          <LinkContent name={build.name} image={media} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
-        )
+      //   linkContent = (
+      //   <View style={{flex: 1}}>
+      //     <LinkContent name={part.name} image={medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
+      //   </View>
+      //   )
+      // }
 
-        postContent = (
-          <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
-        )
-      }
+      // else if (postType === 'build_comment') {
+      //   let {text} = post
+      //     , {buildId} = build
+      //     , media
 
-      else if (postType === 'part_comment' || postType === 'part_log') {
-        let {text} = post
-          , {partId} = part
-        descText = '#Comment'
-        specId = post.specId
-        postContent = (
-        <View style={{flex: 1}}>
-          <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
-        </View>
-        )
-        linkContent = (
-          <LinkContent name={part.name} image={part.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
-        )
-      }
+      //   if (post.media) {
+      //     media = post.media
+      //   } else {
+      //     media = build.media[0]
+      //   }
+      //   descText = '[Comment]'
+      //   linkContent = (
+      //     <LinkContent name={build.name} image={media} linkAction={()=>{Actions.BuildDetails ({buildId})}}/>
+      //   )
+
+      //   postContent = (
+      //     <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
+      //   )
+      // }
+
+      // else if (postType === 'part_comment' || postType === 'part_log') {
+      //   let {text} = post
+      //     , {partId} = part
+      //   descText = '[Comment]'
+      //   specId = post.specId
+      //   postContent = (
+      //   <View style={{flex: 1}}>
+      //     <Text style={{paddingHorizontal: 8, paddingBottom: 16, fontWeight: 'bold'}}>{`"${text}"`}</Text>
+      //   </View>
+      //   )
+      //   linkContent = (
+      //     <LinkContent name={part.name} image={part.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partId, specId: specId}})}}/>
+      //   )
+      // }
 
 
     return (
@@ -109,36 +116,10 @@ export default class Post extends Component {
               <Text style={{fontSize: 8, fontWeight: '600', color: '#2f4f4f', position: 'absolute', top: 2, right: 8}}>{daysAgo}</Text>
             </View>
           </TouchableWithoutFeedback>
-          {postContent}
-          {
-            imageContent ? (
-              <View style={PostStyles.imageContainer}>
-              {imageContent}
-              </View>
-            ): (<View/>)
+          {text?(<Text style={PostStyles.text}>{text}</Text>):(<View/>)
           }
+          {mediaContent}
           {linkContent}
-          
-          {
-            tags.length ? (
-              <ScrollView 
-                style={{flex: -1,  marginVertical: 0, marginHorizontal: 8}}
-                horizontal
-                showsHorizontalScrollIndicator
-                showsVerticalScrollIndicator
-                automaticallyAdjustContentInsets={false}
-                contentContainerStyle={{
-                    backgroundColor: 'transparent', 
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                {
-                  tags.map ((tag, idx)=> {return (<Text key={idx} style={PostStyles.tag}>{`#${tag}`}</Text> )})
-                }
-              </ScrollView>     
-            ) : (<View/>)
-          }
-
         </View>   
     )
   }

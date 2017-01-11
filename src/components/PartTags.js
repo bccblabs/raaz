@@ -27,7 +27,7 @@ export default class PartTags extends Component {
 			            alignItems: 'center',
 			            flex: -1,
 			            margin: 4,}}>
-			          <Text style={{fontSize: 16, margin: 6, color: 'black', fontWeight: 'bold'}}>{`#${partTag}`}</Text>
+			          <Text style={{fontSize: 16, margin: 6, color: 'black', fontWeight: 'bold'}}>{`[${partTag}]`}</Text>
 			          </View>
 			        </TouchableWithoutFeedback>
 			        )})

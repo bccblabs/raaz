@@ -124,7 +124,6 @@ class PartDetails extends Component {
           </View>
         ):undefined
       return (
-      <View style={{flex: 1, backgroundColor:'transparent'}}>
         <ParallaxScrollView
           backgroundColor="transparent"
           contentBackgroundColor="white"
@@ -157,12 +156,6 @@ class PartDetails extends Component {
           <PostsByPartId partId={partId}/>
           </View>
         </ParallaxScrollView>
-        <F8Button style={{flex: -1}}
-                  onPress={()=>Actions.NewPost()}
-                  type="search"
-                  icon={require ('../common/img/comment.png')}
-                  caption={"New Post"}/>
-      </View>
       )
     }
   }

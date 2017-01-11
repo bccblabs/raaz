@@ -14,11 +14,11 @@ import {Actions} from 'react-native-router-flux'
 import {connect} from 'react-redux'
 import {DetailStyles, General, WIDTH,} from '../styles'
 
-import {AddPost, NewPostButton, LoadingView} from '../components'
+import {SelectMediaButton, NewPostButton, LoadingView} from '../components'
 import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 import {Bar} from 'react-native-progress'
-
+import {IMG_OPTS, VIDEO_OPTS} from '../constants' 
 
 import {PostList} from '../post'
 import {
@@ -144,17 +144,26 @@ class Tuning extends Component {
         </ScrollView>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex: -1}}>
         <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-around', flex: -1}}>
-          <F8Button style={{flex: 1}}
-                    onPress={Actions.NewPost}
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Makes}
+                    caption="Parts By car" 
                     type="icon"
-                    icon={require ('../common/img/camera.png')}
-                    caption={"New Post"}/>
-          <F8Button 
-                    icon={require ('../common/img/video.png')} 
-                    onPress={Actions.NewPost} 
-                    type="icon" 
-                    caption="Video" 
-                    style={{flex: 1}}/>
+                    icon={require ('../common/img/search.png')}/>
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Home}
+                    caption="Home" 
+                    type="icon"
+                    icon={require ('../common/img/helmet.png')}/>
+          <SelectMediaButton
+              icon={require ('../common/img/camera.png')}
+              opts={IMG_OPTS}
+              userId={this.state.userId}
+          />
+          <SelectMediaButton
+              icon={require ('../common/img/video.png')} 
+              opts={VIDEO_OPTS}
+              userId={this.state.userId}
+          />
           <F8Button 
                     icon={require ('../common/img/vr.png')} 
                     onPress={Actions.NewPost} 
@@ -162,20 +171,10 @@ class Tuning extends Component {
                     caption="VR" 
                     style={{flex: 1}}/>
           <F8Button style={{flex: 1}}  
-                    onPress={Actions.Makes}
-                    caption="Parts By car" 
-                    type="icon"
-                    icon={require ('../common/img/search.png')}/>
-          <F8Button style={{flex: 1}}  
                     onPress={Actions.Saved}
                     caption="Saved" 
                     type="icon"
                     icon={require ('../common/img/heart.png')}/>
-          <F8Button style={{flex: 1}}  
-                    onPress={Actions.Home}
-                    caption="Parts By car" 
-                    type="icon"
-                    icon={require ('../common/img/helmet.png')}/>
         </View>
         </ScrollView>
         <Modal 

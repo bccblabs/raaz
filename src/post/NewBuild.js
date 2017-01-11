@@ -118,33 +118,40 @@ class NewBuild extends Component {
 	}
 
 	renderPostContent () {
-	let {filePath, fileType, text} = this.state
-	  , content
+		let {filePath, fileType, text} = this.state
+		  , content
 
-	if (filePath && filePath.length) {
-	  if (fileType === 'photo') {
-	    content = (
-	      <Image source={{uri: filePath}} style={PostStyles.primaryImage}/>
-	    )
-	  }
-	  else if (fileType === 'video') {
-	    content = (
-	      <Video
-	        repeat
-	        resizeMode='cover'
-	        source={{uri: filePath}}
-	        style={PostStyles.primaryImage}
-	      />
-	    )
-	  }
-	}
-	return (
-          <View style={{flexDirection: 'column', flex: -1}}>
-			<Image source={{uri: this.props.profileData.picture}} style={{height: 56, width: 56, margin: 8}}/>
-          	{content}
-			<Paragraph style={{margin: 8}}>{text}</Paragraph>
-		</View>
-	)
+		if (filePath && filePath.length) {
+		  if (fileType === 'photo') {
+		    content = (
+		      <Image source={{uri: filePath}} style={PostStyles.primaryImage}/>
+		    )
+		  }
+		  else if (fileType === 'video') {
+		    content = (
+		      <Video
+		        repeat
+		        resizeMode='cover'
+		        source={{uri: filePath}}
+		        style={PostStyles.primaryImage}
+		      />
+		    )
+		  }
+		}
+		return (
+	          <View style={{flexDirection: 'column', flex: -1}}>
+				<Image source={{uri: this.props.profileData.picture}} style={{height: 56, width: 56, margin: 8}}/>
+	          	{content}
+				<Paragraph style={[Titles.filterSectionTitle, {marginVertical: 8}]}>{"TEXT"}</Paragraph>          
+				<TextInput
+					multiline={true}
+					onChangeText={(text) => {
+						this.setState({text});
+					}}
+					placeholder="OMG IT'S FAST"
+					style={[NewPostStyles.largeBlockInput, {marginHorizontal: 16}]}/>
+			</View>
+		)
 	}
 
 	renderNewBuild () {
@@ -313,12 +320,15 @@ class NewBuild extends Component {
 		let {linkedBuilds, linkedParts, newBuild, text, fileName, filePath, fileType, buildSpecs} = this.state
 			, partIds = linkedParts.map ((part)=>part.partId)
 			, buildId = linkedBuilds[0] && linkedBuilds[0].buildId || ''
+			, {userId} = this.props
 		try {
 			let data = {
 				buildSpecs,
 				buildId,
 				partIds,
 				text,
+				userId,
+				mediaType: fileType
 			}, file = {
 				uri: filePath,
 				name: fileName,

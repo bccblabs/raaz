@@ -20,7 +20,7 @@ import F8Button from '../common/F8Button'
 import {fetchCarDetails} from '../reducers/tuning/filterActions'
 import {PostsBySpecId} from '../post'
 import {specDetailsPaginationSelector, specDetailsSelector} from '../selectors'
-import {DetailStyles, General, Specs} from '../styles'
+import {DetailStyles, General, Specs, HEIGHT} from '../styles'
 
 import {BuildsPagerBySpecId} from '../build'
 
@@ -101,7 +101,7 @@ class TuningBySpec extends Component {
         <ParallaxScrollView
           contentBackgroundColor="white"
           backgroundSpeed={1}
-          parallaxHeaderHeight={300+64}
+          parallaxHeaderHeight={HEIGHT}
           stickyHeaderHeight={64}
           renderFixedHeader={()=><BackSquare/>}
           renderForeground={()=>{

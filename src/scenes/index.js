@@ -64,7 +64,7 @@ export default scenes = Actions.create (
     <Scene key="SpecsByManufacturer" component={SpecsByManufacturer} hideNavBar/>
     <Scene key="PartSelector" type={ActionConst.REPLACE} component={PartSelector} hideNavBar/>
 
-    <Scene key="NewBuild" type={ActionConst.REPLACE} component={NewBuild} hideNavBar/>
+    <Scene key="NewBuild" component={NewBuild} hideNavBar/>
     <Scene key="NewListing" component={NewListing} hideNavBar/>
     <Scene key="NewPart" component={NewPart} hideNavBar/>
     <Scene key="NewPost" component={NewPost} hideNavBar/>

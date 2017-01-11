@@ -483,6 +483,15 @@ export const PostStyles = StyleSheet.create({
     bottom: 8,
     left: 8,
   },
+  text: {
+    borderColor: 'black',
+    borderWidth: 2,
+    padding: 8,
+    flex: -1,
+    margin: 8, 
+    padding: 16,
+    fontWeight: 'bold'
+  }
 
 })
 export const CarmeraStyles = StyleSheet.create ({
