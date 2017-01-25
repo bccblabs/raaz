@@ -36,16 +36,15 @@ exports.AUTH0_CLIENT_SECRET = module.exports.AUTH0_CLIENT_SECRET ='RyE7bMsLckFWN
 exports.AUTH0_DOMAIN = module.exports.AUTH0_DOMAIN ='https://raaz.auth0.com'
 exports.AUTH0_DELEGATION = module.exports.AUTH0_DELEGATION = 'https://raaz.auth0.com/delegation'
 exports.AUTH0_CALLBACK_URL = '//raaz://callback'
-exports.API_ENDPOINT = module.exports.API_ENDPOINT = "http://localhost:8080"
-
+exports.API_ENDPOINT = module.exports.API_ENDPOINT = "http://54.173.184.48:8080"
 exports.GET_OPTS = module.exports.GET_OPTS = { method: 'GET', headers: {'Accept': 'application/json','Content-Type':'application/json'}}
 exports.REQ_OPTS = module.exports.REQ_OPTS = { headers: {'Accept': 'application/json','Content-Type':'application/json'}}
 exports.S3_OPTS = module.exports.S3_OPTS = {
   keyPrefix: "user-uploads/",
-  bucket: "raaz-user-images",
+  bucket: "tunesquad-user-upload",
   region: 'us-east-1',
-  accessKey: "AKIAJC4RSF66ZHF6VKYQ",
-  secretKey: "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",
+  accessKey: "AKIAIYR6P6AQEO3NW2LQ",
+  secretKey: "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",
   successActionStatus: 201
 }
 

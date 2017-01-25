@@ -2,24 +2,24 @@
 
 import {connect} from 'react-redux'
 
-import {fetchPartsByTag} from '../reducers/tuning/filterActions'
-import {partsByTagSelector, partsByTagPaginationSelector} from '../selectors'
+import {fetchParts} from '../reducers/tuning/filterActions'
+import {partsBySpecIdSelector, partsPaginationSelector} from '../selectors'
 
 import PartList from './PartList'
 
 const mapStateToProps = (state, props) => {
 	return {
-		data: partsByTagSelector (state, props),
-		pagination: partsByTagPaginationSelector (state, props),
-		title: props.tag,
+		data: partsBySpecIdSelector (state, props),
+		pagination: partsPaginationSelector (state, props),
 		specId: props.specId,
+		showHeader: false,
 	}
 }
 
 const mapDispatchToProps = (dispatch, props) => {
 	return {
 		fetchData: (nextPageUrl) => {
-			dispatch (fetchPartsByTag (props.tag, props.specId, nextPageUrl))
+			dispatch (fetchParts (nextPageUrl, props.specId))
 		}
 	}
 }

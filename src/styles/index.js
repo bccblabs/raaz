@@ -356,7 +356,7 @@ export const PostStyles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     marginBottom: 8,
-    borderBottomColor: 'black', 
+    // borderBottomColor: 'black', 
   },
   imageContainer: {
     height: window.height/2,
@@ -516,8 +516,8 @@ export const DetailStyles = StyleSheet.create ({
     infoContainer: {
       flex: -1,
       position: 'absolute',
-      bottom: 50,
-      left: 2,
+      bottom: 0,
+      left: 0,
       marginRight: 16,
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -530,7 +530,7 @@ export const DetailStyles = StyleSheet.create ({
     },
     primaryTitle: {
       flex: -1,
-      fontSize: 24,
+      fontSize: 18,
       fontWeight: '700',
       padding: 8,
       backgroundColor: 'white',

@@ -11,11 +11,11 @@ const mapStateToProps = (state, props) => {
   return {
     data: partsByManufacturerSelector (state, props),
     pagination: partsByManufacturerPaginationSelector (state, props),
-
     specId: props.specId,
     manufacturerId: props.manufacturerId,
     categoryName: props.categoryName,
-    title: props.name
+    title: props.name,
+    showHeader: true,
   }
 }
 

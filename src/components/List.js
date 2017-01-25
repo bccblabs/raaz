@@ -19,8 +19,7 @@ export default class List extends Component {
     this.state = {
       dataSource: ds.cloneWithRows ([]),
       data: [],
-      pagination: props.pagination,
-      ids : [],
+      pagination: {},
     }
 
   }
@@ -38,30 +37,32 @@ export default class List extends Component {
 
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return  !(nextProps.pagination.ids === this.props.pagination.ids)
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return  !(nextProps.pagination.ids === this.props.pagination.ids)
+  // }
 
   componentWillReceiveProps (nextProps) {
 
     let {data, tags, pagination, clear} = nextProps
 
-    if (clear) {
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-      this.setState ({
-        dataSource: ds.cloneWithRows (data),
-        data: data,
-        pagination,
-      })
-    }
-    else if (!isEqual(pagination.ids, this.props.pagination.ids)) {
-      let ids = union (this.props.pagination.ids, pagination.ids)
+    // if (clear) {
+    // }
+    if (!isEqual(pagination.ids, this.props.pagination.ids)) {
+      let ids = union (this.state.pagination.ids, pagination.ids)
         , blob = union (this.state.data, data)
       this.setState ({
         dataSource: this.state.dataSource.cloneWithRows (blob),
         data: blob,
         pagination,
       })
+    } else {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      this.setState ({
+        dataSource: ds.cloneWithRows (data),
+        data: data,
+        pagination,
+      })
+      
     }
   }
 
@@ -71,8 +72,9 @@ export default class List extends Component {
       , {nextPageUrl, isFetching, hasError} = pagination
       , content
 
-      // if (isFetching) content = (<LoadingView/>)
-      // else 
+      if (isFetching) {
+        content = (<LoadingView/>)
+      }
       if (hasError) {
         content = (<ErrorView
                     onPress={()=>{

@@ -79,10 +79,10 @@ let videoOpts = {
 
 let uploadOpts = {
   keyPrefix: "user-uploads/",
-  bucket: "raaz-user-images",
+  bucket: "tunesquad-user-upload",
   region: 'us-east-1',
-  accessKey: "AKIAJC4RSF66ZHF6VKYQ",
-  secretKey: "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",
+  accessKey: "AKIAIYR6P6AQEO3NW2LQ",
+  secretKey: "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",
   successActionStatus: 201
 }
 

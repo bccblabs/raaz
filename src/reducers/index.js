@@ -110,6 +110,7 @@ const {
   TAGS_SPEC_SUCCESS,
   TAGS_SPEC_ERROR,
 
+
   MANUFACTURERS_SPEC_REQUEST,
   MANUFACTURERS_SPEC_SUCCESS,
   MANUFACTURERS_SPEC_ERROR,
@@ -321,6 +322,7 @@ const pagination = combineReducers ({
       MANUFACTURERS_ERROR
     ]
   }),
+
 })
 
 

@@ -223,7 +223,6 @@ export function fetchParts (nextPageUrl, specId, tags) {
       types: [PARTS_REQUEST, PARTS_SUCCESS, PARTS_ERROR],
       endpoint: endpoint,
       schema: Schemas.PARTS_ARRAY,
-      data: tags
     }
   }
 }

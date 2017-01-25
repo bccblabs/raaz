@@ -88,7 +88,6 @@ class Makes extends Component {
           title="Makes"
           leftItem={leftItem}
           style={FilterStyles.headerStyle}/>
-          <SpecsHistoryHeader/>
           {content}
       </View>
     )

@@ -50,7 +50,7 @@ const createStoreWithMiddleware = applyMiddleware(
   thunk,
   api,
   storageMiddleware,
-  logger,
+  // logger,
   promiseMiddleware (),
   // promise,
   array

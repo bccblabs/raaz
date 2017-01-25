@@ -46,7 +46,7 @@ export default class Post extends Component {
     ):(<View/>)
 
     buildLink = build && build.name ?(<LinkContent name={build.name} large image={build.media[0]} linkAction={()=>{Actions.BuildDetails ({buildId: build.buildId})}}/>):(<View/>)
-    partLink = part && part.length ? part.map ((partLink)=>(<LinkContent name={partLink.name} image={partLink.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partLink.partId, specId: build.specId}})}}/>)) : (<View/>)
+    partLink = part && part.length ? part.map ((partLink, idx)=>(<LinkContent key={`link-${idx}`} name={partLink.name} image={partLink.medium[0]} linkAction={()=>{Actions.PartDetails ({data: {partId: partLink.partId, specId: build.specId}})}}/>)) : (<View/>)
 
     linkContent = (
         <View style={{flex: 1}}>

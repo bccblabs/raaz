@@ -10,7 +10,10 @@ import {fetchTuningTags} from '../reducers/tuning/filterActions'
 import {
 	ErrorView,
 	LoadingView,
+	Manufacturers,
 } from './'
+
+import {HEIGHT} from '../styles'
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -37,7 +40,8 @@ class TuningTags extends Component {
 		else if (pagination.hasError) return (<ErrorView/>)
 		else {			
 		   return (tags && tags.length) ? (
-		    <View style={{flex: -1, marginTop: 8 ,justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
+		   	<View style={{height: HEIGHT, backgroundColor: 'white', flexDirection: 'column'}}>
+		    <View style={{flex:  1, alignItems: 'center', marginTop: 8 ,justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'row'}}>
 		      {tags.map((partTag, idx)=>{
 		        return (
 		        <TouchableWithoutFeedback 
@@ -55,6 +59,7 @@ class TuningTags extends Component {
 		        </TouchableWithoutFeedback>
 		        )})
 		      }
+			</View>
 			</View>
 		) : (<View/>)
 		}

@@ -18,7 +18,7 @@ import F8Header from '../common/F8Header'
 import F8Button from '../common/F8Button'
 
 import {fetchCarDetails} from '../reducers/tuning/filterActions'
-import {PostsBySpecId} from '../post'
+import {PartsBySpecId} from '../part'
 import {specDetailsPaginationSelector, specDetailsSelector} from '../selectors'
 import {DetailStyles, General, Specs, HEIGHT} from '../styles'
 
@@ -28,7 +28,6 @@ import {
   BackSquare,
   LoadingView, 
   ErrorView, 
-  Manufacturers, 
   TuningTags,
 } from '../components'
 
@@ -100,25 +99,23 @@ class TuningBySpec extends Component {
       return (
         <ParallaxScrollView
           contentBackgroundColor="white"
+          backgroundColor="white"
           backgroundSpeed={1}
           parallaxHeaderHeight={HEIGHT}
           stickyHeaderHeight={64}
           renderFixedHeader={()=><BackSquare/>}
-          renderForeground={()=>{
-            return (<F8Button 
-                      icon={require ('../common/img/car.png')}
-                      onPress={()=>Actions.BuildsBySpecId({specId})}
-                      style={{flex: -1,right: 8, position: 'absolute', bottom: 0}}            
-                      type="search" caption="See All Builds"/>
-          )}}
-          renderBackground={() => <BuildsPagerBySpecId specId={specId}/>}
+          renderForeground={() => (
+            <View style={{flex: 1, backgroundColor: 'white'}}>
+              <TuningTags specId={specId}/>
+              <F8Button 
+                icon={require ('../common/img/car.png')}
+                onPress={()=>Actions.BuildsBySpecId({specId})}
+                style={{flex: -1,right: 8, position: 'absolute', bottom: 0}}            
+                type="search" caption="See All Builds"/>
+            </View>)}
           >
           <View style={{flex: 1, backgroundColor: 'transparent'}}>
-          <Text style={{fontSize: 15, marginLeft: 12, marginTop: 16, fontWeight: '700', color: 'black', width: 150, flex: -1}}>{"#MANUFACTURERS"}</Text>
-          <Manufacturers specId={specId}/>
-          <Text style={{fontSize: 15, marginLeft: 12, marginTop: 16, fontWeight: '700', color: 'black', width: 150, flex: -1}}>{"#PARTS"}</Text>
-          <TuningTags specId={specId}/>
-          <PostsBySpecId specId={specId}/>
+          <PartsBySpecId specId={specId}/>
           </View>
         </ParallaxScrollView>
       );
