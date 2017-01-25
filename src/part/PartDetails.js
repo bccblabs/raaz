@@ -91,6 +91,7 @@ class PartDetails extends Component {
       return (<View style={{flex: 1}}>{header}<ErrorView/></View>)
     }
     else {
+      console.log (this.state.data, this.props)
       let {part, manufacturer, tuning} = this.state.data
         , {name, partId, details, description, media} = part
         , graphKeys = [
@@ -98,7 +99,7 @@ class PartDetails extends Component {
           'rearLowering', 'frontLowering',
           'rearSpringRateStiffness','frontSpringRateStiffness']
         , specId = this.props.data.specId
-        , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}})
+        , dataArray = graphKeys.map ((key)=>{return {name: key, value: tuning[key]}}).filter ((val)=>{return val.value !== undefined})
         , foregroundContent = (
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <TouchableWithoutFeedback onPress={()=>Actions.Manufacturer({manufacturer, specId})}>
@@ -123,6 +124,7 @@ class PartDetails extends Component {
           }
           </View>
         ):undefined
+      console.log (dataArray)
       return (
         <ParallaxScrollView
           backgroundColor="transparent"
@@ -133,7 +135,7 @@ class PartDetails extends Component {
           renderFixedHeader={()=>(
             <View style={{flex: 1, flexDirection: 'row'}}>
             <BackSquare/>
-            <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId: this.state.specId})}/>
+            <SaveProductButton part={Object.assign ({}, {...part}, {...tuning}, {specId})}/>
             </View>
           )}
           renderForeground={()=>{return foregroundContent}}
@@ -141,7 +143,7 @@ class PartDetails extends Component {
           >
           <View style={{flex: 1}}>
           <ImagesScroll media={media}/>
-          <Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>
+          {(dataArray && dataArray.length)?<Heading3 style={Titles.filterSectionTitle}>{"SPECS"}</Heading3>:null}
           <View alignSelf="center">
           {
             (dataArray && dataArray.length)?(<MetricsGraph data={[{entries: dataArray}]}/>):(<View/>)

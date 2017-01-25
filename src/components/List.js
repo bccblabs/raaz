@@ -37,9 +37,9 @@ export default class List extends Component {
 
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return  !(nextProps.pagination.ids === this.props.pagination.ids)
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return  !(nextProps.pagination.ids === this.props.pagination.ids)
+  }
 
   componentWillReceiveProps (nextProps) {
 

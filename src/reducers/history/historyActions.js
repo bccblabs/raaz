@@ -30,6 +30,7 @@ export function removeSpecToHistory (specId) {
 }
 
 export function toggleSaveProduct (part) {
+  console.log ('toggleSaveProduct', part)
   return {
     type: TOGGLE_SAVE_PRODUCT,
     payload: Object.assign ({}, {...part}, {media: part.media && part.media[0] || ''})

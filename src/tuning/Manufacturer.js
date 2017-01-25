@@ -14,7 +14,7 @@ import {connect} from 'react-redux'
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {BuildsPagerByManufacturerId} from '../build'
 
-import {General, Titles, DetailStyles, PostStyles, Specs} from '../styles'
+import {General, Titles, DetailStyles, PostStyles, Specs, HEIGHT} from '../styles'
 import {Heading3, Paragraph} from '../common/F8Text'
 
 import {
@@ -23,27 +23,14 @@ import {
 	SpecSelector,
 } from '../components'
 
-const mapStateToProps = (state, props) => {
-	return {
-		specId: state.car.selectedSpecId
-	}
-}
 
-class Manufacturer extends Component {
+export default class Manufacturer extends Component {
 	constructor (props) {
 		super (props)
-		this.state = {
-			specId: props.specId
-		}
-	}
-
-	componentWillReceiveProps(nextProps) {
-		let {specId} = nextProps
-		this.setState ({specId})
 	}
 
 	render () {
-		let {specId, manufacturer} = this.props
+		let {manufacturer, specId} = this.props
 	      , foregroundContent = manufacturer?(
 	        <View style={{flex: 1}}>
 	          <View style={DetailStyles.userInfoContainer}>
@@ -64,19 +51,18 @@ class Manufacturer extends Component {
 	        backgroundColor="transparent"
 	        contentBackgroundColor="white"
 	        backgroundSpeed={1}
-	        parallaxHeaderHeight={300+64}
+	        parallaxHeaderHeight={HEIGHT}
 	        stickyHeaderHeight={64}
 	        renderForeground={()=>{return foregroundContent}}
 	        renderBackground={() => <BuildsPagerByManufacturerId manufacturerId={manufacturer.manufacturerId}/>}
 	        renderFixedHeader={()=>(<BackSquare/>)}
 	        >
 	        <View style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
-	        <SpecSelector style={{marginTop: 16, flex: 1}} manufacturerId={manufacturer.manufacturerId}/>
 	        <PartsByManufactuer specId={specId} manufacturerId={manufacturer.manufacturerId}/>
 	        </View>
 	      </ParallaxScrollView>
 		)		
 	}
 }
+	        // <SpecSelector style={{marginTop: 16, flex: 1}} manufacturerId={manufacturer.manufacturerId}/>
 
-export default connect (mapStateToProps) (Manufacturer)

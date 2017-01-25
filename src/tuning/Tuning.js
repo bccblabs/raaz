@@ -145,15 +145,20 @@ class Tuning extends Component {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex: -1}}>
         <View style={{backgroundColor: 'transparent',flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: 'slategray', justifyContent: 'space-around', flex: -1}}>
           <F8Button style={{flex: 1}}  
-                    onPress={Actions.Makes}
-                    caption="Parts By car" 
+                    onPress={Actions.Saved}
+                    caption="Saved" 
                     type="icon"
-                    icon={require ('../common/img/search.png')}/>
+                    icon={require ('../common/img/heart.png')}/>
           <F8Button style={{flex: 1}}  
                     onPress={Actions.Home}
                     caption="Home" 
                     type="icon"
                     icon={require ('../common/img/helmet.png')}/>
+          <F8Button style={{flex: 1}}  
+                    onPress={Actions.Makes}
+                    caption="Parts By car" 
+                    type="icon"
+                    icon={require ('../common/img/search.png')}/>
           <SelectMediaButton
               icon={require ('../common/img/camera.png')}
               opts={IMG_OPTS}
@@ -164,17 +169,6 @@ class Tuning extends Component {
               opts={VIDEO_OPTS}
               userId={this.state.userId}
           />
-          <F8Button 
-                    icon={require ('../common/img/vr.png')} 
-                    onPress={Actions.NewPost} 
-                    type="icon" 
-                    caption="VR" 
-                    style={{flex: 1}}/>
-          <F8Button style={{flex: 1}}  
-                    onPress={Actions.Saved}
-                    caption="Saved" 
-                    type="icon"
-                    icon={require ('../common/img/heart.png')}/>
         </View>
         </ScrollView>
         <Modal 
@@ -191,5 +185,12 @@ class Tuning extends Component {
     )
   }
 }
+
+          // <F8Button 
+          //           icon={require ('../common/img/vr.png')} 
+          //           onPress={Actions.NewPost} 
+          //           type="icon" 
+          //           caption="VR" 
+          //           style={{flex: 1}}/>
 
 export default connect (mapStateToProps, mapDispatchToProps) (Tuning)
